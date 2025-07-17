@@ -10,7 +10,7 @@ import SwiftData
 
 // MARK: - 다이어리 SwiftData 모델
 @Model
-class ChallengeModel {
+class DiaryModelData {
     
     var createDate: String // ID
     var diaryContent: String
