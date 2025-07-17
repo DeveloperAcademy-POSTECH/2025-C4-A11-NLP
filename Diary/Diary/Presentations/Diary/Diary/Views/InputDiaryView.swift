@@ -9,7 +9,7 @@ import SwiftUI
 
 struct InputDiaryView: View {
     var body: some View {
-        Text("Hello, World!")
+        Text("Hello, World!2")
     }
 }
 
