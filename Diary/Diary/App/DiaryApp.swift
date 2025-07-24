@@ -14,9 +14,23 @@ struct DiaryApp: App {
     
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            RootView()
                 .environmentObject(router)
                 .modelContainer(for: [DiaryModelData.self])
+        }
+    }
+}
+
+struct RootView: View {
+    @State private var isAuthenticated = false
+
+    var body: some View {
+        Group {
+            if isAuthenticated {
+                HomeView()
+            } else {
+                FaceIDAuthView(isAuthenticated: $isAuthenticated)
+            }
         }
     }
 }
