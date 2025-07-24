@@ -15,7 +15,6 @@ struct InputDiaryView: View {
     @State private var shakeOffset: CGFloat = 0
     @FocusState private var isTextFieldFocused: Bool
     
-
     var body: some View {
         VStack(spacing: 0) {
             SegmentedProgressBar(totalSegments: 3, currentSegment: 1)
@@ -87,7 +86,7 @@ struct InputDiaryView: View {
                         
                         
                     } else {
-                        print("다음 뷰로 이동")
+                        print("다음 뷰")
                     }
                 } label: {
                     HStack(spacing: 4) {
