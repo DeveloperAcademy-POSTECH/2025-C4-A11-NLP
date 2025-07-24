@@ -104,6 +104,7 @@ struct InputDiaryView: View {
                     .cornerRadius(15)
                     .offset(x: shakeOffset)
                 }
+                Spacer()
             }
             .padding(.bottom, 32)
         }
