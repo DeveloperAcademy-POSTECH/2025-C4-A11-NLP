@@ -15,7 +15,7 @@ extension Font {
     static var title1Emphasized: Font {
         .system(size: 20, weight: .bold)
     }
-    static var title2: Font {
+    static var title22: Font {
         .system(size: 17, weight: .medium)
     }
     static var body1: Font {

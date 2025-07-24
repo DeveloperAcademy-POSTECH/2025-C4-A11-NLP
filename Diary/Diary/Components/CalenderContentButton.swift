@@ -12,6 +12,7 @@ struct CalenderContentButton: View {
     let title: String
     let imageType: CalenderContentButtonType
     let action: () -> ()
+    @Environment(\.isEnabled) private var isEnabled: Bool
     
     var body: some View {
         
@@ -28,7 +29,7 @@ struct CalenderContentButton: View {
                                 Image(systemName: imageType.image)
                                 Text(title)
                             }
-                            .foregroundStyle(Color.black)
+                            .foregroundStyle(isEnabled ? Color.black : Color.gray02)
                             .font(Font.caption1Emphasized)
                         }
                     case .next:
@@ -37,7 +38,7 @@ struct CalenderContentButton: View {
                                 Text(title)
                                 Image(systemName: imageType.image)
                             }
-                            .foregroundStyle(Color.black)
+                            .foregroundStyle(isEnabled ? Color.black : Color.gray02)
                             .font(Font.caption1Emphasized)
                         }
                     }
