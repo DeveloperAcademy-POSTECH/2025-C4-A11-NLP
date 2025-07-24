@@ -8,7 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		3E1301652E324DC800E39912 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E1301642E324DC800E39912 /* LocalAuthentication.framework */; };
+		3E4FAC1D2E37A0790081E912 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 3E4FAC1C2E37A0790081E912 /* Lottie */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		3E8C98002E3796F2003A641B /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		3E1301642E324DC800E39912 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
@@ -29,6 +43,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E1301652E324DC800E39912 /* LocalAuthentication.framework in Frameworks */,
+				3E4FAC1D2E37A0790081E912 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,6 +85,7 @@
 				DE5BD5FE2E24137500ED1385 /* Sources */,
 				DE5BD5FF2E24137500ED1385 /* Frameworks */,
 				DE5BD6002E24137500ED1385 /* Resources */,
+				3E8C98002E3796F2003A641B /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -80,6 +96,7 @@
 			);
 			name = Diary;
 			packageProductDependencies = (
+				3E4FAC1C2E37A0790081E912 /* Lottie */,
 			);
 			productName = Diary;
 			productReference = DE5BD6022E24137500ED1385 /* Diary.app */;
@@ -109,6 +126,9 @@
 			);
 			mainGroup = DE5BD5F92E24137500ED1385;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				3E4FAC1B2E37A0790081E912 /* XCRemoteSwiftPackageReference "lottie-spm" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = DE5BD6032E24137500ED1385 /* Products */;
 			projectDirPath = "";
@@ -349,6 +369,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3E4FAC1B2E37A0790081E912 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-spm";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.5.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3E4FAC1C2E37A0790081E912 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3E4FAC1B2E37A0790081E912 /* XCRemoteSwiftPackageReference "lottie-spm" */;
+			productName = Lottie;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = DE5BD5FA2E24137500ED1385 /* Project object */;
 }
