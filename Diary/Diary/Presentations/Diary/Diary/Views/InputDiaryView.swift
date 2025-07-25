@@ -17,6 +17,7 @@ struct InputDiaryView: View {
     @FocusState private var isTextFieldFocused: Bool
     
     @EnvironmentObject private var router: NavigationRouter
+    @Environment(\.diaryVM) private var diaryVM
     
     let analyzer: SentimentViewModel = .init()
     
@@ -74,6 +75,7 @@ struct InputDiaryView: View {
                         
                     } else {
                         results = analyzer.predictTopSentiments(for: diaryText, count: 3)
+                        diaryVM.diary.diaryContent = diaryText // 다이어리 컨텐츠 뷰모델 저장
                         router.push(to: .wiseSayingView)
                     }
                 } label: {

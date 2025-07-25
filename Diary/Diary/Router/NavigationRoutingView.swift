@@ -23,13 +23,13 @@ struct NavigationRoutingView: View {
                 InputDiaryView()
                     .hideBackButton()
             case .resolutionView:
-                ResolutionView(date: "", text: "") //FIXME: 초기값 변경
+                ResolutionView(date: "2025년 07월 13일 (월)", text: "") //FIXME: 초기값 변경
                     .hideBackButton()
             case .retrospectiveView:
-                RetrospectiveView()
+                RetrospectiveView(date: "2025년 07월 13일 (월)") //FIXME: 초기값 변경
                     .hideBackButton()
             case .wiseSayingView:
-                WiseSayingView(date: "") //FIXME: 초기값 변경
+                WiseSayingView(date: "2025년 07월 13일 (월)") //FIXME: 초기값 변경
                     .hideBackButton()
             }
         }

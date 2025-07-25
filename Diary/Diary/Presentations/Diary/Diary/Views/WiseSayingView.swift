@@ -14,6 +14,7 @@ struct WiseSayingView: View {
     let date: String //FIXME: 선택된 날짜 나오게 수정
     
     @EnvironmentObject private var router: NavigationRouter
+    @Environment(\.diaryVM) private var diaryVM
     
     var body: some View {
         
@@ -123,6 +124,7 @@ struct WiseSayingView: View {
             Spacer()
             
             CalenderContentButton(title: "다음", imageType: .next) {
+                diaryVM.diary.wiseSaying = "명언" //FIXME: 명언으로 수정
                 router.push(to: .resolutionView)
             }
             .frame(width: 80, height: 40)

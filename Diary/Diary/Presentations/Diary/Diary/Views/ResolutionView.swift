@@ -13,6 +13,7 @@ struct ResolutionView: View {
     @State var text: String
     
     @EnvironmentObject private var router: NavigationRouter
+    @Environment(\.diaryVM) private var diaryVM
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -117,6 +118,7 @@ struct ResolutionView: View {
             Spacer()
             
             CalenderContentButton(title: "다음", imageType: .next) {
+                diaryVM.diary.resolution = text // 다짐 viewModel 저장
                 router.push(to: .retrospectiveView)
             }
             .frame(width: 80, height: 40)
