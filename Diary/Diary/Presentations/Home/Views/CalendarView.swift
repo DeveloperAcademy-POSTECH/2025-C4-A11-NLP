@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct CalendarView: View {
+    
   @Binding var month: Date
-  @Binding private var clickedCurrentMonthDates: Date?
+  @Binding var clickedCurrentMonthDates: Date?
   @Binding private var isMonthPickerPresented : Bool
   @State private var selectedYear = Calendar.current.component(.year, from: Date())
   @State private var selectedMonth = Calendar.current.component(.month, from: Date())
   @ObservedObject var diaryStore: DiaryStore
-
 
     init(
         month: Binding<Date>,
@@ -27,7 +27,7 @@ struct CalendarView: View {
         _isMonthPickerPresented = isMonthPickerPresented
         self.diaryStore = diaryStore
       }
-  
+
     var body: some View {
       VStack(spacing: 0) {
         yearMonthView
@@ -40,35 +40,22 @@ struct CalendarView: View {
             .padding(.top, 4)
         }
         .padding()
-        .background(Color(red: 247/255, green: 248/255, blue: 250/255))
+        .background(Color.white)
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .padding(.horizontal, 16)
       }
     }
-    
-    // MARK: - 요일 표시
-    private var weekdayView: some View {
-      HStack {
-        ForEach(Self.weekdaySymbols.indices, id: \.self) { symbol in
-          Text(Self.weekdaySymbols[symbol])
-            .font(.system(size: 13))
-            .bold()
-            .foregroundStyle(Color(red: 60/255, green: 60/255, blue: 67/255, opacity: 0.6))
-            .frame(maxWidth: .infinity)
-        }
-      }
-    }
 
-  
+
   // MARK: - 연월 표시
   private var yearMonthView: some View {
-      
+
     HStack(alignment: .center, spacing: 8) {
       Text(month, formatter: Self.calendarHeaderDateFormatter)
             .font(.system(size: 17))
             .bold()
             .foregroundStyle(Color(red: 26/255, green: 26/255, blue: 26/255))
-        
+
         Button(
           action: {
               isMonthPickerPresented = true
@@ -81,9 +68,9 @@ struct CalendarView: View {
 
           }
         )
-        
+
         Spacer()
-        
+
         Button(
           action: {
             changeMonth(by: -1)
@@ -95,9 +82,9 @@ struct CalendarView: View {
                   .foregroundStyle(Color(red: 80/255, green: 80/255, blue: 255/255))
           }
         )
-        
+
         Spacer().frame(width: 28)
-      
+
       Button(
         action: {
           changeMonth(by: 1)
@@ -116,9 +103,21 @@ struct CalendarView: View {
 
   }
 
+    // MARK: - 캘린더 요일
+    private var weekdayView: some View {
+      HStack {
+        ForEach(Self.weekdaySymbols.indices, id: \.self) { symbol in
+          Text(Self.weekdaySymbols[symbol])
+            .font(.system(size: 13))
+            .bold()
+            .foregroundStyle(Color(red: 60/255, green: 60/255, blue: 67/255, opacity: 0.6))
+            .frame(maxWidth: .infinity)
+        }
+      }
+    }
 
-  
-  // MARK: - 날짜 그리드 뷰
+
+  // MARK: - 날짜 그리드
     private var calendarGridView: some View {
       let daysInMonth = numberOfDays(in: month)
       let firstWeekday = firstWeekdayOfMonth(in: month) - 1
@@ -134,14 +133,16 @@ struct CalendarView: View {
     }
 }
 
-// MARK: - 일자 셀 뷰
-private struct CellView: View {
+
+
+// MARK: - 날짜 숫자 셀
+struct CellView: View {
   private var day: Int
   private var clicked: Bool
   private var isToday: Bool
   private var isCurrentMonthDay: Bool
   let reflectionStatus: ReflectionStatus
-    
+
     private var textColor: Color {
       if isToday {
         return Color(red: 23 / 255, green: 76 / 255, blue: 192 / 255)
@@ -153,8 +154,8 @@ private struct CellView: View {
     }
 
 
-  
-  fileprivate init(
+
+  init(
     day: Int,
     clicked: Bool = false,
     isToday: Bool = false,
@@ -165,11 +166,11 @@ private struct CellView: View {
     self.clicked = clicked
     self.isToday = isToday
     self.isCurrentMonthDay = isCurrentMonthDay
-      self.reflectionStatus = reflectionStatus
+    self.reflectionStatus = reflectionStatus
   }
-  
-    
-    fileprivate var body: some View {
+
+
+    var body: some View {
       VStack {
         ZStack {
           // 회고 상태에 따른 색상 원
@@ -201,135 +202,5 @@ private struct CellView: View {
         }
       }
       .frame(height: 40)
-    }
-}
-
-private extension CalendarView {
-    var today: Date {
-        let now = Date()
-        let components = Calendar.current.dateComponents([.year, .month, .day], from: now)
-        return Calendar.current.date(from: components)!
-    }
-    
-    static let calendarHeaderDateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "ko_KR")
-        formatter.dateFormat = "yyyy년 M월"
-        return formatter
-    }()
-    
-    static let weekdaySymbols: [String] = {
-        var calendar = Calendar.current
-        calendar.locale = Locale(identifier: "ko_KR")
-        return calendar.shortWeekdaySymbols
-    }()
-}
-
-private extension CalendarView {
-  /// 특정 해당 날짜
-  func getDate(for index: Int) -> Date {
-    let calendar = Calendar.current
-    guard let firstDayOfMonth = calendar.date(
-      from: DateComponents(
-        year: calendar.component(.year, from: month),
-        month: calendar.component(.month, from: month),
-        day: 1
-      )
-    ) else {
-      return Date()
-    }
-    
-    var dateComponents = DateComponents()
-    dateComponents.day = index
-    
-    let timeZone = TimeZone.current
-    let offset = Double(timeZone.secondsFromGMT(for: firstDayOfMonth))
-    dateComponents.second = Int(offset)
-    
-    let date = calendar.date(byAdding: dateComponents, to: firstDayOfMonth) ?? Date()
-    return date
-  }
-  
-  /// 해당 월에 존재하는 일자 수
-  func numberOfDays(in date: Date) -> Int {
-    return Calendar.current.range(of: .day, in: .month, for: date)?.count ?? 0
-  }
-  
-  /// 해당 월의 첫 날짜가 갖는 해당 주의 몇번째 요일
-  func firstWeekdayOfMonth(in date: Date) -> Int {
-    let components = Calendar.current.dateComponents([.year, .month], from: date)
-    let firstDayOfMonth = Calendar.current.date(from: components)!
-    
-    return Calendar.current.component(.weekday, from: firstDayOfMonth)
-  }
-  
-  /// 이전 월 마지막 일자
-  func previousMonth() -> Date {
-    let components = Calendar.current.dateComponents([.year, .month], from: month)
-    let firstDayOfMonth = Calendar.current.date(from: components)!
-    let previousMonth = Calendar.current.date(byAdding: .month, value: -1, to: firstDayOfMonth)!
-    
-    return previousMonth
-  }
-  
-  /// 월 변경
-  func changeMonth(by value: Int) {
-    self.month = adjustedMonth(by: value)
-  }
-  
-  /// 변경하려는 월 반환
-  func adjustedMonth(by value: Int) -> Date {
-    if let newMonth = Calendar.current.date(byAdding: .month, value: value, to: month) {
-      return newMonth
-    }
-    return month
-  }
-}
-
-
-extension Date {
-  static let calendarDayDateFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.locale = Locale(identifier: "ko_KR")
-    formatter.dateFormat = "yyyy년 M월 d일"
-    return formatter
-  }()
-
-  var formattedCalendarDayDate: String {
-    return Date.calendarDayDateFormatter.string(from: self)
-  }
-}
-
-extension CalendarView {
-    @ViewBuilder
-    private func calendarCellView(for index: Int, daysInMonth: Int, firstWeekday: Int, lastDayOfMonthBefore: Int) -> some View {
-        if index >= 0 && index < daysInMonth {
-            let date = getDate(for: index)
-            let day = Calendar.current.component(.day, from: date)
-            let clicked = clickedCurrentMonthDates == date
-            let isToday = date.formattedCalendarDayDate == today.formattedCalendarDayDate
-            
-            let entry = diaryStore.diary(for: date)
-            let status: ReflectionStatus = {
-                if let entry = entry {
-                    return entry.reflection == "-" ? .pending : .completed
-                } else {
-                    return .none
-                }
-            }()
-            
-            CellView(day: day, clicked: clicked, isToday: isToday, reflectionStatus: status)
-                .onTapGesture {
-                    clickedCurrentMonthDates = date
-                }
-            
-        } else if let prevMonthDate = Calendar.current.date(
-            byAdding: .day,
-            value: index + lastDayOfMonthBefore,
-            to: previousMonth()
-        ) {
-            let day = Calendar.current.component(.day, from: prevMonthDate)
-            CellView(day: day, isCurrentMonthDay: false)
-        }
     }
 }

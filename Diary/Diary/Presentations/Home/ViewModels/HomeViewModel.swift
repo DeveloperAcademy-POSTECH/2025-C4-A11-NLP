@@ -2,14 +2,14 @@
 //  HomeViewModel.swift
 //  Diary
 //
-//  Created by jinhyeokKim on 7/14/25.
+//  Created by Yurim on 7/24/25.
 //
 
 import Foundation
 import SwiftUI
 import Combine
 
-
+//최신 버전으로 고치기
 class DiaryStore: ObservableObject {
   @Published var entries: [DiaryEntry] = [
     DiaryEntry(date: Calendar.current.date(byAdding: .day, value: -1, to: Date())! /*date: Date()*/, content: "내일 시험인데 아직도 책을 안 펼쳤다.", quote: "늦었다고 시작할때가 진짜 너무 늦었다. - 박명수", vow: "지금이라도 시작해야겠다.", reflection: "-"),
