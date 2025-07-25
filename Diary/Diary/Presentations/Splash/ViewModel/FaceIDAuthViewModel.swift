@@ -14,6 +14,7 @@ class FaceIDAuthViewModel: ObservableObject {
     @Published var authFailed: Bool = false
     @Published var isAuthAvailable: Bool = false
     
+    // FaceID/비밀번호 유무 확인
     func checkAuthAvailability() {
         let context = LAContext()
         var error: NSError?
@@ -21,6 +22,7 @@ class FaceIDAuthViewModel: ObservableObject {
         isAuthAvailable = context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error)
     }
     
+    // FaceID/비밀번호 인증 시도
     func authenticate() {
         let context = LAContext()
         var error: NSError?
@@ -38,6 +40,7 @@ class FaceIDAuthViewModel: ObservableObject {
                 }
             }
         } else {
+            // Face ID 지원 X -> 자동 인증
             self.isAuthenticated = true
         }
     }
