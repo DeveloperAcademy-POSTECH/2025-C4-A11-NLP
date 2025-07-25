@@ -13,7 +13,10 @@ struct InputDiaryView: View {
     @State private var diaryText: String = ""
     @State private var showRedFeedback: Bool = false
     @State private var shakeOffset: CGFloat = 0
+    @State private var results: [(String, Double)] = []
     @FocusState private var isTextFieldFocused: Bool
+    
+    let analyzer: SentimentViewModel = .init()
     
     var body: some View {
         VStack(spacing: 0) {
@@ -61,6 +64,10 @@ struct InputDiaryView: View {
                             .font(.caption1Emphasized)
                             .foregroundStyle(Color.red)
                     }
+                    //mlmodel 테스트
+//                    ForEach(results, id: \.0) { label, confidence in
+//                        Text("• \(label): \(confidence, specifier: "%.1f")%")
+//                    }
                 }
                 .padding(.horizontal)
                 .padding(.top, 16)
@@ -86,6 +93,7 @@ struct InputDiaryView: View {
                         
                         
                     } else {
+                        results = analyzer.predictTopSentiments(for: diaryText, count: 3)
                         print("다음 뷰")
                     }
                 } label: {
