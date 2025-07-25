@@ -22,31 +22,8 @@ struct InputDiaryView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            SegmentedProgressBar(totalSegments: 3, currentSegment: 1)
-            
-            HStack {
-                Button {
-                    router.pop()
-                } label: {
-                    Image(systemName: "chevron.left")
-                        .foregroundStyle(.blue)
-                        .font(.system(size: 17, weight: .semibold))
-                }
-                Spacer()
-                Text("일기")
-                    .font(.title3)
-                    .fontWeight(.bold)
-                Spacer()
-                if isTextFieldFocused {
-                    Button {
-                        isTextFieldFocused = false
-                    } label: {
-                        Image(systemName: "keyboard.chevron.compact.down")
-                    }
-                }
-            }
-            .padding(.horizontal)
-            .padding(.vertical, 16)
+            topProgressBarAndNavigationTitleView
+                .padding(.horizontal, 16)
             
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
@@ -122,23 +99,43 @@ struct InputDiaryView: View {
             .ignoresSafeArea(edges: .bottom)
         
     }
-}
-
-struct SegmentedProgressBar: View {
-    let totalSegments: Int
-    let currentSegment: Int
-
-    var body: some View {
-        HStack(spacing: 8) {
-            ForEach(0..<totalSegments, id: \.self) { index in
-                Capsule()
-                    .fill(index < currentSegment ? Color.purple : Color.gray.opacity(0.3))
-                    .frame(height: 6)
-                    .frame(maxWidth: .infinity)
+    
+    
+    
+    //MARK: 상단 프로그래스 바, 네비게이션 타이틀
+    private var topProgressBarAndNavigationTitleView: some View {
+        VStack {
+            //FIXME: 반복 코드 수정
+            HStack(spacing: 8) {
+                ProgressView(choice: true)
+                    .frame(width: 115, height: 4)
+                ProgressView(choice: false)
+                    .frame(width: 115, height: 4)
+                ProgressView(choice: false)
+                    .frame(width: 115, height: 4)
             }
+            HStack {
+                Button {
+                    router.pop()
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .foregroundStyle(.blue)
+                        .font(.system(size: 23, weight: .semibold))
+                }
+                Spacer()
+                Text("일기")
+                    .font(.title1Emphasized)
+                Spacer()
+                if isTextFieldFocused {
+                    Button {
+                        isTextFieldFocused = false
+                    } label: {
+                        Image(systemName: "keyboard.chevron.compact.down")
+                    }
+                }
+            }
+            .padding(.vertical, 16)
         }
-        .padding(.horizontal)
-        .padding(.top, 10)
     }
 }
 
