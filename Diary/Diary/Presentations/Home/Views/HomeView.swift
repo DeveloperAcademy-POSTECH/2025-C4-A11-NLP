@@ -29,11 +29,6 @@ struct HomeView: View {
           Spacer()
           InfoButton(isInfoShown: $isInfoShown)
         }
-          
-          // info 설명 오버레이
-          if isInfoShown {
-            InfoOverlay()
-          }
 
         // 캘린더 뷰
           CalendarView(
@@ -69,7 +64,7 @@ struct HomeView: View {
             }
             .padding(.horizontal, 16)
             .padding(.top, 16)
-
+              
               // 글 미리보기
           if let entry = diaryStore.diary(for: selected) {
               VStack(alignment: .leading, spacing: 8){
@@ -148,6 +143,12 @@ struct HomeView: View {
         Spacer()
       }
       .zIndex(0)
+        
+        // info 설명 오버레이
+        if isInfoShown {
+          InfoOverlay()
+                .zIndex(1)
+        }
 
       // 선택된 날짜에 일기 없을 시 보이는 "+" 버튼
         if let selected = selectedDate, diaryStore.diary(for: selected) == nil {
