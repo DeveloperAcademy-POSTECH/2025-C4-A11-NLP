@@ -45,10 +45,10 @@ struct FaceIDAuthView: View {
         let context = LAContext()
         var error: NSError?
 
-        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
-            let reason = "Face ID로 인증해주세요"
+        if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
+            let reason = "Face ID 또는 비밀번호로 인증해주세요"
 
-            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, authenticationError in
+            context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason) { success, authenticationError in
                 DispatchQueue.main.async {
                     if success {
                         isAuthenticated = true
@@ -58,7 +58,7 @@ struct FaceIDAuthView: View {
                 }
             }
         } else {
-            // Face ID 지원 안됨 (기기 제한, 설정 미완 등)
+            // Face ID 지원 X
             authFailed = true
         }
     }
