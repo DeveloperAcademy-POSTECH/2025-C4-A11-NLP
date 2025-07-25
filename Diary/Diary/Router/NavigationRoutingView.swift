@@ -18,14 +18,19 @@ struct NavigationRoutingView: View {
             switch destination {
             case .home:
                 HomeView()
+                    .hideBackButton()
             case .inputDiaryView:
                 InputDiaryView()
+                    .hideBackButton()
             case .resolutionView:
                 ResolutionView(date: "", text: "") //FIXME: 초기값 변경
+                    .hideBackButton()
             case .retrospectiveView:
                 RetrospectiveView()
+                    .hideBackButton()
             case .wiseSayingView:
                 WiseSayingView(date: "") //FIXME: 초기값 변경
+                    .hideBackButton()
             }
         }
         .environmentObject(router)
