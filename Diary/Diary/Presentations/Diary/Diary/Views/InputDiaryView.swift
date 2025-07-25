@@ -26,7 +26,7 @@ struct InputDiaryView: View {
             
             HStack {
                 Button {
-                    print("뒤로가기")
+                    router.pop()
                 } label: {
                     Image(systemName: "chevron.left")
                         .foregroundStyle(.blue)
