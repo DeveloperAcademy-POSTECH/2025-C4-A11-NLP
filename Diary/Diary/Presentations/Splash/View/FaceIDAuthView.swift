@@ -15,6 +15,7 @@ struct FaceIDAuthView: View {
     var body: some View {
         ZStack {
             if viewModel.isAuthAvailable {
+                // 암호 있을 때
                 VStack(spacing: 20) {
                     Image(systemName: "faceid")
                     Text("앱 아이콘")
@@ -29,6 +30,7 @@ struct FaceIDAuthView: View {
                     }
                 }
             } else {
+                // 암호 없을 때
                 VStack(spacing: 20) {
                     Image(systemName: "faceid")
                     Text("앱 아이콘")
