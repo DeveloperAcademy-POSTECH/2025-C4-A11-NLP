@@ -15,4 +15,5 @@ struct RetrospectiveView: View {
 
 #Preview {
     RetrospectiveView()
+        .environmentObject(NavigationRouter())
 }

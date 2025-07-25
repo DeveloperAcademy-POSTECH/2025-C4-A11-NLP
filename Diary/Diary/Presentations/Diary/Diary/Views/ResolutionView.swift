@@ -12,6 +12,8 @@ struct ResolutionView: View {
     
     @State var text: String
     
+    @EnvironmentObject private var router: NavigationRouter
+    
     var body: some View {
         VStack(alignment: .leading) {
             topProgressBarAndNavigationTitleView
@@ -108,14 +110,14 @@ struct ResolutionView: View {
     private var bottomButtonView: some View {
         HStack {
             CalenderContentButton(title: "이전", imageType: .previous) {
-                
+                router.pop()
             }
             .frame(width: 80, height: 40)
             
             Spacer()
             
             CalenderContentButton(title: "다음", imageType: .next) {
-                //TODO: 네비게이션 라우터 추가
+                router.push(to: .retrospectiveView)
             }
             .frame(width: 80, height: 40)
             //            .disabled(selectedIndex == nil)
@@ -125,5 +127,6 @@ struct ResolutionView: View {
 
 #Preview {
     ResolutionView(date: "2025년 07월 13일 (월)", text: "")
+        .environmentObject(NavigationRouter())
 }
 

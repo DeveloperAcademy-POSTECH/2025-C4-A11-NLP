@@ -16,6 +16,8 @@ struct InputDiaryView: View {
     @State private var results: [(String, Double)] = []
     @FocusState private var isTextFieldFocused: Bool
     
+    @EnvironmentObject private var router: NavigationRouter
+    
     let analyzer: SentimentViewModel = .init()
     
     var body: some View {
@@ -75,7 +77,8 @@ struct InputDiaryView: View {
             }
             .overlay(alignment: .bottom) {
                 Button {
-                    if diaryText.count < 200 {
+                    //FIXME: 200 글자 로직 빼기
+                    if diaryText.count < 5 {
                         withAnimation(.default) {
                             showRedFeedback = true
                         }
@@ -94,7 +97,7 @@ struct InputDiaryView: View {
                         
                     } else {
                         results = analyzer.predictTopSentiments(for: diaryText, count: 3)
-                        print("다음 뷰")
+                        router.push(to: .wiseSayingView)
                     }
                 } label: {
                     HStack(spacing: 4) {
@@ -106,7 +109,7 @@ struct InputDiaryView: View {
                     .padding(.horizontal, 16)
                     .background(
                         showRedFeedback ? Color.red :
-                            (diaryText.count < 200 ? Color.gray.opacity(0.3) : Color.blue)
+                            (diaryText.count < 5 ? Color.gray.opacity(0.3) : Color.blue)
                     )
                     .cornerRadius(15)
                     .offset(x: shakeOffset)
@@ -142,4 +145,5 @@ struct SegmentedProgressBar: View {
 
 #Preview {
     InputDiaryView()
+        .environmentObject(NavigationRouter())
 }

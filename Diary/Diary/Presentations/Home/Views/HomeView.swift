@@ -184,9 +184,9 @@ struct HomeView: View {
     var body: some View {
         NavigationStack(path: $router.destination) {
             Button {
-                //:FIXME: 생성 버튼 기능으로 수정하기
+                router.push(to: .inputDiaryView)
             } label: {
-                Text("Go Test1")
+                Text("일기 생성")
             }
             .navigationDestination(for: NavigationDestination.self, destination: { destination in
                 NavigationRoutingView(destination: destination)
