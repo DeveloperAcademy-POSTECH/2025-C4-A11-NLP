@@ -6,3 +6,16 @@
 //
 
 import Foundation
+
+@Observable
+class DiaryViewModel {
+    
+    
+    
+    init() {
+        
+    }
+    
+    
+    
+}
