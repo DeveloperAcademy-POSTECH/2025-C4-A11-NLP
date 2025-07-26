@@ -18,6 +18,7 @@ struct HomeView: View {
     
     
     var body: some View {
+        NavigationStack{
         ZStack(alignment: .topTrailing) {
             
             Color("lightBlue")
@@ -188,6 +189,7 @@ struct HomeView: View {
                 .zIndex(1)
             }
         }
+    }
     }
 }
 
