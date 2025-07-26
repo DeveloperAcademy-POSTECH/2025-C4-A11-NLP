@@ -31,6 +31,9 @@ struct NavigationRoutingView: View {
             case .wiseSayingView:
                 WiseSayingView(date: "2025년 07월 13일 (월)") //FIXME: 초기값 변경
                     .hideBackButton()
+            case .streakView:
+                StreakView(lottieType: .fire)
+                    .hideBackButton()
             }
         }
         .environmentObject(router)

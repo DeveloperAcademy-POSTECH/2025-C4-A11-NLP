@@ -14,5 +14,6 @@ enum NavigationDestination: Equatable, Hashable {
     case resolutionView
     case retrospectiveView
     case wiseSayingView
+    case streakView
 }
 
