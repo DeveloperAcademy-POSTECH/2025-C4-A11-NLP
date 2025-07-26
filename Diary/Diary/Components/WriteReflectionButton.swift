@@ -16,14 +16,14 @@ struct WriteReflectionButton: View{
                 .bold()
                 .font(.system(size: 14))
                 .foregroundStyle(Color("white"))
-                .frame(width: 104, height: 44)
+                .frame(width: 292, height: 44)
                 .background(Color("blue1"))
                 .clipShape(RoundedRectangle(cornerRadius: 15))
-                .padding(.bottom, 13.5)
+                .padding(.top, 8)
                 .padding(.trailing, 24)
         }
         .frame(maxWidth: .infinity, alignment: .center)
-        .padding(.top, 16)
+        //.padding(.top, 16)
     }
 }
 

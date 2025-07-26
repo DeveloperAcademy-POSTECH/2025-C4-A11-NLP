@@ -28,16 +28,16 @@ struct CalendarView: View {
         self.diaryStore = diaryStore
       }
 
+    
     var body: some View {
       VStack(spacing: 0) {
         yearMonthView
 
         VStack(spacing: 0) {
           weekdayView
-            .padding(.vertical, 10)
+                .padding(.vertical, 13.4)
 
           calendarGridView
-            .padding(.top, 4)
         }
         .padding()
         .background(Color("white"))
@@ -50,7 +50,7 @@ struct CalendarView: View {
   // MARK: - 연월 표시
   private var yearMonthView: some View {
 
-    HStack(alignment: .center, spacing: 8) {
+    HStack(alignment: .center) {
       Text(month, formatter: Self.calendarHeaderDateFormatter)
             .font(.system(size: 17))
             .bold()
@@ -83,7 +83,7 @@ struct CalendarView: View {
           }
         )
 
-        Spacer().frame(width: 28)
+        Spacer().frame(width: 24)
 
       Button(
         action: {
@@ -98,8 +98,8 @@ struct CalendarView: View {
         }
       )
     }
-    .padding(.horizontal, 16)
-    .padding(.vertical, 9)
+    .padding(.horizontal, 20)
+    .padding(.vertical, 8)
 
   }
 
@@ -125,7 +125,7 @@ struct CalendarView: View {
       let numberOfRows = 6
       let visibleDaysOfNextMonth = numberOfRows * 7 - (daysInMonth + firstWeekday)
 
-      return LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7), spacing: 3) {
+      return LazyVGrid(columns: Array(repeating: GridItem(/*.fixed(45.8),*/ spacing: 5), count: 7), spacing: 5) {
         ForEach(-firstWeekday ..< daysInMonth + visibleDaysOfNextMonth, id: \.self) { index in
           calendarCellView(for: index, daysInMonth: daysInMonth, firstWeekday: firstWeekday, lastDayOfMonthBefore: lastDayOfMonthBefore)
         }
@@ -177,11 +177,11 @@ struct CellView: View {
           case .pending:
             Circle()
               .fill(Color("blue2"))
-              .frame(width: 36, height: 36)
+              .frame(width: 44, height: 44)
           case .completed:
             Circle()
               .fill(Color("blue1"))
-              .frame(width: 36, height: 36)
+              .frame(width: 44, height: 44)
           case .none:
             EmptyView()
           }
@@ -190,7 +190,7 @@ struct CellView: View {
           if isToday {
             Circle()
               .stroke(Color("blue01"), lineWidth: 4)
-              .frame(width: 36, height: 36)
+              .frame(width: 44, height: 44)
           }
 
           // 날짜 숫자 텍스트
@@ -199,7 +199,7 @@ struct CellView: View {
             .font(.system(size: 20))
             .bold()
         }
+        .frame(width: 45.8, height: 45.8)
       }
-      .frame(height: 40)
     }
 }

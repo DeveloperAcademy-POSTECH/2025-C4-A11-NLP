@@ -24,123 +24,134 @@ struct HomeView: View {
                 .ignoresSafeArea()
             
             VStack(spacing: 0) {
+                
                 // info 버튼
                 HStack {
                     Spacer()
                     InfoButton(isInfoShown: $isInfoShown)
                 }
                 
-                // 캘린더 뷰
-                CalendarView(
-                    month: $month,
-                    clickedCurrentMonthDates: $selectedDate,
-                    isMonthPickerPresented: $isMonthPickerPresented,
-                    diaryStore: diaryStore
-                )
-                
-                
-                // 캘린더 뷰 아래쪽
-                if let selected = selectedDate {
-                    HStack {
-                        // 날짜 텍스트
-                        Text(selected.formattedWithWeekday)
-                            .font(.system(size: 20))
-                            .foregroundStyle(Color("blue01"))
-                            .bold()
-                        
-                        Spacer()
-                        
-                        // 일기가 있는 경우에만 화살표 표시
-                        if diaryStore.diary(for: selected) != nil {
-                            Button(action: {
-                                // 일기 상세 보기 뷰 네비게이션
-                            }) {
-                                Image(systemName: "arrow.right")
-                                    .font(.system(size: 20))
-                                    .bold()
-                                    .foregroundStyle(Color("blue01"))
-                            }
-                        }
-                    }
-                    .padding(.horizontal, 16)
-                    .padding(.top, 16)
+                ScrollView{
+                    // 캘린더 뷰
+                    CalendarView(
+                        month: $month,
+                        clickedCurrentMonthDates: $selectedDate,
+                        isMonthPickerPresented: $isMonthPickerPresented,
+                        diaryStore: diaryStore
+                    )
                     
-                    // 글 미리보기
-                    if let entry = diaryStore.diary(for: selected) {
-                        VStack(alignment: .leading, spacing: 8){
-                            HStack(alignment: .top){
-                                VStack(alignment: .leading, spacing: 2){
-                                    Text("일기")
-                                        .font(.system(size: 17))
-                                    Text("AI 요약")
-                                        .font(.system(size: 13))
+                    
+                    // 캘린더 뷰 아래쪽
+                    if let selected = selectedDate {
+                        HStack {
+                            // 날짜 텍스트
+                            Text(selected.formattedWithWeekday)
+                                .font(.system(size: 20))
+                                .foregroundStyle(Color("blue01"))
+                                .bold()
+                            
+                            Spacer()
+                            
+                            // 일기가 있는 경우에만 화살표 표시
+                            if diaryStore.diary(for: selected) != nil {
+                                Button(action: {
+                                    // 일기 상세 보기 뷰 네비게이션
+                                }) {
+                                    Image(systemName: "arrow.right")
+                                        .font(.system(size: 20))
+                                        .bold()
+                                        .foregroundStyle(Color("blue01"))
                                 }
-                                Text(entry.content)
-                                    .font(.system(size: 17))
-                                    .multilineTextAlignment(.leading)
-                                    .lineLimit(nil)
-                            }
-                            Divider()
-                            HStack(alignment: .top){
-                                Text("명언")
-                                    .font(.system(size: 17))
-                                Text(entry.quote)
-                                    .font(.system(size: 17))
-                                    .multilineTextAlignment(.leading)
-                                    .lineLimit(nil)
-                            }
-                            Divider()
-                            HStack(alignment: .top){
-                                VStack(alignment: .leading, spacing: 2){
-                                    Text("다짐")
-                                        .font(.system(size: 17))
-                                    Text("AI 요약")
-                                        .font(.system(size: 13))
-                                }
-                                Text(entry.vow)
-                                    .font(.system(size: 17))
-                                    .multilineTextAlignment(.leading)
-                                    .lineLimit(nil)
-                            }
-                            Divider()
-                            HStack(alignment: .top) {
-                                VStack(alignment: .leading, spacing: 2) {
-                                    Text("회고")
-                                        .font(.system(size: 17))
-                                    Text("AI 요약")
-                                        .font(.system(size: 13))
-                                }
-                                Text(entry.reflection)
-                                    .font(.system(size: 17))
-                                    .multilineTextAlignment(.leading)
-                                    .lineLimit(nil)
-                            }
-                            Divider()
-                            //회고 없을 시 "회고 쓰기" 버튼 띄우기
-                            if entry.reflection == "-" {
-                                WriteReflectionButton()
                             }
                         }
-                        .padding()
-                        .padding(.leading, 16)
-                        .padding(.top, 30)
-                        .background(Color("white"))
-                        .clipShape(RoundedRectangle(cornerRadius: 20))
                         .padding(.horizontal, 16)
-                        .padding(.vertical, 16)
-                    } else {
-                        // 일기 없는 경우
-                        VStack {
-                            Text("오늘의 일기를 써보세요.")
-                                .font(.system(size: 17))
-                                .foregroundStyle(Color("gray01"))
-                            Spacer().frame(height: 40)
+                        .padding(.top, 40)
+                        
+                        // 글 미리보기
+                        // Divider 너비 수정
+                        if let entry = diaryStore.diary(for: selected) {
+                            VStack(alignment: .leading, spacing: 8){
+                                HStack(alignment: .top){
+                                    VStack(alignment: .leading, spacing: 2){
+                                        Text("일기")
+                                            .font(.system(size: 17))
+                                        Text("AI 요약")
+                                            .font(.system(size: 13))
+                                    }
+                                    .frame(width: 52, alignment: .leading)
+                                    Text(entry.content)
+                                        .font(.system(size: 17))
+                                        .multilineTextAlignment(.leading)
+                                        .lineLimit(nil)
+                                }
+                                Divider()
+                                HStack(alignment: .top){
+                                    VStack(alignment: .leading, spacing: 2){
+                                        Text("명언")
+                                            .font(.system(size: 17))
+                                        Text("")
+                                            .font(.system(size: 13))
+                                    }
+                                    .frame(width: 52, alignment: .leading)
+                                    Text(entry.quote)
+                                        .font(.system(size: 17))
+                                        .multilineTextAlignment(.leading)
+                                        .lineLimit(nil)
+                                }
+                                Divider()
+                                HStack(alignment: .top){
+                                    VStack(alignment: .leading, spacing: 2){
+                                        Text("다짐")
+                                            .font(.system(size: 17))
+                                        Text("AI 요약")
+                                            .font(.system(size: 13))
+                                    }
+                                    .frame(width: 52, alignment: .leading)
+                                    Text(entry.vow)
+                                        .font(.system(size: 17))
+                                        .multilineTextAlignment(.leading)
+                                        .lineLimit(nil)
+                                }
+                                Divider()
+                                HStack(alignment: .top) {
+                                    VStack(alignment: .leading, spacing: 2) {
+                                        Text("회고")
+                                            .font(.system(size: 17))
+                                        Text("AI 요약")
+                                            .font(.system(size: 13))
+                                    }
+                                    .frame(width: 52, alignment: .leading)
+                                    Text(entry.reflection)
+                                        .font(.system(size: 17))
+                                        .multilineTextAlignment(.leading)
+                                        .lineLimit(nil)
+                                }
+                                Divider()
+                                //회고 없을 시 "회고 쓰기" 버튼 띄우기
+                                if entry.reflection == "-" {
+                                    WriteReflectionButton()
+                                }
+                            }
+                            .padding()
+                            .background(Color("white"))
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                        } else {
+                            // 일기 없는 경우
+                            VStack {
+                                Spacer().frame(height: 100)
+                                Text("오늘의 일기를 써보세요.")
+                                    .font(.system(size: 17))
+                                    .foregroundStyle(Color("gray01"))
+                                Spacer().frame(height: 100)
+                            }
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
                         }
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                     }
+                    
+                    Spacer()
                 }
-                
-                Spacer()
             }
             .zIndex(0)
             
