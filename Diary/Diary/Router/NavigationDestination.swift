@@ -6,3 +6,9 @@
 //
 
 import Foundation
+import SwiftUI
+
+enum NavigationDestination: Equatable, Hashable {
+    case home //FIXME: 임시) 케이스 수정하기
+}
+
