@@ -19,17 +19,17 @@ struct NavigationRoutingView: View {
             case .home:
                 HomeView()
                     .hideBackButton()
-            case .inputDiaryView:
-                InputDiaryView()
+            case .inputDiaryView(let date):
+                InputDiaryView(date: date)
                     .hideBackButton()
             case .resolutionView:
-                ResolutionView(date: "2025년 07월 13일 (월)", text: "") //FIXME: 초기값 변경
+                ResolutionView(text: "") //FIXME: 초기값 변경
                     .hideBackButton()
             case .retrospectiveView:
-                RetrospectiveView(date: "2025년 07월 13일 (월)") //FIXME: 초기값 변경
+                RetrospectiveView()
                     .hideBackButton()
             case .wiseSayingView:
-                WiseSayingView(date: "2025년 07월 13일 (월)") //FIXME: 초기값 변경
+                WiseSayingView()
                     .hideBackButton()
             case .streakView:
                 StreakView(lottieType: .fire)

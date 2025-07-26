@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ResolutionView: View {
-    let date: String //FIXME: 선택된 날짜 나오게 수정
     
     @State var text: String
     
@@ -83,7 +82,7 @@ struct ResolutionView: View {
             
             Spacer().frame(height: 8)
             
-            Text(date)
+            Text(diaryVM.diary.createDate?.formattedWithWeekday ?? Date().formattedWithWeekday)
                 .font(Font.caption1Emphasized)
                 .foregroundStyle(Color.gray01)
             
@@ -128,7 +127,7 @@ struct ResolutionView: View {
 }
 
 #Preview {
-    ResolutionView(date: "2025년 07월 13일 (월)", text: "")
+    ResolutionView(text: "")
         .environmentObject(NavigationRouter())
 }
 

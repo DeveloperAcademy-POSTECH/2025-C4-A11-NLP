@@ -19,6 +19,8 @@ struct InputDiaryView: View {
     @EnvironmentObject private var router: NavigationRouter
     @Environment(\.diaryVM) private var diaryVM
     
+    let date: Date
+    
     let analyzer: SentimentViewModel = .init()
     
     var body: some View {
@@ -31,7 +33,7 @@ struct InputDiaryView: View {
                     Text("오늘 하루는 어땠나요?")
                         .font(.system(size: 17, weight: .semibold))
                         .padding(.bottom, 8)
-                    Text("2025년 07월 13일 (월)")
+                    Text("\(date.formattedWithWeekday)")
                         .font(.caption)
                         .foregroundStyle(Color.gray)
                         .padding(.bottom, 27)
@@ -75,6 +77,7 @@ struct InputDiaryView: View {
                         
                     } else {
                         results = analyzer.predictTopSentiments(for: diaryText, count: 3)
+                        diaryVM.diary.createDate = self.date
                         diaryVM.diary.diaryContent = diaryText // 다이어리 컨텐츠 뷰모델 저장
                         router.push(to: .wiseSayingView)
                     }
@@ -143,6 +146,6 @@ struct InputDiaryView: View {
 
 
 #Preview {
-    InputDiaryView()
+    InputDiaryView(date: Date())
         .environmentObject(NavigationRouter())
 }

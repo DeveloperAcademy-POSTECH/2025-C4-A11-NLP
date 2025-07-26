@@ -43,6 +43,11 @@ struct HomeView: View {
                         isMonthPickerPresented: $isMonthPickerPresented,
                         diaryStore: diaryStore
                     )
+                    .onChange(of: selectedDate) { _, newValue in
+                        if let date = newValue {
+                            print("Selected date: \(date)")
+                        }
+                    }
                     
                     
                     // 캘린더 뷰 아래쪽
@@ -163,7 +168,7 @@ struct HomeView: View {
                         HStack {
                             Spacer()
                             AddEntryButton() {
-                                router.push(to: .inputDiaryView)
+                                router.push(to: .inputDiaryView(date: selected))
                             }
                         }
                     }
@@ -201,6 +206,11 @@ struct HomeView: View {
                 NavigationRoutingView(destination: destination)
                     .environmentObject(router)
             })
+            .task { // 날짜가 선택되지 않을때는 오늘 날짜로 넣어두기
+                if selectedDate == nil {
+                    selectedDate = Date()
+                }
+            }
         }
         .environmentObject(lottieManager)
         
@@ -213,3 +223,4 @@ struct HomeView: View {
     HomeView()
         .environmentObject(NavigationRouter())
 }
+

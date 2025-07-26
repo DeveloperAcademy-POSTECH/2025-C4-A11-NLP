@@ -11,8 +11,6 @@ struct WiseSayingView: View {
     
     @State private var selectedIndex: Int? = nil
     
-    let date: String //FIXME: 선택된 날짜 나오게 수정
-    
     @EnvironmentObject private var router: NavigationRouter
     @Environment(\.diaryVM) private var diaryVM
     
@@ -65,7 +63,7 @@ struct WiseSayingView: View {
             
             Spacer().frame(height: 8)
             
-            Text(date)
+            Text(diaryVM.diary.createDate?.formattedWithWeekday ?? Date().formattedWithWeekday)
                 .font(Font.caption1Emphasized)
                 .foregroundStyle(.gray01)
             
@@ -135,7 +133,7 @@ struct WiseSayingView: View {
 
 #Preview {
     NavigationStack {
-        WiseSayingView(date: "2025년 07월 13일 (월)")
+        WiseSayingView()
             .environmentObject(NavigationRouter())
     }
 }

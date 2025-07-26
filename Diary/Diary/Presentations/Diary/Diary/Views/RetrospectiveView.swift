@@ -13,7 +13,6 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
     @EnvironmentObject private var lottieManager: LottieManager
     @Environment(\.diaryVM) private var  diaryVM
     
-    let date: String //FIXME: 선택된 날짜 나오게 수정
     
     var body: some View {
         ZStack {
@@ -66,7 +65,7 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
             
             Spacer().frame(height: 8)
             
-            Text(date)
+            Text(diaryVM.diary.createDate?.formattedWithWeekday ?? Date().formattedWithWeekday)
                 .font(Font.caption1Emphasized)
                 .foregroundStyle(Color.gray01)
         }
@@ -158,6 +157,6 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
 }
 
 #Preview {
-    RetrospectiveView(date: "2025년 07월 13일 (월)")
+    RetrospectiveView()
         .environmentObject(NavigationRouter())
 }

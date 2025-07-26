@@ -10,9 +10,8 @@ import Foundation
 @Observable
 final class DiaryViewModel {
     
-    var diary: DiaryModel = .init(createDate: "", diaryContent: "", wiseSaying: "", retrospective: "", resolution: "", summary: "")
+    var diary: DiaryModel = .init(diaryContent: "", wiseSaying: "", retrospective: "", resolution: "", summary: "")
     
     var shouldPlayLottie: Bool = false
     
 }
-
