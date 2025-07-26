@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct HomeView: View {
+
   @State private var selectedDate: Date? = Date()
   @State private var isInfoShown: Bool = false
   @StateObject private var diaryStore = DiaryStore()
@@ -176,10 +177,28 @@ struct HomeView: View {
                     )
                     .zIndex(1)
                 }
+
+    
+    @EnvironmentObject var router: NavigationRouter
+    
+    var body: some View {
+        NavigationStack(path: $router.destination) {
+            Button {
+                //:FIXME: 생성 버튼 기능으로 수정하기
+            } label: {
+                Text("Go Test1")
+            }
+            .navigationDestination(for: NavigationDestination.self, destination: { destination in
+                NavigationRoutingView(destination: destination)
+                    .environmentObject(router)
+            })
+        }
+
     }
   }
 }
 
 #Preview {
     HomeView()
+        .environmentObject(NavigationRouter())
 }
