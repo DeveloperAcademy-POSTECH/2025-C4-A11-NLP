@@ -180,20 +180,36 @@ struct HomeView: View {
 
     
     @EnvironmentObject var router: NavigationRouter
+    @StateObject private var lottieManager :LottieManager = .init()
+    private var lottieType: LottieType = .confettie
     
     var body: some View {
         NavigationStack(path: $router.destination) {
-            Button {
-                router.push(to: .inputDiaryView)
-            } label: {
-                Text("일기 생성")
+            ZStack {
+                Button {
+                    router.push(to: .inputDiaryView)
+                } label: {
+                    Text("일기 생성")
+                }
+                .navigationDestination(for: NavigationDestination.self, destination: { destination in
+                    NavigationRoutingView(destination: destination)
+                        .environmentObject(router)
+                })
+                
+                // Lottie 애니메이션 (shouldPlayLottie가 true일 때만)
+                if lottieManager.shouldPlayLottie {
+                    LottieView(name: lottieType.lottie)
+                        .frame(width: 200, height: 200)
+                        .onAppear { //FIXME: 코드 수정
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
+                                lottieManager.shouldPlayLottie = false
+                            }
+                        }
+                        .transition(.opacity)
+                }
             }
-            .navigationDestination(for: NavigationDestination.self, destination: { destination in
-                NavigationRoutingView(destination: destination)
-                    .environmentObject(router)
-            })
         }
-
+        .environmentObject(lottieManager)
     }
   }
 }

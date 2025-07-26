@@ -10,6 +10,7 @@ import SwiftUI
 struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
     
     @EnvironmentObject private var router: NavigationRouter
+    @EnvironmentObject private var lottieManager: LottieManager
     @Environment(\.diaryVM) private var  diaryVM
     
     let date: String //FIXME: 선택된 날짜 나오게 수정
@@ -148,7 +149,8 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
     private var bottomSaveButtonView: some View {
         SaveWriteButton(title: "저장하기") {
         //TODO: SwiftData 추가하기
-            router.popToRootView()
+        lottieManager.shouldPlayLottie = true  // Lottie 실행 신호
+        router.popToRootView()
         }
         .frame(width: 100, height: 44) // FIXME: 크기 동적 수정
     }
