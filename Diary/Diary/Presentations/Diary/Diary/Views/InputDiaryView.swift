@@ -79,6 +79,13 @@ struct InputDiaryView: View {
                         results = analyzer.predictTopSentiments(for: diaryText, count: 3)
                         diaryVM.diary.createDate = self.date
                         diaryVM.diary.diaryContent = diaryText // 다이어리 컨텐츠 뷰모델 저장
+                        if diaryText.count > 25 {
+                            Task {
+                                diaryVM.diary.summary = try await diaryVM.summarize(diaryText)
+                            }
+                        } else {
+                            diaryVM.diary.summary = diaryText
+                        }
                         router.push(to: .wiseSayingView)
                     }
                 } label: {

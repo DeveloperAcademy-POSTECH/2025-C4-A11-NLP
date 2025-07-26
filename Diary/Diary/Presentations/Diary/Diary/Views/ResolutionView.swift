@@ -90,7 +90,7 @@ struct ResolutionView: View {
             
             HStack(spacing: .zero) {
                 Text("일기 AI요약: ")
-                Text("안녕")
+                Text(diaryVM.diary.summary)
             }
             .font(Font.caption1Emphasized)
             .foregroundStyle(Color.gray01)
