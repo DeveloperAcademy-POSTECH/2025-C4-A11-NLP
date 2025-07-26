@@ -11,7 +11,7 @@ import Foundation
 class DiaryViewModel {
     
     
-    
+
     init() {
         
     }
@@ -19,3 +19,4 @@ class DiaryViewModel {
     
     
 }
+

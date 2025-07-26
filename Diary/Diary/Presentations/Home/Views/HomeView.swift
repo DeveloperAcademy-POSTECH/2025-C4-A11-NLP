@@ -8,20 +8,20 @@
 import SwiftUI
 
 struct HomeView: View {
-    @State private var selectedDate: Date? = Date()
-    @State private var isInfoShown: Bool = false
-    @StateObject private var diaryStore = DiaryStore()
-    @State private var isMonthPickerPresented = false
-    @State private var selectedYear = Calendar.current.component(.year, from: Date())
-    @State private var selectedMonth = Calendar.current.component(.month, from: Date())
-    @State private var month: Date = Date()
     
-    
-    var body: some View {
-        NavigationStack{
-        ZStack(alignment: .topTrailing) {
-            
-            Color("lightBlue")
+  @State private var selectedDate: Date? = Date()
+  @State private var isInfoShown: Bool = false
+  @StateObject private var diaryStore = DiaryStore()
+  @State private var isMonthPickerPresented = false
+  @State private var selectedYear = Calendar.current.component(.year, from: Date())
+  @State private var selectedMonth = Calendar.current.component(.month, from: Date())
+  @State private var month: Date = Date()
+
+
+  var body: some View {
+    ZStack(alignment: .topTrailing) {
+        
+        Color(red: 247/255, green: 248/255, blue: 250/255)
                 .ignoresSafeArea()
             
             VStack(spacing: 0) {
@@ -189,7 +189,21 @@ struct HomeView: View {
                 .zIndex(1)
             }
         }
-    }
+
+        //datepicker에서 선택한 연월로 캘린더 갱신
+                if isMonthPickerPresented {
+                    MonthYearPickerPopup(
+                        selectedYear: $selectedYear,
+                        selectedMonth: $selectedMonth,
+                        isPresented: $isMonthPickerPresented,
+                        onConfirm: {
+                            if let newDate = Calendar.current.date(from: DateComponents(year: selectedYear, month: selectedMonth, day: 1)) {
+                              month = newDate
+                            }
+                          }
+                    )
+                    .zIndex(1)
+                }
     }
 }
 
