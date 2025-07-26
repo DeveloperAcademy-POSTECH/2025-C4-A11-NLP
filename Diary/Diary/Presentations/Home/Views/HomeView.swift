@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct HomeView: View {
     
@@ -21,6 +22,8 @@ struct HomeView: View {
     @StateObject private var lottieManager :LottieManager = .init()
     private var lottieType: LottieType = .confettie
     
+    
+    @Query(sort: \DiaryModelData.createDate, order: .reverse) private var diaries: [DiaryModelData]
     
     var body: some View {
         NavigationStack(path: $router.destination) {
@@ -212,6 +215,9 @@ struct HomeView: View {
                 }
             }
         }
+        .onAppear(perform: {
+            print("diaryDates : \(diaries.first)")
+        })
         .environmentObject(lottieManager)
         
     }

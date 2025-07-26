@@ -6,11 +6,13 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
     
     @EnvironmentObject private var router: NavigationRouter
     @EnvironmentObject private var lottieManager: LottieManager
+    @Environment(\.modelContext) private var modelContext
     @Environment(\.diaryVM) private var  diaryVM
     
     
@@ -147,9 +149,24 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
     //MARK: 바텀 저장하기 버튼 뷰
     private var bottomSaveButtonView: some View {
         SaveWriteButton(title: "저장하기") {
-        //TODO: SwiftData 추가하기
-        lottieManager.shouldPlayLottie = true  // Lottie 실행 신호
-        router.popToRootView()
+            
+            // 1. diaryVM.diary 데이터를 받아 SwiftData로 변환
+            let newDiary = DiaryModelData(
+                createDate: diaryVM.diary.createDate ?? Date(),
+                diaryContent: diaryVM.diary.diaryContent,
+                wiseSaying: diaryVM.diary.wiseSaying,
+                retrospective: diaryVM.diary.retrospective,
+                resolution: diaryVM.diary.resolution,
+                summary: diaryVM.diary.summary
+            )
+            
+            // 2. modelContext에 저장
+            modelContext.insert(newDiary)
+            try? modelContext.save()
+            
+            
+            lottieManager.shouldPlayLottie = true  // Lottie 실행
+            router.popToRootView()
         }
         .frame(width: 100, height: 44) // FIXME: 크기 동적 수정
     }

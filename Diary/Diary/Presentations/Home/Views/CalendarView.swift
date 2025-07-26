@@ -9,127 +9,132 @@ import SwiftUI
 
 struct CalendarView: View {
     
-  @Binding var month: Date
-  @Binding var clickedCurrentMonthDates: Date?
-  @Binding private var isMonthPickerPresented : Bool
-  @State private var selectedYear = Calendar.current.component(.year, from: Date())
-  @State private var selectedMonth = Calendar.current.component(.month, from: Date())
-  @ObservedObject var diaryStore: DiaryStore
-
+    @Binding var month: Date
+    @Binding var clickedCurrentMonthDates: Date?
+    @Binding private var isMonthPickerPresented : Bool
+    @State private var selectedYear = Calendar.current.component(.year, from: Date())
+    @State private var selectedMonth = Calendar.current.component(.month, from: Date())
+    @ObservedObject var diaryStore: DiaryStore
+    
+    // let diaryDates: Set<Date>
+    
+    
     init(
         month: Binding<Date>,
         clickedCurrentMonthDates: Binding<Date?>,
         isMonthPickerPresented: Binding<Bool>,
-        diaryStore: DiaryStore
-      ) {
+        diaryStore: DiaryStore,
+        //diaryDates: Set<Date>
+    ) {
         _month = month
         _clickedCurrentMonthDates = clickedCurrentMonthDates
         _isMonthPickerPresented = isMonthPickerPresented
         self.diaryStore = diaryStore
-      }
-
+        //self.diaryDates = diaryDates
+    }
+    
     var body: some View {
-      VStack(spacing: 0) {
-        yearMonthView
-
         VStack(spacing: 0) {
-          weekdayView
-            .padding(.vertical, 10)
-
-          calendarGridView
-            .padding(.top, 4)
+            yearMonthView
+            
+            VStack(spacing: 0) {
+                weekdayView
+                    .padding(.vertical, 10)
+                
+                calendarGridView
+                    .padding(.top, 4)
+            }
+            .padding()
+            .background(Color.white)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+            .padding(.horizontal, 16)
         }
-        .padding()
-        .background(Color.white)
-        .clipShape(RoundedRectangle(cornerRadius: 10))
-        .padding(.horizontal, 16)
-      }
     }
-
-
-  // MARK: - 연월 표시
-  private var yearMonthView: some View {
-
-    HStack(alignment: .center, spacing: 8) {
-      Text(month, formatter: Self.calendarHeaderDateFormatter)
-            .font(.system(size: 17))
-            .bold()
-            .foregroundStyle(Color(red: 26/255, green: 26/255, blue: 26/255))
-
-        Button(
-          action: {
-              isMonthPickerPresented = true
-          },
-          label: {
-            Image(systemName: "chevron.right")
-                  .font(.system(size: 17))
-                  .bold()
-                  .foregroundStyle(Color(red: 80/255, green: 80/255, blue: 255/255))
-
-          }
-        )
-
-        Spacer()
-
-        Button(
-          action: {
-            changeMonth(by: -1)
-          },
-          label: {
-            Image(systemName: "chevron.left")
-                  .font(.system(size: 20))
-                  .bold()
-                  .foregroundStyle(Color(red: 80/255, green: 80/255, blue: 255/255))
-          }
-        )
-
-        Spacer().frame(width: 28)
-
-      Button(
-        action: {
-          changeMonth(by: 1)
-        },
-        label: {
-          Image(systemName: "chevron.right")
-                .font(.system(size: 20))
+    
+    
+    // MARK: - 연월 표시
+    private var yearMonthView: some View {
+        
+        HStack(alignment: .center, spacing: 8) {
+            Text(month, formatter: Self.calendarHeaderDateFormatter)
+                .font(.system(size: 17))
                 .bold()
-                .foregroundStyle(Color(red: 80/255, green: 80/255, blue: 255/255))
-
+                .foregroundStyle(Color(red: 26/255, green: 26/255, blue: 26/255))
+            
+            Button(
+                action: {
+                    isMonthPickerPresented = true
+                },
+                label: {
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 17))
+                        .bold()
+                        .foregroundStyle(Color(red: 80/255, green: 80/255, blue: 255/255))
+                    
+                }
+            )
+            
+            Spacer()
+            
+            Button(
+                action: {
+                    changeMonth(by: -1)
+                },
+                label: {
+                    Image(systemName: "chevron.left")
+                        .font(.system(size: 20))
+                        .bold()
+                        .foregroundStyle(Color(red: 80/255, green: 80/255, blue: 255/255))
+                }
+            )
+            
+            Spacer().frame(width: 28)
+            
+            Button(
+                action: {
+                    changeMonth(by: 1)
+                },
+                label: {
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 20))
+                        .bold()
+                        .foregroundStyle(Color(red: 80/255, green: 80/255, blue: 255/255))
+                    
+                }
+            )
         }
-      )
+        .padding(.horizontal, 16)
+        .padding(.vertical, 9)
+        
     }
-    .padding(.horizontal, 16)
-    .padding(.vertical, 9)
-
-  }
-
+    
     // MARK: - 캘린더 요일
     private var weekdayView: some View {
-      HStack {
-        ForEach(Self.weekdaySymbols.indices, id: \.self) { symbol in
-          Text(Self.weekdaySymbols[symbol])
-            .font(.system(size: 13))
-            .bold()
-            .foregroundStyle(Color(red: 60/255, green: 60/255, blue: 67/255, opacity: 0.6))
-            .frame(maxWidth: .infinity)
+        HStack {
+            ForEach(Self.weekdaySymbols.indices, id: \.self) { symbol in
+                Text(Self.weekdaySymbols[symbol])
+                    .font(.system(size: 13))
+                    .bold()
+                    .foregroundStyle(Color(red: 60/255, green: 60/255, blue: 67/255, opacity: 0.6))
+                    .frame(maxWidth: .infinity)
+            }
         }
-      }
     }
-
-
-  // MARK: - 날짜 그리드
+    
+    
+    // MARK: - 날짜 그리드
     private var calendarGridView: some View {
-      let daysInMonth = numberOfDays(in: month)
-      let firstWeekday = firstWeekdayOfMonth(in: month) - 1
-      let lastDayOfMonthBefore = numberOfDays(in: previousMonth())
-      let numberOfRows = Int(ceil(Double(daysInMonth + firstWeekday) / 7.0))
-      let visibleDaysOfNextMonth = numberOfRows * 7 - (daysInMonth + firstWeekday)
-
-      return LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7), spacing: 3) {
-        ForEach(-firstWeekday ..< daysInMonth + visibleDaysOfNextMonth, id: \.self) { index in
-          calendarCellView(for: index, daysInMonth: daysInMonth, firstWeekday: firstWeekday, lastDayOfMonthBefore: lastDayOfMonthBefore)
+        let daysInMonth = numberOfDays(in: month)
+        let firstWeekday = firstWeekdayOfMonth(in: month) - 1
+        let lastDayOfMonthBefore = numberOfDays(in: previousMonth())
+        let numberOfRows = Int(ceil(Double(daysInMonth + firstWeekday) / 7.0))
+        let visibleDaysOfNextMonth = numberOfRows * 7 - (daysInMonth + firstWeekday)
+        
+        return LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7), spacing: 3) {
+            ForEach(-firstWeekday ..< daysInMonth + visibleDaysOfNextMonth, id: \.self) { index in
+                calendarCellView(for: index, daysInMonth: daysInMonth, firstWeekday: firstWeekday, lastDayOfMonthBefore: lastDayOfMonthBefore)
+            }
         }
-      }
     }
 }
 
@@ -137,70 +142,70 @@ struct CalendarView: View {
 
 // MARK: - 날짜 숫자 셀
 struct CellView: View {
-  private var day: Int
-  private var clicked: Bool
-  private var isToday: Bool
-  private var isCurrentMonthDay: Bool
-  let reflectionStatus: ReflectionStatus
-
+    private var day: Int
+    private var clicked: Bool
+    private var isToday: Bool
+    private var isCurrentMonthDay: Bool
+    let reflectionStatus: ReflectionStatus
+    
     private var textColor: Color {
-      if isToday {
-        return Color(red: 23 / 255, green: 76 / 255, blue: 192 / 255)
-      } else if isCurrentMonthDay {
-        return Color(red: 26/255, green: 26/255, blue: 26/255)
-      } else {
-        return Color(red: 202/255, green: 203/255, blue: 204/255)
-      }
-    }
-
-
-
-  init(
-    day: Int,
-    clicked: Bool = false,
-    isToday: Bool = false,
-    isCurrentMonthDay: Bool = true,
-    reflectionStatus: ReflectionStatus = .none
-  ) {
-    self.day = day
-    self.clicked = clicked
-    self.isToday = isToday
-    self.isCurrentMonthDay = isCurrentMonthDay
-    self.reflectionStatus = reflectionStatus
-  }
-
-
-    var body: some View {
-      VStack {
-        ZStack {
-          // 회고 상태에 따른 색상 원
-          switch reflectionStatus {
-          case .pending:
-            Circle()
-              .fill(Color(red: 178/255, green: 203/255, blue: 255/255))
-              .frame(width: 36, height: 36)
-          case .completed:
-            Circle()
-              .fill(Color(red: 102/255, green: 150/255, blue: 255/255))
-              .frame(width: 36, height: 36)
-          case .none:
-            EmptyView()
-          }
-
-          // 오늘이면 원 테두리
-          if isToday {
-            Circle()
-              .stroke(Color(red: 23/255, green: 76/255, blue: 192/255), lineWidth: 3)
-              .frame(width: 36, height: 36)
-          }
-
-          // 날짜 숫자 텍스트
-          Text(String(day))
-            .foregroundStyle(textColor)
-            .font(.system(size: 20))
-            .bold()
+        if isToday {
+            return Color(red: 23 / 255, green: 76 / 255, blue: 192 / 255)
+        } else if isCurrentMonthDay {
+            return Color(red: 26/255, green: 26/255, blue: 26/255)
+        } else {
+            return Color(red: 202/255, green: 203/255, blue: 204/255)
         }
-      }
-      .frame(height: 40)
+    }
+    
+    
+    
+    init(
+        day: Int,
+        clicked: Bool = false,
+        isToday: Bool = false,
+        isCurrentMonthDay: Bool = true,
+        reflectionStatus: ReflectionStatus = .none
+    ) {
+        self.day = day
+        self.clicked = clicked
+        self.isToday = isToday
+        self.isCurrentMonthDay = isCurrentMonthDay
+        self.reflectionStatus = reflectionStatus
+    }
+    
+    
+    var body: some View {
+        VStack {
+            ZStack {
+                // 회고 상태에 따른 색상 원
+                switch reflectionStatus {
+                case .pending:
+                    Circle()
+                        .fill(Color(red: 178/255, green: 203/255, blue: 255/255))
+                        .frame(width: 36, height: 36)
+                case .completed:
+                    Circle()
+                        .fill(Color(red: 102/255, green: 150/255, blue: 255/255))
+                        .frame(width: 36, height: 36)
+                case .none:
+                    EmptyView()
+                }
+                
+                // 오늘이면 원 테두리
+                if isToday {
+                    Circle()
+                        .stroke(Color(red: 23/255, green: 76/255, blue: 192/255), lineWidth: 3)
+                        .frame(width: 36, height: 36)
+                }
+                
+                // 날짜 숫자 텍스트
+                Text(String(day))
+                    .foregroundStyle(textColor)
+                    .font(.system(size: 20))
+                    .bold()
+            }
+        }
+        .frame(height: 40)
     }
 }
