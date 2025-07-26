@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct AddEntryButton: View{
+    let action: () -> ()
+    
     var body: some View {
         Button(action: {
-          // 새 일기 작성 화면으로 이동
+          action()
         }) {
           Image(systemName: "plus")
             .bold()
@@ -27,5 +29,7 @@ struct AddEntryButton: View{
 }
 
 #Preview {
-    AddEntryButton()
+    AddEntryButton() {
+        
+    }
 }
