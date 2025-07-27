@@ -22,7 +22,7 @@ struct NavigationRoutingView: View {
             case .inputDiaryView(let date):
                 InputDiaryView(date: date)
             case .resolutionView:
-                ResolutionView(text: "") //FIXME: 초기값 변경
+                ResolutionView() 
             case .retrospectiveView:
                 RetrospectiveView()
             case .wiseSayingView:

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ResolutionView: View {
     
-    @State var text: String
+    @State var text: String = ""
     
     @EnvironmentObject private var router: NavigationRouter
     @Environment(\.diaryVM) private var diaryVM
@@ -99,7 +99,7 @@ struct ResolutionView: View {
             
             HStack(spacing: .zero) {
                 Text("명언: ")
-                Text("안녕")
+                Text(diaryVM.diary.wiseSaying)
             }
             .font(Font.caption1Emphasized)
             .foregroundStyle(Color.gray01)

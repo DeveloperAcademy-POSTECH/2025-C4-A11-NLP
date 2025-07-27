@@ -10,6 +10,7 @@ import SwiftUI
 struct WiseSayingView: View {
     
     @State private var selectedIndex: Int? = nil
+    @State private var selectedContent: String? = nil
     
     @EnvironmentObject private var router: NavigationRouter
     @Environment(\.diaryVM) private var diaryVM
@@ -69,12 +70,15 @@ struct WiseSayingView: View {
             
             Spacer().frame(height: 32)
             
+            //FIXME: JSON에서 불러오는 데이터 변경하기
+            
             WiseSayingContentButton(
-                content: "",
-                respondent: "",
-                source: "",
+                content: "하루하루는 성실하게. 인생 자체는 되는대로",
+                respondent: "Libby",
+                source: "이동진",
                 isSelected: selectedIndex == 0
             ) {
+                selectedContent = "하루하루는 성실하게. 인생 자체는 되는대로" //FIXME: 로직수정
                 selectedIndex = 0
             }
             .frame(maxWidth: .infinity)
@@ -83,24 +87,27 @@ struct WiseSayingView: View {
             Spacer().frame(height: 24)
             
             WiseSayingContentButton(
-                content: "",
-                respondent: "",
-                source: "",
+                content: "무슨 생각을 해 그냥 하는거지",
+                respondent: "Gabi",
+                source: "김연아",
                 isSelected: selectedIndex == 1
             ) {
+                selectedContent = "무슨 생각을 해 그냥 하는거지" //FIXME: 로직수정
                 selectedIndex = 1
             }
             .frame(maxWidth: .infinity)
-            .frame(height: 110) //FIXME: 높이 수정
+            .frame(height: 110, alignment: .leading) //FIXME: 높이 수정
             
             Spacer().frame(height: 24)
             
             WiseSayingContentButton(
-                content: "",
-                respondent: "",
-                source: "",
-                isSelected: selectedIndex == 2
+                content: "나를 죽이지 못하는 것은 나를 더 강하게 만든다.",
+                respondent: "Peppr",
+                source: "니체",
+                isSelected: selectedIndex == 2,
+                
             ) {
+                selectedContent = "나를 죽이지 못하는 것은 나를 더 강하게 만든다." //FIXME: 로직수정
                 selectedIndex = 2
             }
             .frame(maxWidth: .infinity)
@@ -120,9 +127,10 @@ struct WiseSayingView: View {
             .frame(width: 80, height: 40)
             
             Spacer()
-            
+           
             CalenderContentButton(title: "다음", imageType: .next) {
-                diaryVM.diary.wiseSaying = "명언" //FIXME: 명언으로 수정
+                diaryVM.diary.wiseSaying = selectedContent ?? ""  //FIXME: 명언으로 수정
+                print("selectedContent : \(selectedContent)")
                 router.push(to: .resolutionView)
             }
             .frame(width: 80, height: 40)
