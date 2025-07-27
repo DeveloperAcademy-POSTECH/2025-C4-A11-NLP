@@ -39,11 +39,13 @@ struct HomeView: View {
                         }
                         
                         HStack{
-                            Image("fire icon")
-                            Text("0")
+                            Image(diaryStore.currentStreak > 0 ? "fire icon.fill" : "fire icon")
+                              Text("\(diaryStore.currentStreak)")
                                 .font(.system(size: 20))
                                 .bold()
-                                .foregroundStyle(Color("gray02"))
+                                .foregroundStyle(
+                                      diaryStore.currentStreak > 0 ? Color("red02") : Color("gray02")
+                                    )
                         }
                         .padding(.leading, 16)
                     }

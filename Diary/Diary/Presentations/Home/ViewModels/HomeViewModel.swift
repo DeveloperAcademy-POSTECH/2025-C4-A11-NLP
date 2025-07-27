@@ -25,7 +25,7 @@ class DiaryStore: ObservableObject {
         reflection: "-"
       ),
       DiaryEntry(
-        date: calendar.date(byAdding: .day, value: -2, to: today)!,
+        date: calendar.date(byAdding: .day, value: 0, to: today)!,
         content: "명륜진사갈비는 어떤 맛일까.",
         quote: "먹고 죽은 귀신이 때깔도 곱다.",
         vow: "체력 보강을 위해 고기를 매주 한번씩 먹자.",
@@ -37,4 +37,22 @@ class DiaryStore: ObservableObject {
   func diary(for date: Date) -> DiaryEntry? {
     entries.first { Calendar.current.isDate($0.date, inSameDayAs: date) }
   }
+    
+    // 연속 작성한 일기 일수
+      var currentStreak: Int {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        let writtenDates: Set<Date> = Set(entries.map { calendar.startOfDay(for: $0.date) })
+
+        var streak = 0
+        var current = today
+
+        while writtenDates.contains(current) {
+          streak += 1
+          guard let previous = calendar.date(byAdding: .day, value: -1, to: current) else { break }
+          current = previous
+        }
+
+        return streak
+      }
 }
