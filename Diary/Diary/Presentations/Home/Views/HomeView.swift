@@ -18,16 +18,36 @@ struct HomeView: View {
   @State private var month: Date = Date()
 
 
-  var body: some View {
-    ZStack(alignment: .topTrailing) {
-        
-        Color(red: 247/255, green: 248/255, blue: 250/255)
+    var body: some View {
+        NavigationStack{
+        ZStack(alignment: .topTrailing) {
+            
+            Color("lightBlue")
                 .ignoresSafeArea()
             
             VStack(spacing: 0) {
                 
                 // info 버튼
                 HStack {
+                    HStack{
+                        HStack{
+                            Image("book icon")
+                            Text("0")
+                                .font(.system(size: 20))
+                                .bold()
+                                .foregroundStyle(Color("gray02"))
+                        }
+                        
+                        HStack{
+                            Image("fire icon")
+                            Text("0")
+                                .font(.system(size: 20))
+                                .bold()
+                                .foregroundStyle(Color("gray02"))
+                        }
+                        .padding(.leading, 16)
+                    }
+                    .padding()
                     Spacer()
                     InfoButton(isInfoShown: $isInfoShown)
                 }
@@ -189,21 +209,7 @@ struct HomeView: View {
                 .zIndex(1)
             }
         }
-
-        //datepicker에서 선택한 연월로 캘린더 갱신
-                if isMonthPickerPresented {
-                    MonthYearPickerPopup(
-                        selectedYear: $selectedYear,
-                        selectedMonth: $selectedMonth,
-                        isPresented: $isMonthPickerPresented,
-                        onConfirm: {
-                            if let newDate = Calendar.current.date(from: DateComponents(year: selectedYear, month: selectedMonth, day: 1)) {
-                              month = newDate
-                            }
-                          }
-                    )
-                    .zIndex(1)
-                }
+    }
     }
 }
 
