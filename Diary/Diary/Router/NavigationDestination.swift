@@ -12,6 +12,7 @@ enum NavigationDestination: Equatable, Hashable {
     case home //FIXME: 임시) 케이스 수정하기
     case inputDiaryView(date: Date)
     case resolutionView
+    case resolutionUpdateView
     case retrospectiveView
     case wiseSayingView
     case streakView

@@ -22,7 +22,9 @@ struct NavigationRoutingView: View {
             case .inputDiaryView(let date):
                 InputDiaryView(date: date)
             case .resolutionView:
-                ResolutionView() 
+                ResolutionView(viewType: .new)
+            case .resolutionUpdateView:
+                ResolutionView(viewType: .update)
             case .retrospectiveView:
                 RetrospectiveView()
             case .wiseSayingView:

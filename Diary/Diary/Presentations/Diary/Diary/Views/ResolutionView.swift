@@ -11,6 +11,8 @@ struct ResolutionView: View {
     
     @State var text: String = ""
     
+    var viewType: ViewType
+    
     @EnvironmentObject private var router: NavigationRouter
     @Environment(\.diaryVM) private var diaryVM
     
@@ -42,6 +44,9 @@ struct ResolutionView: View {
             bottomButtonView
         }
         .padding(.horizontal, 16)
+        .task {
+            self.text = diaryVM.diary.resolution
+        }
     }
     
     //MARK: 상단 프로그래스 바, 네비게이션 타이틀
@@ -106,28 +111,67 @@ struct ResolutionView: View {
         }
     }
     
-    //MARK: 하단 버튼 뷰
+    @ViewBuilder
     private var bottomButtonView: some View {
-        HStack {
-            CalenderContentButton(title: "이전", imageType: .previous) {
-                router.pop()
+        switch viewType {
+        case .new:
+            HStack {
+                CalenderContentButton(title: "이전", imageType: .previous) {
+                    router.pop()
+                }
+                .frame(width: 80, height: 40)
+                
+                Spacer()
+                
+                CalenderContentButton(title: "다음", imageType: .next) {
+                    diaryVM.diary.resolution = text // 다짐 viewModel 저장
+                    router.push(to: .retrospectiveView)
+                }
+                .frame(width: 80, height: 40)
             }
-            .frame(width: 80, height: 40)
-            
-            Spacer()
-            
-            CalenderContentButton(title: "다음", imageType: .next) {
-                diaryVM.diary.resolution = text // 다짐 viewModel 저장
-                router.push(to: .retrospectiveView)
+        case .update:
+            HStack {
+                Spacer()
+                CalenderContentButton(title: "완료", imageType: .none) {
+                    diaryVM.diary.resolution = text // 다짐 viewModel 저장
+                    router.pop()
+                }
+                .frame(width: 80, height: 40)
+                Spacer()
             }
-            .frame(width: 80, height: 40)
-            //            .disabled(selectedIndex == nil)
         }
     }
+    
+    //MARK: 하단 버튼 뷰
+//    private var bottomButtonView: some View {
+//        
+//        //        switch viewType {
+//        //        case .new:
+//        //            
+//        //        case .update:
+//        //            
+//        //        }
+//        
+//        HStack {
+//            CalenderContentButton(title: "이전", imageType: .previous) {
+//                router.pop()
+//            }
+//            .frame(width: 80, height: 40)
+//            
+//            Spacer()
+//            
+//            CalenderContentButton(title: "다음", imageType: .next) {
+//                diaryVM.diary.resolution = text // 다짐 viewModel 저장
+//                router.push(to: .retrospectiveView)
+//            }
+//            .frame(width: 80, height: 40)
+//            //            .disabled(selectedIndex == nil)
+//        }
+//    }
 }
 
 #Preview {
-    ResolutionView(text: "")
+    ResolutionView(text: "", viewType: .update)
         .environmentObject(NavigationRouter())
 }
 

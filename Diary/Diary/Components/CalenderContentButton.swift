@@ -41,6 +41,14 @@ struct CalenderContentButton: View {
                             .foregroundStyle(isEnabled ? Color.black : Color.gray02)
                             .font(Font.caption1Emphasized)
                         }
+                    case .none:
+                        HStack(spacing: 8) {
+                            Group {
+                                Text(title)
+                            }
+                            .foregroundStyle(isEnabled ? Color.black : Color.gray02)
+                            .font(Font.caption1Emphasized)
+                        }
                     }
                 }
         }
@@ -52,6 +60,9 @@ struct CalenderContentButton: View {
         print("이전")
     }
     CalenderContentButton(title: "다음", imageType: .next) {
+        print("다음")
+    }
+    CalenderContentButton(title: "완료", imageType: .none) {
         print("다음")
     }
 }

@@ -81,8 +81,12 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
                     .font(Font.body2Emphasized)
                     .foregroundStyle(Color.black)
                 Spacer()
-                Image(systemName: "square.and.pencil")
-                    .foregroundStyle(Color.blue)
+                Button {
+                    
+                } label: {
+                    Image(systemName: "square.and.pencil")
+                        .foregroundStyle(Color.blue)
+                }
             }
             Spacer().frame(height: 8)
             Text(diaryVM.diary.diaryContent)
@@ -129,8 +133,12 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
                     .font(Font.body2Emphasized)
                     .foregroundStyle(Color.black)
                 Spacer()
-                Image(systemName: "square.and.pencil")
-                    .foregroundStyle(Color.blue)
+                Button {
+                    router.push(to: .resolutionUpdateView)
+                } label: {
+                    Image(systemName: "square.and.pencil")
+                        .foregroundStyle(Color.blue)
+                }
             }
             Spacer().frame(height: 8)
             Text(diaryVM.diary.resolution)
