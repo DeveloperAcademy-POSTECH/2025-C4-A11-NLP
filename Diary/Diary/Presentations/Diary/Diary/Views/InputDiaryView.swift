@@ -19,6 +19,8 @@ struct InputDiaryView: View {
     @EnvironmentObject private var router: NavigationRouter
     @Environment(\.diaryVM) private var diaryVM
     
+    @State private var testLabel: String = ""
+    
     let date: Date
     
     let analyzer: SentimentViewModel = .init()
@@ -37,7 +39,7 @@ struct InputDiaryView: View {
                         .font(.caption)
                         .foregroundStyle(Color.gray)
                         .padding(.bottom, 27)
-                    TextField("오늘 느낀 감정들을 써보세요. (200자 이상)", text: $diaryText, axis: .vertical)
+                    TextField("글을 작성해주세요.", text: $diaryText, axis: .vertical)
                         .font(.body)
                         .focused($isTextFieldFocused)
                     
@@ -57,37 +59,17 @@ struct InputDiaryView: View {
             }
             .overlay(alignment: .bottom) {
                 Button {
-                    //FIXME: 200 글자 로직 빼기
-                    if diaryText.count < 5 {
-                        withAnimation(.default) {
-                            showRedFeedback = true
+                    results = analyzer.predictTopSentiments(for: diaryText, count: 3)
+                    diaryVM.diary.createDate = self.date
+                    diaryVM.diary.diaryContent = diaryText // 다이어리 컨텐츠 뷰모델 저장
+                    if diaryText.count > 25 {
+                        Task {
+                            diaryVM.diary.summary = try await diaryVM.summarize(diaryText)
                         }
-                        withAnimation(
-                            Animation.default
-                                .repeatCount(5, autoreverses: true)
-                                .speed(6)
-                        ) {
-                            shakeOffset = 10
-                        }
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                            showRedFeedback = false
-                            shakeOffset = 0
-                        }
-                        
-                        
                     } else {
-                        results = analyzer.predictTopSentiments(for: diaryText, count: 3)
-                        diaryVM.diary.createDate = self.date
-                        diaryVM.diary.diaryContent = diaryText // 다이어리 컨텐츠 뷰모델 저장
-                        if diaryText.count > 25 {
-                            Task {
-                                diaryVM.diary.summary = try await diaryVM.summarize(diaryText)
-                            }
-                        } else {
-                            diaryVM.diary.summary = diaryText
-                        }
-                        router.push(to: .wiseSayingView)
+                        diaryVM.diary.summary = diaryText
                     }
+                    router.push(to: .wiseSayingView)
                 } label: {
                     HStack(spacing: 4) {
                         Text("오늘의 명언 받기")
@@ -97,8 +79,7 @@ struct InputDiaryView: View {
                     .frame(height: 44)
                     .padding(.horizontal, 16)
                     .background(
-                        showRedFeedback ? Color.red :
-                            (diaryText.count < 5 ? Color.gray.opacity(0.3) : Color.blue)
+                         Color.blue
                     )
                     .cornerRadius(15)
                     .offset(x: shakeOffset)
