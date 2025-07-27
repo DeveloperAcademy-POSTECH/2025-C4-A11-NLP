@@ -27,12 +27,12 @@ struct HomeView: View {
             
             VStack(spacing: 0) {
                 
-                // info 버튼
+                // 캘린더 상단
                 HStack {
                     HStack{
                         HStack{
                             Image("book icon")
-                            Text("0")
+                            Text("\(diaryStore.entries.count)")
                                 .font(.system(size: 20))
                                 .bold()
                                 .foregroundStyle(Color("gray02"))
