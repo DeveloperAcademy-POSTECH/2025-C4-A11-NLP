@@ -28,19 +28,19 @@ struct CalendarView: View {
         self.diaryStore = diaryStore
       }
 
+    
     var body: some View {
       VStack(spacing: 0) {
         yearMonthView
 
         VStack(spacing: 0) {
           weekdayView
-            .padding(.vertical, 10)
+                .padding(.vertical, 13.4)
 
           calendarGridView
-            .padding(.top, 4)
         }
         .padding()
-        .background(Color.white)
+        .background(Color("white"))
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .padding(.horizontal, 16)
       }
@@ -50,11 +50,11 @@ struct CalendarView: View {
   // MARK: - 연월 표시
   private var yearMonthView: some View {
 
-    HStack(alignment: .center, spacing: 8) {
+    HStack(alignment: .center) {
       Text(month, formatter: Self.calendarHeaderDateFormatter)
             .font(.system(size: 17))
             .bold()
-            .foregroundStyle(Color(red: 26/255, green: 26/255, blue: 26/255))
+            .foregroundStyle(Color("black"))
 
         Button(
           action: {
@@ -64,7 +64,7 @@ struct CalendarView: View {
             Image(systemName: "chevron.right")
                   .font(.system(size: 17))
                   .bold()
-                  .foregroundStyle(Color(red: 80/255, green: 80/255, blue: 255/255))
+                  .foregroundStyle(Color("blue01"))
 
           }
         )
@@ -79,11 +79,11 @@ struct CalendarView: View {
             Image(systemName: "chevron.left")
                   .font(.system(size: 20))
                   .bold()
-                  .foregroundStyle(Color(red: 80/255, green: 80/255, blue: 255/255))
+                  .foregroundStyle(Color("blue01"))
           }
         )
 
-        Spacer().frame(width: 28)
+        Spacer().frame(width: 24)
 
       Button(
         action: {
@@ -93,13 +93,13 @@ struct CalendarView: View {
           Image(systemName: "chevron.right")
                 .font(.system(size: 20))
                 .bold()
-                .foregroundStyle(Color(red: 80/255, green: 80/255, blue: 255/255))
+                .foregroundStyle(Color("blue01"))
 
         }
       )
     }
-    .padding(.horizontal, 16)
-    .padding(.vertical, 9)
+    .padding(.horizontal, 20)
+    .padding(.vertical, 8)
 
   }
 
@@ -110,7 +110,7 @@ struct CalendarView: View {
           Text(Self.weekdaySymbols[symbol])
             .font(.system(size: 13))
             .bold()
-            .foregroundStyle(Color(red: 60/255, green: 60/255, blue: 67/255, opacity: 0.6))
+            .foregroundStyle(Color("gray01"))
             .frame(maxWidth: .infinity)
         }
       }
@@ -122,10 +122,10 @@ struct CalendarView: View {
       let daysInMonth = numberOfDays(in: month)
       let firstWeekday = firstWeekdayOfMonth(in: month) - 1
       let lastDayOfMonthBefore = numberOfDays(in: previousMonth())
-      let numberOfRows = Int(ceil(Double(daysInMonth + firstWeekday) / 7.0))
+      let numberOfRows = 6
       let visibleDaysOfNextMonth = numberOfRows * 7 - (daysInMonth + firstWeekday)
 
-      return LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7), spacing: 3) {
+      return LazyVGrid(columns: Array(repeating: GridItem(/*.fixed(45.8),*/ spacing: 5), count: 7), spacing: 5) {
         ForEach(-firstWeekday ..< daysInMonth + visibleDaysOfNextMonth, id: \.self) { index in
           calendarCellView(for: index, daysInMonth: daysInMonth, firstWeekday: firstWeekday, lastDayOfMonthBefore: lastDayOfMonthBefore)
         }
@@ -145,14 +145,13 @@ struct CellView: View {
 
     private var textColor: Color {
       if isToday {
-        return Color(red: 23 / 255, green: 76 / 255, blue: 192 / 255)
+        return Color("blue01")
       } else if isCurrentMonthDay {
-        return Color(red: 26/255, green: 26/255, blue: 26/255)
+        return Color("black")
       } else {
-        return Color(red: 202/255, green: 203/255, blue: 204/255)
+          return Color("gray02")
       }
     }
-
 
 
   init(
@@ -177,12 +176,12 @@ struct CellView: View {
           switch reflectionStatus {
           case .pending:
             Circle()
-              .fill(Color(red: 178/255, green: 203/255, blue: 255/255))
-              .frame(width: 36, height: 36)
+              .fill(Color("blue2"))
+              .frame(width: 44, height: 44)
           case .completed:
             Circle()
-              .fill(Color(red: 102/255, green: 150/255, blue: 255/255))
-              .frame(width: 36, height: 36)
+              .fill(Color("blue1"))
+              .frame(width: 44, height: 44)
           case .none:
             EmptyView()
           }
@@ -190,8 +189,8 @@ struct CellView: View {
           // 오늘이면 원 테두리
           if isToday {
             Circle()
-              .stroke(Color(red: 23/255, green: 76/255, blue: 192/255), lineWidth: 3)
-              .frame(width: 36, height: 36)
+              .stroke(Color("blue01"), lineWidth: 4)
+              .frame(width: 44, height: 44)
           }
 
           // 날짜 숫자 텍스트
@@ -200,7 +199,7 @@ struct CellView: View {
             .font(.system(size: 20))
             .bold()
         }
+        .frame(width: 45.8, height: 45.8)
       }
-      .frame(height: 40)
     }
 }
