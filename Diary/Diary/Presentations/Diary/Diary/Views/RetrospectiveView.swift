@@ -174,6 +174,7 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
             
             
             lottieManager.shouldPlayLottie = true  // Lottie 실행
+            diaryVM.resetDiary() // 뷰모델 초기화
             router.popToRootView()
         }
         .frame(width: 100, height: 44) // FIXME: 크기 동적 수정

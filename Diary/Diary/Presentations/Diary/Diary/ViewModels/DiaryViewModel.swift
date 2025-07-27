@@ -16,6 +16,10 @@ final class DiaryViewModel {
     
     var shouldPlayLottie: Bool = false
     
+    func resetDiary() {
+        self.diary = .init(diaryContent: "", wiseSaying: "", retrospective: "", resolution: "", summary: "")
+    }
+    
     func summarize(_ text: String) async throws -> String {
         let prompt = """
                \(text)에 대한 내용을 최대한 짧게 한 줄로 요약해줘.
