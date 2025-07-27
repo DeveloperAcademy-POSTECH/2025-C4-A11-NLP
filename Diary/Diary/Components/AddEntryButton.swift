@@ -18,6 +18,7 @@ struct AddEntryButton: View {
                 .background(Color("blue1"))
                 .clipShape(Circle())
                 .shadow(radius: 4)
+                .glassEffect()
                 .padding(.bottom, 30)
                 .padding(.trailing, 20)
         }

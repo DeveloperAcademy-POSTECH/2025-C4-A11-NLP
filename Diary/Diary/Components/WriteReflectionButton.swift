@@ -19,6 +19,7 @@ struct WriteReflectionButton: View{
                 .frame(width: 324, height: 44)
                 .background(Color("blue1"))
                 .clipShape(RoundedRectangle(cornerRadius: 15))
+                .glassEffect()
                 .padding(.top, 8)
         }
         .frame(maxWidth: .infinity, alignment: .center)

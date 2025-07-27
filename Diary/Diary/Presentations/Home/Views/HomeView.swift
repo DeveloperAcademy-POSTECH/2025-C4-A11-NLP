@@ -47,9 +47,9 @@ struct HomeView: View {
                                       diaryStore.currentStreak > 0 ? Color("red02") : Color("gray02")
                                     )
                         }
-                        .padding(.leading, 16)
+                        .padding(.horizontal, 16)
                     }
-                    .padding()
+                    .padding(.leading, 16)
                     Spacer()
                     InfoButton(isInfoShown: $isInfoShown)
                 }
