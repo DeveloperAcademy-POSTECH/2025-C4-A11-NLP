@@ -38,14 +38,17 @@ struct HomeView: View {
                                 .foregroundStyle(Color("gray02"))
                         }
                         
-                        HStack{
-                            Image(diaryStore.currentStreak > 0 ? "fire icon.fill" : "fire icon")
-                              Text("\(diaryStore.currentStreak)")
+                        HStack {
+                            let wroteToday = diaryStore.diary(for: Date()) != nil
+                            let streak = wroteToday ? diaryStore.currentStreak : diaryStore.pastStreak
+                            let iconName = (wroteToday && streak > 0) ? "fire icon.fill" : "fire icon"
+                            let color = wroteToday ? Color("red02") : Color("gray02")
+
+                            Image(iconName)
+                            Text("\(streak)")
                                 .font(.system(size: 20))
                                 .bold()
-                                .foregroundStyle(
-                                      diaryStore.currentStreak > 0 ? Color("red02") : Color("gray02")
-                                    )
+                                .foregroundStyle(color)
                         }
                         .padding(.horizontal, 16)
                     }
