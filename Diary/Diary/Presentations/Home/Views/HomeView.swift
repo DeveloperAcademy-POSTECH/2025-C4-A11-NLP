@@ -109,61 +109,13 @@ struct HomeView: View {
                         // 글 미리보기
                         if let entry = diaryStore.diary(for: selected) {
                             VStack(alignment: .leading, spacing: 8){
-                                HStack(alignment: .top){
-                                    VStack(alignment: .leading, spacing: 2){
-                                        Text("일기")
-                                            .font(.system(size: 17))
-                                        Text("AI 요약")
-                                            .font(.system(size: 13))
-                                    }
-                                    .frame(width: 52, alignment: .leading)
-                                    Text(entry.content)
-                                        .font(.system(size: 17))
-                                        .multilineTextAlignment(.leading)
-                                        .lineLimit(nil)
-                                }
+                                DiaryPreviewView(title: "일기", subtitle: "AI 요약", content: entry.content)
                                 Divider()
-                                HStack(alignment: .top){
-                                    VStack(alignment: .leading, spacing: 2){
-                                        Text("명언")
-                                            .font(.system(size: 17))
-                                        Text(" ")
-                                            .font(.system(size: 13))
-                                    }
-                                    .frame(width: 52, alignment: .leading)
-                                    Text(entry.quote)
-                                        .font(.system(size: 17))
-                                        .multilineTextAlignment(.leading)
-                                        .lineLimit(nil)
-                                }
+                                DiaryPreviewView(title: "명언", subtitle: " ", content: entry.quote)
                                 Divider()
-                                HStack(alignment: .top){
-                                    VStack(alignment: .leading, spacing: 2){
-                                        Text("다짐")
-                                            .font(.system(size: 17))
-                                        Text("AI 요약")
-                                            .font(.system(size: 13))
-                                    }
-                                    .frame(width: 52, alignment: .leading)
-                                    Text(entry.vow)
-                                        .font(.system(size: 17))
-                                        .multilineTextAlignment(.leading)
-                                        .lineLimit(nil)
-                                }
+                                DiaryPreviewView(title: "다짐", subtitle: "AI 요약", content: entry.vow)
                                 Divider()
-                                HStack(alignment: .top) {
-                                    VStack(alignment: .leading, spacing: 2) {
-                                        Text("회고")
-                                            .font(.system(size: 17))
-                                        Text("AI 요약")
-                                            .font(.system(size: 13))
-                                    }
-                                    .frame(width: 52, alignment: .leading)
-                                    Text(entry.reflection)
-                                        .font(.system(size: 17))
-                                        .multilineTextAlignment(.leading)
-                                        .lineLimit(nil)
-                                }
+                                DiaryPreviewView(title: "회고", subtitle: "AI 요약", content: entry.reflection)
                                 Divider()
                                 //회고 없을 시 "회고 쓰기" 버튼 띄우기
                                 if entry.reflection == "-" {
