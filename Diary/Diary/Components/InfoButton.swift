@@ -17,7 +17,7 @@ struct InfoButton: View{
         }) {
           Image(systemName: "info.circle.fill")
             .font(.system(size: 24))
-            .foregroundStyle(Color(red: 222/255, green: 223/255, blue: 224/255))
+            .foregroundStyle(Color("gray1"))
             .padding()
         }
     }
@@ -25,31 +25,30 @@ struct InfoButton: View{
 
 struct InfoOverlay: View{
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 9.5) {
           HStack(spacing: 8) {
             Circle()
-              .fill(Color(red: 178/255, green: 203/255, blue: 255/255))
-              .frame(width: 30, height: 30)
+              .fill(Color("blue2"))
+              .frame(width: 20, height: 20)
             Text("회고 없음")
-              .font(.system(size: 24))
+              .font(.system(size: 14))
           }
 
           HStack(spacing: 8) {
             Circle()
-              .fill(Color(red: 77/255, green: 133/255, blue: 255/255))
-              .frame(width: 30, height: 30)
+              .fill(Color("blue1"))
+              .frame(width: 20, height: 20)
             Text("회고 완료")
-              .font(.system(size: 24))
+              .font(.system(size: 14))
           }
         }
-        .frame(width: 189, height: 70)
+        .frame(width: 84, height: 48)
         .padding()
-        .background(Color.white)
-        .clipShape(RoundedRectangle(cornerRadius: 20))
-        .shadow(color: .black.opacity(0.3), radius: 4, x: 0, y: 0)
-        .padding(.top, 50)
+        .background(Color("white"))
+        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .shadow(color: .black.opacity(0.3), radius: 10, x: 0, y: 0)
+        .padding(.top, 68)
         .padding(.trailing, 16)
-        .zIndex(1)
     }
 }
 

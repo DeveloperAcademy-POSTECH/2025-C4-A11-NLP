@@ -14,16 +14,15 @@ struct WriteReflectionButton: View{
         }) {
             Text("회고 쓰기")
                 .bold()
-                .font(.system(size: 13))
-                .foregroundStyle(Color(red: 23/255, green: 76/255, blue: 192/255))
-                .frame(width: 80, height: 40)
-                .background(Color(red: 225/255, green: 233/255, blue: 250/255))
-                .clipShape(RoundedRectangle(cornerRadius: 10))
-                .padding(.bottom, 30)
-                .padding(.trailing, 20)
+                .font(.system(size: 14))
+                .foregroundStyle(Color("white"))
+                .frame(width: 292, height: 44)
+                .background(Color("blue1"))
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+                .glassEffect()
+                .padding(.top, 8)
         }
         .frame(maxWidth: .infinity, alignment: .center)
-        .padding(.top, 20)
     }
 }
 

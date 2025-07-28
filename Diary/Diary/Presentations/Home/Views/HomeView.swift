@@ -30,16 +30,42 @@ struct HomeView: View {
         NavigationStack(path: $router.destination) {
             ZStack(alignment: .topTrailing) {
                 
-                Color(red: 247/255, green: 248/255, blue: 250/255)
+                Color("lightBlue")
                     .ignoresSafeArea()
                 
                 VStack(spacing: 0) {
-                    // info 버튼
+                    // 캘린더 상단
                     HStack {
+                        HStack{
+                            HStack{
+                                Image("book icon")
+                                Text("\(diaryStore.entries.count)")
+                                    .font(.system(size: 20))
+                                    .bold()
+                                    .foregroundStyle(Color("gray02"))
+                            }
+                            
+                            HStack {
+                                let wroteToday = diaryStore.diary(for: Date()) != nil
+                                let streak = wroteToday ? diaryStore.currentStreak : diaryStore.pastStreak
+                                let iconName = (wroteToday && streak > 0) ? "fire icon.fill" : "fire icon"
+                                let color = wroteToday ? Color("red02") : Color("gray02")
+                                
+                                Image(iconName)
+                                Text("\(streak)")
+                                    .font(.system(size: 20))
+                                    .bold()
+                                    .foregroundStyle(color)
+                            }
+                            .padding(.horizontal, 16)
+                        }
+                        .padding(.leading, 16)
                         Spacer()
+                        // info 버튼
                         InfoButton(isInfoShown: $isInfoShown)
                     }
                     
+                    ScrollView{
                     // 캘린더 뷰
                     CalendarView(
                         month: $month,
@@ -60,7 +86,7 @@ struct HomeView: View {
                             // 날짜 텍스트
                             Text(selected.formattedWithWeekday)
                                 .font(.system(size: 20))
-                                .foregroundStyle(Color(red: 23/255, green: 76/255, blue: 192/255))
+                                .foregroundStyle(Color("blue01"))
                                 .bold()
                             
                             Spacer()
@@ -73,7 +99,7 @@ struct HomeView: View {
                                     Image(systemName: "arrow.right")
                                         .font(.system(size: 20))
                                         .bold()
-                                        .foregroundStyle(Color(red: 23/255, green: 76/255, blue: 192/255))
+                                        .foregroundStyle(Color("blue01"))
                                 }
                             }
                         }
@@ -83,53 +109,13 @@ struct HomeView: View {
                         // 글 미리보기
                         if let entry = diaryStore.diary(for: selected) {
                             VStack(alignment: .leading, spacing: 8){
-                                HStack(alignment: .top){
-                                    VStack(alignment: .leading, spacing: 2){
-                                        Text("일기")
-                                            .font(.system(size: 17))
-                                        Text("AI 요약")
-                                            .font(.system(size: 13))
-                                    }
-                                    Text(entry.content)
-                                        .font(.system(size: 17))
-                                        .multilineTextAlignment(.leading)
-                                        .lineLimit(nil)
-                                }
+                                DiaryPreviewView(title: "일기", subtitle: "AI 요약", content: entry.content)
                                 Divider()
-                                HStack(alignment: .top){
-                                    Text("명언")
-                                        .font(.system(size: 17))
-                                    Text(entry.quote)
-                                        .font(.system(size: 17))
-                                        .multilineTextAlignment(.leading)
-                                        .lineLimit(nil)
-                                }
+                                DiaryPreviewView(title: "명언", subtitle: " ", content: entry.quote)
                                 Divider()
-                                HStack(alignment: .top){
-                                    VStack(alignment: .leading, spacing: 2){
-                                        Text("다짐")
-                                            .font(.system(size: 17))
-                                        Text("AI 요약")
-                                            .font(.system(size: 13))
-                                    }
-                                    Text(entry.vow)
-                                        .font(.system(size: 17))
-                                        .multilineTextAlignment(.leading)
-                                        .lineLimit(nil)
-                                }
+                                DiaryPreviewView(title: "다짐", subtitle: "AI 요약", content: entry.vow)
                                 Divider()
-                                HStack(alignment: .top) {
-                                    VStack(alignment: .leading, spacing: 2) {
-                                        Text("회고")
-                                            .font(.system(size: 17))
-                                        Text("AI 요약")
-                                            .font(.system(size: 13))
-                                    }
-                                    Text(entry.reflection)
-                                        .font(.system(size: 17))
-                                        .multilineTextAlignment(.leading)
-                                        .lineLimit(nil)
-                                }
+                                DiaryPreviewView(title: "회고", subtitle: "AI 요약", content: entry.reflection)
                                 Divider()
                                 //회고 없을 시 "회고 쓰기" 버튼 띄우기
                                 if entry.reflection == "-" {
@@ -137,27 +123,26 @@ struct HomeView: View {
                                 }
                             }
                             .padding()
-                            .padding(.leading, 16)
-                            .padding(.top, 30)
-                            .background(Color.white)
-                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                            .background(Color("white"))
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
                             .padding(.horizontal, 16)
-                            .padding(.vertical, 16)
+                            .padding(.vertical, 8)
                         } else {
                             // 일기 없는 경우
                             VStack {
+                                Spacer().frame(height: 100)
                                 Text("오늘의 일기를 써보세요.")
                                     .font(.system(size: 17))
-                                    .foregroundStyle(Color(red: 207/255, green: 208/255, blue: 209/255))
-                                Spacer().frame(height: 40)
+                                    .foregroundStyle(Color("gray01"))
+                                Spacer().frame(height: 100)
                             }
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                         }
+                        Spacer()
                     }
-                    
-                    Spacer()
                 }
                 .zIndex(0)
+            }
                 
                 // info 설명 오버레이
                 if isInfoShown {
