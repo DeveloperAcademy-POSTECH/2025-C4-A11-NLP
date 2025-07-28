@@ -23,6 +23,11 @@ final class DiaryViewModel {
         resolutionSummary: ""
     )
     
+    init() {
+        let todayStartOfDay = Calendar.current.startOfDay(for: Date())
+        self.diary.createDate = todayStartOfDay
+    }
+    
     var shouldPlayLottie: Bool = false
     
     func resetDiary() {

@@ -219,6 +219,9 @@ struct HomeView: View {
             .task { // 날짜가 선택되지 않을때는 오늘 날짜로 넣어두기
                 if selectedDate == nil {
                     selectedDate = Date().addingTimeInterval(60 * 60 * 9)
+//                    let todayStartOfDay = Calendar.current.startOfDay(for: Date())
+//                       selectedDate = todayStartOfDay
+//                       diaryVM.diary.createDate = todayStartOfDay
                 }
                 print("diaries : \(diaries.first?.createDate)")
             }
