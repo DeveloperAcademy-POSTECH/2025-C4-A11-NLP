@@ -127,7 +127,7 @@ struct CalendarView: View {
         let daysInMonth = numberOfDays(in: month)
         let firstWeekday = firstWeekdayOfMonth(in: month) - 1
         let lastDayOfMonthBefore = numberOfDays(in: previousMonth())
-        let numberOfRows = Int(ceil(Double(daysInMonth + firstWeekday) / 7.0))
+        let numberOfRows = 6
         let visibleDaysOfNextMonth = numberOfRows * 7 - (daysInMonth + firstWeekday)
         
         return LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7), spacing: 3) {
