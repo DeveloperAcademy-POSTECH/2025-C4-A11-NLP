@@ -63,7 +63,8 @@ struct ResolutionView: View {
             }
             HStack {
                 Button {
-                    router.pop()
+                    diaryVM.resetDiary()
+                    router.popToRootView()
                 } label: {
                     Image(systemName: "chevron.left")
                         .foregroundStyle(.blue)

@@ -43,7 +43,8 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
         VStack {
             HStack {
                 Button {
-                    router.pop()
+                    diaryVM.resetDiary()
+                    router.popToRootView()
                 } label: {
                     Image(systemName: "chevron.left")
                         .foregroundStyle(.blue)
