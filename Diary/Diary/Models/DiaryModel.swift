@@ -15,7 +15,10 @@ struct DiaryModel {
     var wiseSaying: String
     var retrospective: String
     var resolution: String
-    var summary: String
+    var diaryContentSummary: String
+    var wiseSayingSummary: String
+    var retrospectiveSummary: String
+    var resolutionSummary: String
     
     
 }

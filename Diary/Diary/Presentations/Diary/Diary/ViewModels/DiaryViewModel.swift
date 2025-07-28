@@ -12,12 +12,30 @@ import FoundationModels
 @Observable
 final class DiaryViewModel {
     private let model = SystemLanguageModel.default
-    var diary: DiaryModel = .init(diaryContent: "", wiseSaying: "", retrospective: "", resolution: "", summary: "")
+    var diary: DiaryModel = .init(
+        diaryContent: "",
+        wiseSaying: "",
+        retrospective: "",
+        resolution: "",
+        diaryContentSummary: "",
+        wiseSayingSummary: "",
+        retrospectiveSummary: "",
+        resolutionSummary: ""
+    )
     
     var shouldPlayLottie: Bool = false
     
     func resetDiary() {
-        self.diary = .init(diaryContent: "", wiseSaying: "", retrospective: "", resolution: "", summary: "")
+        self.diary = .init(
+            diaryContent: "",
+            wiseSaying: "",
+            retrospective: "",
+            resolution: "",
+            diaryContentSummary: "",
+            wiseSayingSummary: "",
+            retrospectiveSummary: "",
+            resolutionSummary: ""
+        )
     }
     
     func summarize(_ text: String) async throws -> String {

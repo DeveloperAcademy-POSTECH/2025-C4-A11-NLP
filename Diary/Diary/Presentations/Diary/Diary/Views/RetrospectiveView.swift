@@ -166,7 +166,10 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
                 wiseSaying: diaryVM.diary.wiseSaying,
                 retrospective: diaryVM.diary.retrospective,
                 resolution: diaryVM.diary.resolution,
-                summary: diaryVM.diary.summary
+                diaryContentSummary: diaryVM.diary.diaryContentSummary,
+                wiseSayingSummary: diaryVM.diary.wiseSayingSummary,
+                retrospectiveSummary: diaryVM.diary.retrospectiveSummary,
+                resolutionSummary: diaryVM.diary.resolutionSummary
             )
             
             // 2. modelContext에 저장
@@ -187,3 +190,4 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
     RetrospectiveView()
         .environmentObject(NavigationRouter())
 }
+

@@ -12,21 +12,38 @@ import SwiftData
 @Model
 class DiaryModelData {
     
-    var createDate: Date // ID
+    var createDate: Date? // ID
     var diaryContent: String
     var wiseSaying: String
     var retrospective: String
     var resolution: String
-    var summary: String
+    
+    // 요약
+    var diaryContentSummary: String
+    var wiseSayingSummary: String
+    var retrospectiveSummary: String
+    var resolutionSummary: String
     
     
-    init(createDate: Date, diaryContent: String, wiseSaying: String, retrospective: String, resolution: String, summary: String) {
-        self.createDate = createDate
+    init(
+        createDate: Date?,
+        diaryContent: String,
+        wiseSaying: String,
+        retrospective: String,
+        resolution: String,
+        diaryContentSummary: String,
+        wiseSayingSummary: String,
+        retrospectiveSummary: String,
+        resolutionSummary: String
+    ) {
         self.diaryContent = diaryContent
         self.wiseSaying = wiseSaying
         self.retrospective = retrospective
         self.resolution = resolution
-        self.summary = summary
+        self.diaryContentSummary = diaryContentSummary
+        self.wiseSayingSummary = wiseSayingSummary
+        self.retrospectiveSummary = retrospectiveSummary
+        self.resolutionSummary = resolutionSummary
     }
     
 }

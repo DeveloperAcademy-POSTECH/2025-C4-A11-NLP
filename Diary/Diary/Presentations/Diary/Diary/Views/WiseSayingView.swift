@@ -136,6 +136,7 @@ struct WiseSayingView: View {
             case .new:
                 CalenderContentButton(title: "다음", imageType: .next) {
                     diaryVM.diary.wiseSaying = selectedContent ?? ""  //FIXME: 명언으로 수정
+                    diaryVM.diary.wiseSayingSummary = selectedContent ?? ""
                     router.push(to: .resolutionView)
                 }
                 .frame(width: 80, height: 40)
@@ -143,6 +144,7 @@ struct WiseSayingView: View {
             case .update:
                 CalenderContentButton(title: "완료", imageType: .none) {
                     diaryVM.diary.wiseSaying = selectedContent ?? ""  //FIXME: 명언으로 수정
+                    diaryVM.diary.wiseSayingSummary = selectedContent ?? ""
                     router.push(to: .retrospectiveView)
                 }
                 .frame(width: 80, height: 40)
