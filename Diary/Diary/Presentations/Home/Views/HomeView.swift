@@ -115,6 +115,7 @@ struct HomeView: View {
                                         Text("AI 요약")
                                             .font(.system(size: 13))
                                     }
+                                    .frame(width: 52, alignment: .leading)
                                     Text(entry.content)
                                         .font(.system(size: 17))
                                         .multilineTextAlignment(.leading)
@@ -122,12 +123,17 @@ struct HomeView: View {
                                 }
                                 Divider()
                                 HStack(alignment: .top){
-                                    Text("명언")
-                                        .font(.system(size: 17))
-                                    Text(entry.quote)
-                                        .font(.system(size: 17))
-                                        .multilineTextAlignment(.leading)
-                                        .lineLimit(nil)
+                                    VStack(alignment: .leading, spacing: 2){
+                                        Text("명언")
+                                            .font(.system(size: 17))
+                                        Text(" ")
+                                            .font(.system(size: 13))
+                                    }
+                                    .frame(width: 52, alignment: .leading)
+                                        Text(entry.quote)
+                                            .font(.system(size: 17))
+                                            .multilineTextAlignment(.leading)
+                                            .lineLimit(nil)
                                 }
                                 Divider()
                                 HStack(alignment: .top){
@@ -137,6 +143,7 @@ struct HomeView: View {
                                         Text("AI 요약")
                                             .font(.system(size: 13))
                                     }
+                                    .frame(width: 52, alignment: .leading)
                                     Text(entry.vow)
                                         .font(.system(size: 17))
                                         .multilineTextAlignment(.leading)
@@ -150,6 +157,7 @@ struct HomeView: View {
                                         Text("AI 요약")
                                             .font(.system(size: 13))
                                     }
+                                    .frame(width: 52, alignment: .leading)
                                     Text(entry.reflection)
                                         .font(.system(size: 17))
                                         .multilineTextAlignment(.leading)
@@ -162,25 +170,23 @@ struct HomeView: View {
                                 }
                             }
                             .padding()
-                            .padding(.leading, 16)
-                            .padding(.top, 30)
-                            .background(Color.white)
-                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                            .background(Color("white"))
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
                             .padding(.horizontal, 16)
-                            .padding(.vertical, 16)
+                            .padding(.vertical, 8)
                         } else {
                             // 일기 없는 경우
                             VStack {
+                                Spacer().frame(height: 100)
                                 Text("오늘의 일기를 써보세요.")
                                     .font(.system(size: 17))
                                     .foregroundStyle(Color("gray01"))
-                                Spacer().frame(height: 40)
+                                Spacer().frame(height: 100)
                             }
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                         }
+                        Spacer()
                     }
-                    
-                    Spacer()
                 }
                 .zIndex(0)
                 

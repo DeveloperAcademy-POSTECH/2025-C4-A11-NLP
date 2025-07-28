@@ -35,7 +35,7 @@ extension CalendarView {
     static let calendarHeaderDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ko_KR")
-        formatter.dateFormat = "yyyy년 M월"
+        formatter.dateFormat = "yyyy년 MM월"
         return formatter
     }()
     
