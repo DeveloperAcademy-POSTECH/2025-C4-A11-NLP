@@ -9,8 +9,20 @@
 /* Begin PBXBuildFile section */
 		3E1301652E324DC800E39912 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E1301642E324DC800E39912 /* LocalAuthentication.framework */; };
 		3EF5075F2E37939900DB66AA /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 3EF5075E2E37939900DB66AA /* Lottie */; };
-		3EF507612E37939900DB66AA /* Lottie-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 3EF507602E37939900DB66AA /* Lottie-Dynamic */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		3E8C98002E3796F2003A641B /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		3E1301642E324DC800E39912 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
@@ -32,7 +44,6 @@
 			files = (
 				3E1301652E324DC800E39912 /* LocalAuthentication.framework in Frameworks */,
 				3EF5075F2E37939900DB66AA /* Lottie in Frameworks */,
-				3EF507612E37939900DB66AA /* Lottie-Dynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,6 +85,7 @@
 				DE5BD5FE2E24137500ED1385 /* Sources */,
 				DE5BD5FF2E24137500ED1385 /* Frameworks */,
 				DE5BD6002E24137500ED1385 /* Resources */,
+				3E8C98002E3796F2003A641B /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -85,7 +97,6 @@
 			name = Diary;
 			packageProductDependencies = (
 				3EF5075E2E37939900DB66AA /* Lottie */,
-				3EF507602E37939900DB66AA /* Lottie-Dynamic */,
 			);
 			productName = Diary;
 			productReference = DE5BD6022E24137500ED1385 /* Diary.app */;
@@ -375,11 +386,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3EF5075D2E37939900DB66AA /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
-		};
-		3EF507602E37939900DB66AA /* Lottie-Dynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3EF5075D2E37939900DB66AA /* XCRemoteSwiftPackageReference "lottie-ios" */;
-			productName = "Lottie-Dynamic";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
