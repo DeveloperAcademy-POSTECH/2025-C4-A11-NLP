@@ -22,6 +22,7 @@ struct InputDiaryView: View {
     @State private var testLabel: String = ""
     @State private var isLoading: Bool = false   // 추가
 
+    var viewType: ViewType
     let date: Date
     
     let analyzer: SentimentViewModel = .init()
@@ -77,6 +78,8 @@ struct InputDiaryView: View {
                 }
                 .overlay(alignment: .bottom) {
                     Button {
+                    switch viewType {
+                    case .new:
                         results = analyzer.predictTopSentiments(for: diaryText, count: 3)
                         diaryVM.diary.createDate = self.date
                         diaryVM.diary.diaryContent = diaryText // 다이어리 컨텐츠 뷰모델 저장
@@ -96,6 +99,28 @@ struct InputDiaryView: View {
                                 router.push(to: .wiseSayingView)
                             }
                         }
+                    case .update:
+                        results = analyzer.predictTopSentiments(for: diaryText, count: 3)
+                        diaryVM.diary.createDate = self.date
+                        diaryVM.diary.diaryContent = diaryText // 다이어리 컨텐츠 뷰모델 저장
+                        
+                        // 프로그래스바 시작
+                        isLoading = true
+                        
+                        Task {
+                            if diaryText.count > 25 {
+                                diaryVM.diary.summary = try await diaryVM.summarize(diaryText)
+                            } else {
+                                diaryVM.diary.summary = diaryText
+                            }
+                            // 요약 끝, 로딩 끝, 다음 화면으로!
+                            await MainActor.run {
+                                isLoading = false
+                                router.push(to: .wiseSayingUpdateView)
+                            }
+                        }
+                    }
+                        
                     } label: {
                         HStack(spacing: 4) {
                             Text("오늘의 명언 받기")
@@ -163,6 +188,6 @@ struct InputDiaryView: View {
 
 
 #Preview {
-    InputDiaryView(date: Date())
+    InputDiaryView(viewType: .new, date: Date())
         .environmentObject(NavigationRouter())
 }

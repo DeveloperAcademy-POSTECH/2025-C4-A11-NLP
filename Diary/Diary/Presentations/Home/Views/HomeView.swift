@@ -22,6 +22,7 @@ struct HomeView: View {
     @StateObject private var lottieManager :LottieManager = .init()
     private var lottieType: LottieType = .confettie
     
+    static var shardSelectedDate: Date? //FIXME: 네비게이션 date주입을 위한 임시 변수
     
     @Query(sort: \DiaryModelData.createDate, order: .reverse) private var diaries: [DiaryModelData]
     
@@ -171,6 +172,7 @@ struct HomeView: View {
                         HStack {
                             Spacer()
                             AddEntryButton() {
+                                HomeView.shardSelectedDate = selected //FIXME: 네비게이션 date주입을 위한 임시 변수
                                 router.push(to: .inputDiaryView(date: selected))
                             }
                         }
@@ -215,9 +217,6 @@ struct HomeView: View {
                 }
             }
         }
-        .onAppear(perform: {
-            print("diaryDates : \(diaries.first)")
-        })
         .environmentObject(lottieManager)
         
     }

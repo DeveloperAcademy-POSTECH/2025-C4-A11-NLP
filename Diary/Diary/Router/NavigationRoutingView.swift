@@ -20,7 +20,9 @@ struct NavigationRoutingView: View {
             case .home:
                 HomeView()
             case .inputDiaryView(let date):
-                InputDiaryView(date: date)
+                InputDiaryView(viewType: .new, date: date)
+            case .inputDiaryUpdateView(let date, let viewType):
+                InputDiaryView(viewType: viewType, date: date)
             case .resolutionView:
                 ResolutionView(viewType: .new)
             case .resolutionUpdateView:
@@ -28,7 +30,9 @@ struct NavigationRoutingView: View {
             case .retrospectiveView:
                 RetrospectiveView()
             case .wiseSayingView:
-                WiseSayingView()
+                WiseSayingView(viewType: .new)
+            case .wiseSayingUpdateView:
+                WiseSayingView(viewType: .update)
             case .streakView:
                 StreakView(lottieType: .fire)
             }

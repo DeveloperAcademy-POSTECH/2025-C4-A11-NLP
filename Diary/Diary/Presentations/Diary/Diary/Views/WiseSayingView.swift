@@ -15,6 +15,8 @@ struct WiseSayingView: View {
     @EnvironmentObject private var router: NavigationRouter
     @Environment(\.diaryVM) private var diaryVM
     
+    var viewType: ViewType
+    
     var body: some View {
         
         VStack {
@@ -119,6 +121,7 @@ struct WiseSayingView: View {
     }
     
     //MARK: 하단 버튼 뷰
+    @ViewBuilder
     private var bottomButtonView: some View {
         HStack {
             CalenderContentButton(title: "이전", imageType: .previous) {
@@ -127,21 +130,30 @@ struct WiseSayingView: View {
             .frame(width: 80, height: 40)
             
             Spacer()
-           
-            CalenderContentButton(title: "다음", imageType: .next) {
-                diaryVM.diary.wiseSaying = selectedContent ?? ""  //FIXME: 명언으로 수정
-                print("selectedContent : \(selectedContent)")
-                router.push(to: .resolutionView)
+            
+            switch viewType {
+            case .new:
+                CalenderContentButton(title: "다음", imageType: .next) {
+                    diaryVM.diary.wiseSaying = selectedContent ?? ""  //FIXME: 명언으로 수정
+                    router.push(to: .resolutionView)
+                }
+                .frame(width: 80, height: 40)
+                .disabled(selectedIndex == nil)
+            case .update:
+                CalenderContentButton(title: "완료", imageType: .none) {
+                    diaryVM.diary.wiseSaying = selectedContent ?? ""  //FIXME: 명언으로 수정
+                    router.push(to: .retrospectiveView)
+                }
+                .frame(width: 80, height: 40)
+                .disabled(selectedIndex == nil)
             }
-            .frame(width: 80, height: 40)
-            .disabled(selectedIndex == nil)
         }
     }
 }
 
 #Preview {
     NavigationStack {
-        WiseSayingView()
+        WiseSayingView(viewType: .new)
             .environmentObject(NavigationRouter())
     }
 }

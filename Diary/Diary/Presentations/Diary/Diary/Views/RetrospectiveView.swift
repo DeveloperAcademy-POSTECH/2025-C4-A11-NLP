@@ -82,7 +82,7 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
                     .foregroundStyle(Color.black)
                 Spacer()
                 Button {
-                    
+                    router.push(to: .inputDiaryUpdateView(date: HomeView.shardSelectedDate ?? Date(), viewType: .update))
                 } label: {
                     Image(systemName: "square.and.pencil")
                         .foregroundStyle(Color.blue)
