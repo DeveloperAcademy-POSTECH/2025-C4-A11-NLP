@@ -185,33 +185,6 @@ struct ResolutionView: View {
             }
         }
     }
-    
-    //MARK: 하단 버튼 뷰
-    //    private var bottomButtonView: some View {
-    //
-    //        //        switch viewType {
-    //        //        case .new:
-    //        //
-    //        //        case .update:
-    //        //
-    //        //        }
-    //
-    //        HStack {
-    //            CalenderContentButton(title: "이전", imageType: .previous) {
-    //                router.pop()
-    //            }
-    //            .frame(width: 80, height: 40)
-    //
-    //            Spacer()
-    //
-    //            CalenderContentButton(title: "다음", imageType: .next) {
-    //                diaryVM.diary.resolution = text // 다짐 viewModel 저장
-    //                router.push(to: .retrospectiveView)
-    //            }
-    //            .frame(width: 80, height: 40)
-    //            //            .disabled(selectedIndex == nil)
-    //        }
-    //    }
 }
 
 #Preview {
