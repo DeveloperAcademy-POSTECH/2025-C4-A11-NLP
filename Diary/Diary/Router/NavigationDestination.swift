@@ -18,5 +18,6 @@ enum NavigationDestination: Equatable, Hashable {
     case wiseSayingView
     case wiseSayingUpdateView
     case streakView
+    case retrospectiveWriteView
 }
 

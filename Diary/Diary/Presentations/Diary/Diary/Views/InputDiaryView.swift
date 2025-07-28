@@ -89,9 +89,9 @@ struct InputDiaryView: View {
                         
                         Task {
                             if diaryText.count > 25 {
-                                diaryVM.diary.summary = try await diaryVM.summarize(diaryText)
+                                diaryVM.diary.diaryContentSummary = try await diaryVM.summarize(diaryText)
                             } else {
-                                diaryVM.diary.summary = diaryText
+                                diaryVM.diary.diaryContentSummary = diaryText
                             }
                             // 요약 끝, 로딩 끝, 다음 화면으로!
                             await MainActor.run {
@@ -109,9 +109,9 @@ struct InputDiaryView: View {
                         
                         Task {
                             if diaryText.count > 25 {
-                                diaryVM.diary.summary = try await diaryVM.summarize(diaryText)
+                                diaryVM.diary.diaryContentSummary = try await diaryVM.summarize(diaryText)
                             } else {
-                                diaryVM.diary.summary = diaryText
+                                diaryVM.diary.diaryContentSummary = diaryText
                             }
                             // 요약 끝, 로딩 끝, 다음 화면으로!
                             await MainActor.run {

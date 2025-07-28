@@ -16,7 +16,6 @@ struct CalendarView: View {
     @State private var selectedMonth = Calendar.current.component(.month, from: Date())
     @ObservedObject var diaryStore: DiaryStore
     
-    // let diaryDates: Set<Date>
     
     
     init(
