@@ -134,8 +134,11 @@ struct HomeView: View {
                                 }
                                 Divider()
                                 //회고 없을 시 "회고 쓰기" 버튼 띄우기
-                                if entry.reflection == "-" {
-                                    WriteReflectionButton()
+                                //FIXME: 이게 맞는 걸까
+                                if entry.reflection == "" {
+                                    WriteReflectionButton() {
+                                        router.push(to: .retrospectiveWriteView)
+                                    }
                                 }
                             }
                             .padding()

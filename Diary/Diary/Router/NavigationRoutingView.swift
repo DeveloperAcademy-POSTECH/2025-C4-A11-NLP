@@ -35,6 +35,8 @@ struct NavigationRoutingView: View {
                 WiseSayingView(viewType: .update)
             case .streakView:
                 StreakView(lottieType: .fire)
+            case .retrospectiveWriteView:
+                RetrospectiveWriteView()
             }
         }
         .hideBackButton()
