@@ -213,11 +213,18 @@ struct HomeView: View {
             })
             .task { // 날짜가 선택되지 않을때는 오늘 날짜로 넣어두기
                 if selectedDate == nil {
-                    selectedDate = Date()
+                    selectedDate = Date().addingTimeInterval(60 * 60 * 9)
                 }
                 print("diaries : \(diaries.first?.createDate)")
-                print("date : \(Date())")
             }
+            //TODO: 로직 살펴보기
+            .onAppear {
+                diaryStore.update(with: diaries) // SwiftData → entries 반영
+            }
+            .onChange(of: diaries) { _, newDiaries in
+                diaryStore.update(with: newDiaries) // 데이터 변동 반영
+            }
+            
         }
         .environmentObject(lottieManager)
         

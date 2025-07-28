@@ -15,6 +15,8 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
     @Environment(\.modelContext) private var modelContext
     @Environment(\.diaryVM) private var  diaryVM
     
+    let calendar = Calendar.current
+    
     
     var body: some View {
         ZStack {
@@ -155,11 +157,16 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
         )
     }
     
+    
     //MARK: 바텀 저장하기 버튼 뷰
+    @ViewBuilder
     private var bottomSaveButtonView: some View {
+        let calendar = Calendar.current
+        let selectedZero = calendar.startOfDay(for: Date())
+        
         SaveWriteButton(title: "저장하기") {
             let newDiary = DiaryModelData(
-                createDate: diaryVM.diary.createDate?.addingTimeInterval(60 * 60 * 9) ?? Date().addingTimeInterval(60 * 60 * 9),
+                createDate: selectedZero/*diaryVM.diary.createDate?.addingTimeInterval(60 * 60 * 9) ?? Date().addingTimeInterval(60 * 60 * 9)*/,
                 diaryContent: diaryVM.diary.diaryContent,
                 wiseSaying: diaryVM.diary.wiseSaying,
                 retrospective: diaryVM.diary.retrospective,
