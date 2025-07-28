@@ -44,27 +44,28 @@ struct HomeView: View {
                                     .bold()
                                     .foregroundStyle(Color("gray02"))
                             }
-
+                            
                             HStack {
                                 let wroteToday = diaryStore.diary(for: Date()) != nil
-                                                        let streak = wroteToday ? diaryStore.currentStreak : diaryStore.pastStreak
-                                                        let iconName = (wroteToday && streak > 0) ? "fire icon.fill" : "fire icon"
-                                                        let color = wroteToday ? Color("red02") : Color("gray02")
-
-                                                        Image(iconName)
-                                                        Text("\(streak)")
-                                                            .font(.system(size: 20))
-                                                            .bold()
-                                                            .foregroundStyle(color)
-                                                    }
-                                                    .padding(.horizontal, 16)
-                                  }
+                                let streak = wroteToday ? diaryStore.currentStreak : diaryStore.pastStreak
+                                let iconName = (wroteToday && streak > 0) ? "fire icon.fill" : "fire icon"
+                                let color = wroteToday ? Color("red02") : Color("gray02")
+                                
+                                Image(iconName)
+                                Text("\(streak)")
+                                    .font(.system(size: 20))
+                                    .bold()
+                                    .foregroundStyle(color)
+                            }
+                            .padding(.horizontal, 16)
+                        }
                         .padding()
                         Spacer()
                         // info 버튼
                         InfoButton(isInfoShown: $isInfoShown)
                     }
                     
+                    ScrollView{
                     // 캘린더 뷰
                     CalendarView(
                         month: $month,
@@ -130,10 +131,10 @@ struct HomeView: View {
                                             .font(.system(size: 13))
                                     }
                                     .frame(width: 52, alignment: .leading)
-                                        Text(entry.quote)
-                                            .font(.system(size: 17))
-                                            .multilineTextAlignment(.leading)
-                                            .lineLimit(nil)
+                                    Text(entry.quote)
+                                        .font(.system(size: 17))
+                                        .multilineTextAlignment(.leading)
+                                        .lineLimit(nil)
                                 }
                                 Divider()
                                 HStack(alignment: .top){
@@ -189,6 +190,7 @@ struct HomeView: View {
                     }
                 }
                 .zIndex(0)
+            }
                 
                 // info 설명 오버레이
                 if isInfoShown {
