@@ -45,7 +45,7 @@ struct CalendarView: View {
                     .padding(.top, 4)
             }
             .padding()
-            .background(Color.white)
+            .background(Color("white"))
             .clipShape(RoundedRectangle(cornerRadius: 10))
             .padding(.horizontal, 16)
         }
@@ -59,7 +59,7 @@ struct CalendarView: View {
             Text(month, formatter: Self.calendarHeaderDateFormatter)
                 .font(.system(size: 17))
                 .bold()
-                .foregroundStyle(Color(red: 26/255, green: 26/255, blue: 26/255))
+                .foregroundStyle(Color("black"))
             
             Button(
                 action: {
@@ -69,7 +69,7 @@ struct CalendarView: View {
                     Image(systemName: "chevron.right")
                         .font(.system(size: 17))
                         .bold()
-                        .foregroundStyle(Color(red: 80/255, green: 80/255, blue: 255/255))
+                        .foregroundStyle(Color("blue01"))
                     
                 }
             )
@@ -84,7 +84,7 @@ struct CalendarView: View {
                     Image(systemName: "chevron.left")
                         .font(.system(size: 20))
                         .bold()
-                        .foregroundStyle(Color(red: 80/255, green: 80/255, blue: 255/255))
+                        .foregroundStyle(Color("blue01"))
                 }
             )
             
@@ -98,7 +98,7 @@ struct CalendarView: View {
                     Image(systemName: "chevron.right")
                         .font(.system(size: 20))
                         .bold()
-                        .foregroundStyle(Color(red: 80/255, green: 80/255, blue: 255/255))
+                        .foregroundStyle(Color("blue01"))
                     
                 }
             )
@@ -115,7 +115,7 @@ struct CalendarView: View {
                 Text(Self.weekdaySymbols[symbol])
                     .font(.system(size: 13))
                     .bold()
-                    .foregroundStyle(Color(red: 60/255, green: 60/255, blue: 67/255, opacity: 0.6))
+                    .foregroundStyle(Color("gray01"))
                     .frame(maxWidth: .infinity)
             }
         }
@@ -150,11 +150,11 @@ struct CellView: View {
     
     private var textColor: Color {
         if isToday {
-            return Color(red: 23 / 255, green: 76 / 255, blue: 192 / 255)
+            return Color("blue01")
         } else if isCurrentMonthDay {
-            return Color(red: 26/255, green: 26/255, blue: 26/255)
+            return Color("black")
         } else {
-            return Color(red: 202/255, green: 203/255, blue: 204/255)
+            return Color("gray02")
         }
     }
     
@@ -182,11 +182,11 @@ struct CellView: View {
                 switch reflectionStatus {
                 case .pending:
                     Circle()
-                        .fill(Color(red: 178/255, green: 203/255, blue: 255/255))
+                        .fill(Color("blue2"))
                         .frame(width: 36, height: 36)
                 case .completed:
                     Circle()
-                        .fill(Color(red: 102/255, green: 150/255, blue: 255/255))
+                        .fill(Color("blue1"))
                         .frame(width: 36, height: 36)
                 case .none:
                     EmptyView()
@@ -195,7 +195,7 @@ struct CellView: View {
                 // 오늘이면 원 테두리
                 if isToday {
                     Circle()
-                        .stroke(Color(red: 23/255, green: 76/255, blue: 192/255), lineWidth: 3)
+                        .stroke(Color("blue01"), lineWidth: 4)
                         .frame(width: 36, height: 36)
                 }
                 

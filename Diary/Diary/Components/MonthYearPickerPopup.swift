@@ -63,8 +63,8 @@ struct MonthYearPickerPopup: View {
           Text("확인")
             .bold()
             .frame(width: 80, height: 40)
-            .background(Color(red: 225/255, green: 233/255, blue: 250/255))
-            .foregroundStyle(Color(red: 23/255, green: 76/255, blue: 192/255))
+            .background(Color("blue3"))
+            .foregroundStyle(Color("black"))
             .clipShape(RoundedRectangle(cornerRadius: 10))
             .shadow(color: Color.black.opacity(0.25), radius: 4, x: 0, y: 4)
         }

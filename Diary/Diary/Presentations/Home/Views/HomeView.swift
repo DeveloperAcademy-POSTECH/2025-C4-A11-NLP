@@ -30,7 +30,7 @@ struct HomeView: View {
         NavigationStack(path: $router.destination) {
             ZStack(alignment: .topTrailing) {
                 
-                Color(red: 247/255, green: 248/255, blue: 250/255)
+                Color("lightBlue")
                     .ignoresSafeArea()
                 
                 VStack(spacing: 0) {
@@ -85,7 +85,7 @@ struct HomeView: View {
                             // 날짜 텍스트
                             Text(selected.formattedWithWeekday)
                                 .font(.system(size: 20))
-                                .foregroundStyle(Color(red: 23/255, green: 76/255, blue: 192/255))
+                                .foregroundStyle(Color("blue01"))
                                 .bold()
                             
                             Spacer()
@@ -98,7 +98,7 @@ struct HomeView: View {
                                     Image(systemName: "arrow.right")
                                         .font(.system(size: 20))
                                         .bold()
-                                        .foregroundStyle(Color(red: 23/255, green: 76/255, blue: 192/255))
+                                        .foregroundStyle(Color("blue01"))
                                 }
                             }
                         }
@@ -173,7 +173,7 @@ struct HomeView: View {
                             VStack {
                                 Text("오늘의 일기를 써보세요.")
                                     .font(.system(size: 17))
-                                    .foregroundStyle(Color(red: 207/255, green: 208/255, blue: 209/255))
+                                    .foregroundStyle(Color("gray01"))
                                 Spacer().frame(height: 40)
                             }
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
