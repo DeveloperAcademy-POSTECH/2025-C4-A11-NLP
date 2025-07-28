@@ -67,10 +67,6 @@ struct InputDiaryView: View {
                                 .font(.caption1Emphasized)
                                 .foregroundStyle(Color.red)
                         }
-                        //mlmodel 테스트
-                        //                    ForEach(results, id: \.0) { label, confidence in
-                        //                        Text("• \(label): \(confidence, specifier: "%.1f")%")
-                        //                    }
                     }
                     .padding(.horizontal)
                     .padding(.top, 16)
@@ -96,7 +92,7 @@ struct InputDiaryView: View {
                             // 요약 끝, 로딩 끝, 다음 화면으로!
                             await MainActor.run {
                                 isLoading = false
-                                router.push(to: .wiseSayingView)
+                                router.push(to: .wiseSayingView(emotions: results.map { $0.0 }))
                             }
                         }
                     case .update:
@@ -116,7 +112,7 @@ struct InputDiaryView: View {
                             // 요약 끝, 로딩 끝, 다음 화면으로!
                             await MainActor.run {
                                 isLoading = false
-                                router.push(to: .wiseSayingUpdateView)
+                                router.push(to: .wiseSayingUpdateView(emotions: results.map { $0.0 }))
                             }
                         }
                     }
@@ -138,15 +134,11 @@ struct InputDiaryView: View {
                     Spacer()
                 }
                 .padding(.bottom, 32)
-                
-                
             }
             .background(Color(.systemGray6))
             .ignoresSafeArea(edges: .bottom)
         }
-        
     }
-    
     
     
     //MARK: 상단 프로그래스 바, 네비게이션 타이틀

@@ -11,21 +11,43 @@ struct WiseSayingView: View {
     
     @State private var selectedIndex: Int? = nil
     @State private var selectedContent: String? = nil
+    @State private var quotes: [Quote] = []
     
     @EnvironmentObject private var router: NavigationRouter
     @Environment(\.diaryVM) private var diaryVM
     
     var viewType: ViewType
+    var emotions: [String] = []
     
     var body: some View {
-        
         VStack {
             topProgressBarAndNavigationTitleView
             middleWiseSayingContentView
             bottomButtonView
         }
         .padding(.horizontal, 16)
+        .onAppear {
+            loadQuotes()
+        }
     }
+    
+    private func loadQuotes() {
+        guard let url = Bundle.main.url(forResource: "QuoteData", withExtension: "json"),
+              let data = try? Data(contentsOf: url),
+              let allQuotes = try? JSONDecoder().decode([Quote].self, from: data) else {
+            return
+        }
+
+        var result: [Quote] = []
+        for label in emotions {
+            let quotesForLabel = allQuotes.filter { $0.label == label }
+            if let randomQuote = quotesForLabel.randomElement() {
+                result.append(randomQuote)
+            }
+        }
+        self.quotes = result
+    }
+    
     
     //MARK: 상단 프로그래스 바, 네비게이션 타이틀
     private var topProgressBarAndNavigationTitleView: some View {
@@ -74,47 +96,20 @@ struct WiseSayingView: View {
             Spacer().frame(height: 32)
             
             //FIXME: JSON에서 불러오는 데이터 변경하기
-            
-            WiseSayingContentButton(
-                content: "하루하루는 성실하게. 인생 자체는 되는대로",
-                respondent: "Libby",
-                source: "이동진",
-                isSelected: selectedIndex == 0
-            ) {
-                selectedContent = "하루하루는 성실하게. 인생 자체는 되는대로" //FIXME: 로직수정
-                selectedIndex = 0
+            ForEach(Array(quotes.enumerated()), id: \.offset) { index, quote in
+                WiseSayingContentButton(
+                    content: quote.quote,
+                    respondent: quote.respondent,
+                    source: quote.quoteSource ?? "",
+                    isSelected: selectedIndex == index
+                ) {
+                    selectedContent = quote.quote
+                    selectedIndex = index
+                }
+                .frame(maxWidth: .infinity)
+                .frame(height: 110)
+                .padding(.bottom, 24)
             }
-            .frame(maxWidth: .infinity)
-            .frame(height: 110) //FIXME: 높이 수정
-            
-            Spacer().frame(height: 24)
-            
-            WiseSayingContentButton(
-                content: "무슨 생각을 해 그냥 하는거지",
-                respondent: "Gabi",
-                source: "김연아",
-                isSelected: selectedIndex == 1
-            ) {
-                selectedContent = "무슨 생각을 해 그냥 하는거지" //FIXME: 로직수정
-                selectedIndex = 1
-            }
-            .frame(maxWidth: .infinity)
-            .frame(height: 110, alignment: .leading) //FIXME: 높이 수정
-            
-            Spacer().frame(height: 24)
-            
-            WiseSayingContentButton(
-                content: "나를 죽이지 못하는 것은 나를 더 강하게 만든다.",
-                respondent: "Peppr",
-                source: "니체",
-                isSelected: selectedIndex == 2,
-                
-            ) {
-                selectedContent = "나를 죽이지 못하는 것은 나를 더 강하게 만든다." //FIXME: 로직수정
-                selectedIndex = 2
-            }
-            .frame(maxWidth: .infinity)
-            .frame(height: 110) //FIXME: 높이 수정
             
             Spacer()
         }

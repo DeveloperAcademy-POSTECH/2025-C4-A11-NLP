@@ -29,10 +29,10 @@ struct NavigationRoutingView: View {
                 ResolutionView(viewType: .update)
             case .retrospectiveView:
                 RetrospectiveView()
-            case .wiseSayingView:
-                WiseSayingView(viewType: .new)
-            case .wiseSayingUpdateView:
-                WiseSayingView(viewType: .update)
+            case .wiseSayingView(let emotions):
+                WiseSayingView(viewType: .new, emotions: emotions)
+            case .wiseSayingUpdateView(let emotions):
+                WiseSayingView(viewType: .update, emotions: emotions)
             case .streakView:
                 StreakView(lottieType: .fire)
             case .retrospectiveWriteView:
