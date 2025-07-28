@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import WidgetKit
 
 struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
     
@@ -190,6 +191,7 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
             sharedDefaults?.set(newDiary.createDate, forKey: "latestDiaryDate")
             sharedDefaults?.set(newDiary.wiseSaying, forKey: "latestWiseSaying")
             sharedDefaults?.set(newDiary.resolution, forKey: "latestResolution")
+            WidgetCenter.shared.reloadAllTimelines()
 
             lottieManager.shouldPlayLottie = true  // Lottie 실행
             diaryVM.resetDiary() // 뷰모델 초기화
