@@ -1,5 +1,6 @@
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
   "originHash" : "2689f9e2586b55228eed3965e4be842c098dfc484978323bb9dc0de25d79665c",
   "pins" : [
     {
@@ -10,14 +11,21 @@
         "revision" : "04f2fd18cc9404a0a0917265a449002674f24ec9",
 =======
   "originHash" : "0a79f2009ea5ba6a9e7c2c6471d05458a7ac9a981d2fd7ab914f1eb741af1ea1",
+=======
+  "originHash" : "2689f9e2586b55228eed3965e4be842c098dfc484978323bb9dc0de25d79665c",
+>>>>>>> 6880a81 (🐛[Fix] #16 - Lottie 라이브러리 교체)
   "pins" : [
     {
-      "identity" : "lottie-ios",
+      "identity" : "lottie-spm",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/airbnb/lottie-ios",
+      "location" : "https://github.com/airbnb/lottie-spm",
       "state" : {
+<<<<<<< HEAD
         "revision" : "a004050748dc197c56256a14dca49a035d74726c",
 >>>>>>> 71bf4ac (♻️ [Refactor] 홈 뷰(캘린더, 미리보기) 리팩토링)
+=======
+        "revision" : "04f2fd18cc9404a0a0917265a449002674f24ec9",
+>>>>>>> 6880a81 (🐛[Fix] #16 - Lottie 라이브러리 교체)
         "version" : "4.5.2"
       }
     }
