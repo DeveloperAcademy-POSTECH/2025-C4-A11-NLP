@@ -36,6 +36,25 @@ struct HomeView: View {
                 VStack(spacing: 0) {
                     // info 버튼
                     HStack {
+                        HStack{
+                            HStack{
+                                Image("book icon")
+                                Text("0")
+                                    .font(.system(size: 20))
+                                    .bold()
+                                    .foregroundStyle(Color("gray02"))
+                            }
+
+                            HStack{
+                                Image("fire icon")
+                                Text("0")
+                                    .font(.system(size: 20))
+                                    .bold()
+                                    .foregroundStyle(Color("gray02"))
+                            }
+                            .padding(.leading, 16)
+                                  }
+                        .padding()
                         Spacer()
                         InfoButton(isInfoShown: $isInfoShown)
                     }
