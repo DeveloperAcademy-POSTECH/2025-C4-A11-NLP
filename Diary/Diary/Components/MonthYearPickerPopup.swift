@@ -38,7 +38,7 @@ struct MonthYearPickerPopup: View {
             }
           }
           .labelsHidden()
-          .frame(width: 160)
+          .frame(width: 150)
           .clipped()
 
           Picker("월", selection: $selectedMonth) {
@@ -47,7 +47,7 @@ struct MonthYearPickerPopup: View {
             }
           }
           .labelsHidden()
-          .frame(width: 160)
+          .frame(width: 150)
           .clipped()
         }
         .pickerStyle(.wheel)
@@ -55,6 +55,7 @@ struct MonthYearPickerPopup: View {
         .background(Color.white)
         .clipShape(RoundedRectangle(cornerRadius: 20))
         .shadow(color: Color.black.opacity(0.25), radius: 4, x: 0, y: 4)
+        .frame(height: 184)
 
         Button(action: {
           isPresented = false
@@ -65,7 +66,7 @@ struct MonthYearPickerPopup: View {
             .frame(width: 80, height: 40)
             .background(Color("blue3"))
             .foregroundStyle(Color("black"))
-            .clipShape(RoundedRectangle(cornerRadius: 10))
+            .clipShape(RoundedRectangle(cornerRadius: 15))
             .shadow(color: Color.black.opacity(0.25), radius: 4, x: 0, y: 4)
         }
       }
