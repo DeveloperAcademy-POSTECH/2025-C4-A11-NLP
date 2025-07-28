@@ -10,9 +10,9 @@ import SwiftData
 
 // MARK: - 다이어리 SwiftData 모델
 @Model
-class DiaryModelData {
+final class DiaryModelData {
     
-    var createDate: Date? // ID
+    var createDate: Date // ID
     var diaryContent: String
     var wiseSaying: String
     var retrospective: String
@@ -26,7 +26,7 @@ class DiaryModelData {
     
     
     init(
-        createDate: Date?,
+        createDate: Date,
         diaryContent: String,
         wiseSaying: String,
         retrospective: String,
@@ -36,6 +36,7 @@ class DiaryModelData {
         retrospectiveSummary: String,
         resolutionSummary: String
     ) {
+        self.createDate = createDate
         self.diaryContent = diaryContent
         self.wiseSaying = wiseSaying
         self.retrospective = retrospective

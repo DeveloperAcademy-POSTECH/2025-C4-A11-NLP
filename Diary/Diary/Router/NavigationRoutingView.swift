@@ -38,7 +38,6 @@ struct NavigationRoutingView: View {
             }
         }
         .hideBackButton()
-        .modelContainer(for: [DiaryModelData.self])
         .environmentObject(router)
     }
 }

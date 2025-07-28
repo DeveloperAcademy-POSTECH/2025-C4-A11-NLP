@@ -24,7 +24,7 @@ struct HomeView: View {
     
     static var shardSelectedDate: Date? //FIXME: 네비게이션 date주입을 위한 임시 변수
     
-    @Query(sort: \DiaryModelData.createDate, order: .reverse) private var diaries: [DiaryModelData]
+    @Query private var diaries: [DiaryModelData]
     
     var body: some View {
         NavigationStack(path: $router.destination) {
@@ -215,6 +215,8 @@ struct HomeView: View {
                 if selectedDate == nil {
                     selectedDate = Date()
                 }
+                print("diaries : \(diaries.first?.createDate)")
+                print("date : \(Date())")
             }
         }
         .environmentObject(lottieManager)

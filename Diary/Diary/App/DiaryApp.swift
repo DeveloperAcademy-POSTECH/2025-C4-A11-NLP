@@ -15,8 +15,8 @@ struct DiaryApp: App {
     var body: some Scene {
         WindowGroup {
             HomeView()
+                .modelContainer(for: DiaryModelData.self)
                 .environmentObject(router)
-                .modelContainer(for: [DiaryModelData.self])
         }
     }
 }

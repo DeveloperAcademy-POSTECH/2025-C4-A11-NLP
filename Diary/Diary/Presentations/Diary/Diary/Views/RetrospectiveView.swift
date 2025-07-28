@@ -158,10 +158,8 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
     //MARK: 바텀 저장하기 버튼 뷰
     private var bottomSaveButtonView: some View {
         SaveWriteButton(title: "저장하기") {
-            
-            // 1. diaryVM.diary 데이터를 받아 SwiftData로 변환
             let newDiary = DiaryModelData(
-                createDate: diaryVM.diary.createDate ?? Date(),
+                createDate: diaryVM.diary.createDate?.addingTimeInterval(60 * 60 * 9) ?? Date().addingTimeInterval(60 * 60 * 9),
                 diaryContent: diaryVM.diary.diaryContent,
                 wiseSaying: diaryVM.diary.wiseSaying,
                 retrospective: diaryVM.diary.retrospective,
@@ -171,14 +169,18 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
                 retrospectiveSummary: diaryVM.diary.retrospectiveSummary,
                 resolutionSummary: diaryVM.diary.resolutionSummary
             )
-            
-            // 2. modelContext에 저장
             modelContext.insert(newDiary)
-            try? modelContext.save()
-            
-            
-            lottieManager.shouldPlayLottie = true  // Lottie 실행
-            diaryVM.resetDiary() // 뷰모델 초기화
+            do {
+                try modelContext.save()
+                print("SwiftData 저장 완료!!")
+                // 바로 fetch해서 개수 확인!
+                let diaries = try modelContext.fetch(FetchDescriptor<DiaryModelData>())
+                print("저장 후 fetch 결과: \(diaries.count)")
+            } catch {
+                print("SwiftData 저장 에러: \(error.localizedDescription)")
+            }
+            lottieManager.shouldPlayLottie = true
+            diaryVM.resetDiary()
             router.popToRootView()
         }
         .frame(width: 100, height: 44) // FIXME: 크기 동적 수정
