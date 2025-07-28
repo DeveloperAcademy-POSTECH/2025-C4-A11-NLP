@@ -19,6 +19,7 @@ struct HomeView: View {
     @State private var month: Date = Date()
     
     @EnvironmentObject var router: NavigationRouter
+    @Environment(\.diaryVM) private var diaryVM
     @StateObject private var lottieManager :LottieManager = .init()
     private var lottieType: LottieType = .confettie
     
@@ -49,6 +50,7 @@ struct HomeView: View {
                     )
                     .onChange(of: selectedDate) { _, newValue in
                         if let date = newValue {
+                            diaryVM.diary.createDate = date //FIXME: 로직 수정해야 될 것 같음
                             print("Selected date: \(date)")
                         }
                     }

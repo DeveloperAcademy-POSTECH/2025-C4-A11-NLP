@@ -162,7 +162,7 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
     @ViewBuilder
     private var bottomSaveButtonView: some View {
         let calendar = Calendar.current
-        let selectedZero = calendar.startOfDay(for: Date())
+        let selectedZero = calendar.startOfDay(for: diaryVM.diary.createDate ?? Date())
         
         SaveWriteButton(title: "저장하기") {
             let newDiary = DiaryModelData(
