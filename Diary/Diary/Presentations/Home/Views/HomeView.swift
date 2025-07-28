@@ -59,7 +59,7 @@ struct HomeView: View {
                             }
                             .padding(.horizontal, 16)
                         }
-                        .padding()
+                        .padding(.leading, 16)
                         Spacer()
                         // info 버튼
                         InfoButton(isInfoShown: $isInfoShown)
