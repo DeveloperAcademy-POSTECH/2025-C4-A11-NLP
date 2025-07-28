@@ -12,9 +12,10 @@ struct WiseSayingContentButton: View {
     let content: String
     let respondent: String
     let source: String
-    let isSelected: Bool 
-    
+    let isSelected: Bool
     let action: () -> ()
+    
+    @State private var selectedContent: String? = nil
     
     var body: some View {
         Button {
@@ -30,9 +31,15 @@ struct WiseSayingContentButton: View {
                 }
                 .overlay {
                     VStack(alignment: .leading, spacing: 16) {
-                        Text(content)
-                            .font(isSelected ? Font.body2Emphasized : Font.body2Regular)
-                            .foregroundStyle(Color.black)
+                        HStack {
+                            Text(content)
+                                .font(isSelected ? Font.body2Emphasized : Font.body2Regular)
+                                .foregroundStyle(Color.black)
+                                .multilineTextAlignment(.leading) 
+                                .fixedSize(horizontal: false, vertical: true)
+                                .lineLimit(nil)
+                            Spacer()
+                        }
                         
                         HStack(spacing: 4) {
                             Text(respondent)
@@ -43,6 +50,7 @@ struct WiseSayingContentButton: View {
                                 .foregroundStyle(Color.gray01)
                         }
                     }
+                    .padding(24)
                 }
         }
     }

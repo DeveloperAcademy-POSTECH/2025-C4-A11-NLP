@@ -12,7 +12,7 @@ import SwiftData
 @Model
 class DiaryModelData {
     
-    var createDate: String // ID
+    var createDate: Date // ID
     var diaryContent: String
     var wiseSaying: String
     var retrospective: String
@@ -20,7 +20,7 @@ class DiaryModelData {
     var summary: String
     
     
-    init(createDate: String, diaryContent: String, wiseSaying: String, retrospective: String, resolution: String, summary: String) {
+    init(createDate: Date, diaryContent: String, wiseSaying: String, retrospective: String, resolution: String, summary: String) {
         self.createDate = createDate
         self.diaryContent = diaryContent
         self.wiseSaying = wiseSaying

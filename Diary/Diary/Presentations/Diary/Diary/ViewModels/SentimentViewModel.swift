@@ -11,7 +11,7 @@ import NaturalLanguage
 import CoreML
 
 @Observable
-class SentimentViewModel
+final class SentimentViewModel
  {
     var model: NLModel?
 

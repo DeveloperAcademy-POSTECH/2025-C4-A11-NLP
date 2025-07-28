@@ -10,7 +10,7 @@ import Foundation
 enum CalenderContentButtonType {
     case previous
     case next
-    
+    case none
     
     var image: String {
         switch self {
@@ -18,6 +18,8 @@ enum CalenderContentButtonType {
             return "chevron.left"
         case .next:
             return "chevron.right"
+        case .none:
+            return ""
         }
     }
 }

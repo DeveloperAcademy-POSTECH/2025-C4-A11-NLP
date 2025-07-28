@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct NavigationRoutingView: View {
     
@@ -18,8 +19,26 @@ struct NavigationRoutingView: View {
             switch destination {
             case .home:
                 HomeView()
+            case .inputDiaryView(let date):
+                InputDiaryView(viewType: .new, date: date)
+            case .inputDiaryUpdateView(let date, let viewType):
+                InputDiaryView(viewType: viewType, date: date)
+            case .resolutionView:
+                ResolutionView(viewType: .new)
+            case .resolutionUpdateView:
+                ResolutionView(viewType: .update)
+            case .retrospectiveView:
+                RetrospectiveView()
+            case .wiseSayingView:
+                WiseSayingView(viewType: .new)
+            case .wiseSayingUpdateView:
+                WiseSayingView(viewType: .update)
+            case .streakView:
+                StreakView(lottieType: .fire)
             }
         }
+        .hideBackButton()
+        .modelContainer(for: [DiaryModelData.self])
         .environmentObject(router)
     }
 }

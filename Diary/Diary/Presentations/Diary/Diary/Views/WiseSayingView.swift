@@ -10,8 +10,12 @@ import SwiftUI
 struct WiseSayingView: View {
     
     @State private var selectedIndex: Int? = nil
+    @State private var selectedContent: String? = nil
     
-    let date: String //FIXME: 선택된 날짜 나오게 수정
+    @EnvironmentObject private var router: NavigationRouter
+    @Environment(\.diaryVM) private var diaryVM
+    
+    var viewType: ViewType
     
     var body: some View {
         
@@ -37,7 +41,8 @@ struct WiseSayingView: View {
             }
             HStack {
                 Button {
-                    print("뒤로가기")
+                    diaryVM.resetDiary()
+                    router.popToRootView()
                 } label: {
                     Image(systemName: "chevron.left")
                         .foregroundStyle(.blue)
@@ -62,18 +67,21 @@ struct WiseSayingView: View {
             
             Spacer().frame(height: 8)
             
-            Text(date)
+            Text(diaryVM.diary.createDate?.formattedWithWeekday ?? Date().formattedWithWeekday)
                 .font(Font.caption1Emphasized)
                 .foregroundStyle(.gray01)
             
             Spacer().frame(height: 32)
             
+            //FIXME: JSON에서 불러오는 데이터 변경하기
+            
             WiseSayingContentButton(
-                content: "",
-                respondent: "",
-                source: "",
+                content: "하루하루는 성실하게. 인생 자체는 되는대로",
+                respondent: "Libby",
+                source: "이동진",
                 isSelected: selectedIndex == 0
             ) {
+                selectedContent = "하루하루는 성실하게. 인생 자체는 되는대로" //FIXME: 로직수정
                 selectedIndex = 0
             }
             .frame(maxWidth: .infinity)
@@ -82,24 +90,27 @@ struct WiseSayingView: View {
             Spacer().frame(height: 24)
             
             WiseSayingContentButton(
-                content: "",
-                respondent: "",
-                source: "",
+                content: "무슨 생각을 해 그냥 하는거지",
+                respondent: "Gabi",
+                source: "김연아",
                 isSelected: selectedIndex == 1
             ) {
+                selectedContent = "무슨 생각을 해 그냥 하는거지" //FIXME: 로직수정
                 selectedIndex = 1
             }
             .frame(maxWidth: .infinity)
-            .frame(height: 110) //FIXME: 높이 수정
+            .frame(height: 110, alignment: .leading) //FIXME: 높이 수정
             
             Spacer().frame(height: 24)
             
             WiseSayingContentButton(
-                content: "",
-                respondent: "",
-                source: "",
-                isSelected: selectedIndex == 2
+                content: "나를 죽이지 못하는 것은 나를 더 강하게 만든다.",
+                respondent: "Peppr",
+                source: "니체",
+                isSelected: selectedIndex == 2,
+                
             ) {
+                selectedContent = "나를 죽이지 못하는 것은 나를 더 강하게 만든다." //FIXME: 로직수정
                 selectedIndex = 2
             }
             .frame(maxWidth: .infinity)
@@ -111,26 +122,39 @@ struct WiseSayingView: View {
     }
     
     //MARK: 하단 버튼 뷰
+    @ViewBuilder
     private var bottomButtonView: some View {
         HStack {
             CalenderContentButton(title: "이전", imageType: .previous) {
-                
+                router.pop()
             }
             .frame(width: 80, height: 40)
             
             Spacer()
             
-            CalenderContentButton(title: "다음", imageType: .next) {
-                //TODO: 네비게이션 라우터 추가
+            switch viewType {
+            case .new:
+                CalenderContentButton(title: "다음", imageType: .next) {
+                    diaryVM.diary.wiseSaying = selectedContent ?? ""  //FIXME: 명언으로 수정
+                    router.push(to: .resolutionView)
+                }
+                .frame(width: 80, height: 40)
+                .disabled(selectedIndex == nil)
+            case .update:
+                CalenderContentButton(title: "완료", imageType: .none) {
+                    diaryVM.diary.wiseSaying = selectedContent ?? ""  //FIXME: 명언으로 수정
+                    router.push(to: .retrospectiveView)
+                }
+                .frame(width: 80, height: 40)
+                .disabled(selectedIndex == nil)
             }
-            .frame(width: 80, height: 40)
-            .disabled(selectedIndex == nil)
         }
     }
 }
 
 #Preview {
     NavigationStack {
-        WiseSayingView(date: "2025년 07월 13일 (월)")
+        WiseSayingView(viewType: .new)
+            .environmentObject(NavigationRouter())
     }
 }

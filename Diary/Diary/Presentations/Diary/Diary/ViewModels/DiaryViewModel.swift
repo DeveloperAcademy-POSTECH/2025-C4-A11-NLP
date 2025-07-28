@@ -6,17 +6,27 @@
 //
 
 import Foundation
+import SwiftData
+import FoundationModels
 
 @Observable
-class DiaryViewModel {
+final class DiaryViewModel {
+    private let model = SystemLanguageModel.default
+    var diary: DiaryModel = .init(diaryContent: "", wiseSaying: "", retrospective: "", resolution: "", summary: "")
     
+    var shouldPlayLottie: Bool = false
     
-
-    init() {
-        
+    func resetDiary() {
+        self.diary = .init(diaryContent: "", wiseSaying: "", retrospective: "", resolution: "", summary: "")
     }
     
-    
+    func summarize(_ text: String) async throws -> String {
+        let prompt = """
+               \(text)에 대한 내용을 최대한 짧게 한 줄로 요약해줘.
+               """
+        let session = LanguageModelSession()
+        let response = try await session.respond(to: prompt)
+        return response.content.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
     
 }
-

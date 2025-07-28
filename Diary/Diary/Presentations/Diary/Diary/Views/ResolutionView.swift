@@ -8,9 +8,13 @@
 import SwiftUI
 
 struct ResolutionView: View {
-    let date: String //FIXME: 선택된 날짜 나오게 수정
     
-    @State var text: String
+    @State var text: String = ""
+    
+    var viewType: ViewType
+    
+    @EnvironmentObject private var router: NavigationRouter
+    @Environment(\.diaryVM) private var diaryVM
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -40,6 +44,9 @@ struct ResolutionView: View {
             bottomButtonView
         }
         .padding(.horizontal, 16)
+        .task {
+            self.text = diaryVM.diary.resolution
+        }
     }
     
     //MARK: 상단 프로그래스 바, 네비게이션 타이틀
@@ -56,7 +63,8 @@ struct ResolutionView: View {
             }
             HStack {
                 Button {
-                    print("뒤로가기")
+                    diaryVM.resetDiary()
+                    router.popToRootView()
                 } label: {
                     Image(systemName: "chevron.left")
                         .foregroundStyle(.blue)
@@ -80,7 +88,7 @@ struct ResolutionView: View {
             
             Spacer().frame(height: 8)
             
-            Text(date)
+            Text(diaryVM.diary.createDate?.formattedWithWeekday ?? Date().formattedWithWeekday)
                 .font(Font.caption1Emphasized)
                 .foregroundStyle(Color.gray01)
             
@@ -88,7 +96,7 @@ struct ResolutionView: View {
             
             HStack(spacing: .zero) {
                 Text("일기 AI요약: ")
-                Text("안녕")
+                Text(diaryVM.diary.summary)
             }
             .font(Font.caption1Emphasized)
             .foregroundStyle(Color.gray01)
@@ -97,33 +105,74 @@ struct ResolutionView: View {
             
             HStack(spacing: .zero) {
                 Text("명언: ")
-                Text("안녕")
+                Text(diaryVM.diary.wiseSaying)
             }
             .font(Font.caption1Emphasized)
             .foregroundStyle(Color.gray01)
         }
     }
     
-    //MARK: 하단 버튼 뷰
+    @ViewBuilder
     private var bottomButtonView: some View {
-        HStack {
-            CalenderContentButton(title: "이전", imageType: .previous) {
+        switch viewType {
+        case .new:
+            HStack {
+                CalenderContentButton(title: "이전", imageType: .previous) {
+                    router.pop()
+                }
+                .frame(width: 80, height: 40)
                 
+                Spacer()
+                
+                CalenderContentButton(title: "다음", imageType: .next) {
+                    diaryVM.diary.resolution = text // 다짐 viewModel 저장
+                    router.push(to: .retrospectiveView)
+                }
+                .frame(width: 80, height: 40)
             }
-            .frame(width: 80, height: 40)
-            
-            Spacer()
-            
-            CalenderContentButton(title: "다음", imageType: .next) {
-                //TODO: 네비게이션 라우터 추가
+        case .update:
+            HStack {
+                Spacer()
+                CalenderContentButton(title: "완료", imageType: .none) {
+                    diaryVM.diary.resolution = text // 다짐 viewModel 저장
+                    router.pop()
+                }
+                .frame(width: 80, height: 40)
+                Spacer()
             }
-            .frame(width: 80, height: 40)
-            //            .disabled(selectedIndex == nil)
         }
     }
+    
+    //MARK: 하단 버튼 뷰
+//    private var bottomButtonView: some View {
+//        
+//        //        switch viewType {
+//        //        case .new:
+//        //            
+//        //        case .update:
+//        //            
+//        //        }
+//        
+//        HStack {
+//            CalenderContentButton(title: "이전", imageType: .previous) {
+//                router.pop()
+//            }
+//            .frame(width: 80, height: 40)
+//            
+//            Spacer()
+//            
+//            CalenderContentButton(title: "다음", imageType: .next) {
+//                diaryVM.diary.resolution = text // 다짐 viewModel 저장
+//                router.push(to: .retrospectiveView)
+//            }
+//            .frame(width: 80, height: 40)
+//            //            .disabled(selectedIndex == nil)
+//        }
+//    }
 }
 
 #Preview {
-    ResolutionView(date: "2025년 07월 13일 (월)", text: "")
+    ResolutionView(text: "", viewType: .update)
+        .environmentObject(NavigationRouter())
 }
 
