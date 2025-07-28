@@ -43,7 +43,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E1301652E324DC800E39912 /* LocalAuthentication.framework in Frameworks */,
-				3E4FAC1D2E37A0790081E912 /* Lottie in Frameworks */,
+				3EF5075F2E37939900DB66AA /* Lottie in Frameworks */,
+				3EF507612E37939900DB66AA /* Lottie-Dynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,7 +97,8 @@
 			);
 			name = Diary;
 			packageProductDependencies = (
-				3E4FAC1C2E37A0790081E912 /* Lottie */,
+				3EF5075E2E37939900DB66AA /* Lottie */,
+				3EF507602E37939900DB66AA /* Lottie-Dynamic */,
 			);
 			productName = Diary;
 			productReference = DE5BD6022E24137500ED1385 /* Diary.app */;
