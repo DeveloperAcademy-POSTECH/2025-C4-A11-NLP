@@ -17,9 +17,12 @@ struct ResolutionView: View {
     @Environment(\.diaryVM) private var diaryVM
     
     @State private var isLoading: Bool = false   // 추가
+    @FocusState private var isTextFieldFocused: Bool
+    
     var body: some View {
         if isLoading {
             ZStack(alignment: .center) {
+                Color.lightBlue.ignoresSafeArea()
                 VStack() {
                     LottieView(name: "loading")
                         .frame(width: 76, height: 60)
@@ -33,36 +36,48 @@ struct ResolutionView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
             }
         } else {
-            VStack(alignment: .leading) {
-                topProgressBarAndNavigationTitleView
-                middleSummationView
+            ZStack {
+                Color.lightBlue.ignoresSafeArea()
                 
-                Spacer().frame(height: 16)
-                
-                TextEditor(text: $text)
-                    .frame(maxHeight: .infinity)
-                    .overlay(
-                        Group {
-                            if text.isEmpty {
-                                VStack {
-                                    Text("다짐을 작성해보세요.")
-                                        .foregroundStyle(Color.gray)
-                                        .padding([.top,.horizontal], 8)
-                                        .allowsHitTesting(false)
-                                        .frame(maxWidth: .infinity, alignment: .topLeading)
-                                    Spacer()
-                                }
-                            }
-                        }
-                    )
-                
-                Spacer()
-                bottomButtonView
+                VStack(alignment: .leading) {
+                    topProgressBarAndNavigationTitleView
+                    middleSummationView
+                    
+                    Spacer().frame(height: 16)
+                    
+                    TextField("글을 작성해주세요.", text: $text, axis: .vertical)
+                        .font(.body)
+                        .focused($isTextFieldFocused)
+                    Spacer()
+                    bottomButtonView
+                }
+                .padding(.horizontal, 16)
+                .task {
+                    self.text = diaryVM.diary.resolution
+                }
+                .navigationTitle("다짐")
+                .navigationBarTitleDisplayMode(.inline)
             }
-            
-            .padding(.horizontal, 16)
-            .task {
-                self.text = diaryVM.diary.resolution
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        diaryVM.resetDiary()
+                        router.popToRootView()
+                    } label: {
+                        Image(systemName: "chevron.left")
+                            .foregroundStyle(.blue)
+                            .font(.system(size: 23, weight: .semibold))
+                    }
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    if isTextFieldFocused {
+                        Button {
+                            isTextFieldFocused = false
+                        } label: {
+                            Image(systemName: "keyboard.chevron.compact.down")
+                        }
+                    }
+                }
             }
         }
     }
@@ -79,21 +94,23 @@ struct ResolutionView: View {
                 ProgressView(choice: true)
                     .frame(width: 115, height: 4)
             }
-            HStack {
-                Button {
-                    diaryVM.resetDiary()
-                    router.popToRootView()
-                } label: {
-                    Image(systemName: "chevron.left")
-                        .foregroundStyle(.blue)
-                        .font(.system(size: 23, weight: .semibold))
-                }
-                Spacer()
-                Text("다짐")
-                    .font(.title1Emphasized)
-                Spacer()
-            }
-            .padding(.vertical, 16)
+            .padding(.bottom, 16)
+            
+            //            HStack {
+            //                Button {
+            //                    diaryVM.resetDiary()
+            //                    router.popToRootView()
+            //                } label: {
+            //                    Image(systemName: "chevron.left")
+            //                        .foregroundStyle(.blue)
+            //                        .font(.system(size: 23, weight: .semibold))
+            //                }
+            //                Spacer()
+            //                Text("다짐")
+            //                    .font(.title1Emphasized)
+            //                Spacer()
+            //            }
+            //            .padding(.vertical, 16)
         }
     }
     
@@ -188,7 +205,9 @@ struct ResolutionView: View {
 }
 
 #Preview {
-    ResolutionView(text: "", viewType: .update)
-        .environmentObject(NavigationRouter())
+    NavigationStack {
+        ResolutionView(text: "", viewType: .new)
+            .environmentObject(NavigationRouter())
+    }
 }
 

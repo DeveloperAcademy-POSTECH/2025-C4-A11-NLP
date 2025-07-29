@@ -35,30 +35,45 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
                     Spacer().frame(height: 24)
                     bottomSaveButtonView
                 }
+                .navigationTitle("미리보기")
+                .navigationBarTitleDisplayMode(.inline)
             }
             .padding(.horizontal, 16)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        diaryVM.resetDiary()
+                        router.popToRootView()
+                    } label: {
+                        Image(systemName: "chevron.left")
+                            .foregroundStyle(.blue)
+                            .font(.system(size: 23, weight: .semibold))
+                    }
+                }
+            }
         }
     }
     
     //MARK: 네비게이션 타이틀
     private var topNavigationTitleView: some View {
         VStack {
-            HStack {
-                Button {
-                    diaryVM.resetDiary()
-                    router.popToRootView()
-                } label: {
-                    Image(systemName: "chevron.left")
-                        .foregroundStyle(.blue)
-                        .font(.system(size: 23, weight: .semibold))
-                }
-                Spacer()
-                Text("미리보기")
-                    .font(.title1Emphasized)
-                Spacer()
-            }
-            .padding(.vertical, 16)
+//            HStack {
+//                Button {
+//                    diaryVM.resetDiary()
+//                    router.popToRootView()
+//                } label: {
+//                    Image(systemName: "chevron.left")
+//                        .foregroundStyle(.blue)
+//                        .font(.system(size: 23, weight: .semibold))
+//                }
+//                Spacer()
+//                Text("미리보기")
+//                    .font(.title1Emphasized)
+//                Spacer()
+//            }
+//            .padding(.vertical, 16)
         }
+        .padding(.bottom, 16)
     }
     
     //MARK: 미들 요약 뷰
@@ -196,7 +211,9 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
 }
 
 #Preview {
-    RetrospectiveView()
-        .environmentObject(NavigationRouter())
+    NavigationStack {
+        RetrospectiveView()
+            .environmentObject(NavigationRouter())
+    }
 }
 

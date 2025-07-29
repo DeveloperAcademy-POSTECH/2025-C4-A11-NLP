@@ -20,17 +20,36 @@ struct WiseSayingView: View {
     var emotions: [String] = []
     
     var body: some View {
-        VStack {
-            topProgressBarAndNavigationTitleView
-            middleWiseSayingContentView
-            bottomButtonView
-        }
-        .padding(.horizontal, 16)
-        .task(id: quotes.isEmpty) {
-            if quotes.isEmpty {
-                loadQuotes()
+        ZStack {
+            Color.lightBlue.ignoresSafeArea()
+            
+            VStack(alignment: .leading) {
+                topProgressBarAndNavigationTitleView
+                middleWiseSayingContentView
+                bottomButtonView
             }
+            .padding(.horizontal, 16)
+            .task(id: quotes.isEmpty) {
+                if quotes.isEmpty {
+                    loadQuotes()
+                }
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        diaryVM.resetDiary()
+                        router.popToRootView()
+                    } label: {
+                        Image(systemName: "chevron.left")
+                            .foregroundStyle(.blue)
+                            .font(.system(size: 23, weight: .semibold))
+                    }
+                }
+            }
+            .navigationTitle("명언")
+            .navigationBarTitleDisplayMode(.inline)
         }
+        
     }
     
     private func loadQuotes() {
@@ -63,21 +82,7 @@ struct WiseSayingView: View {
                 ProgressView(choice: false)
                     .frame(width: 115, height: 4)
             }
-            HStack {
-                Button {
-                    diaryVM.resetDiary()
-                    router.popToRootView()
-                } label: {
-                    Image(systemName: "chevron.left")
-                        .foregroundStyle(.blue)
-                        .font(.system(size: 23, weight: .semibold))
-                }
-                Spacer()
-                Text("명언")
-                    .font(.title1Emphasized)
-                Spacer()
-            }
-            .padding(.vertical, 16)
+            .padding(.bottom, 16)
         }
     }
     
@@ -112,7 +117,6 @@ struct WiseSayingView: View {
                 .frame(minHeight: 110) // 고정 크기에서 변경
                 .padding(.bottom, 24)
             }
-            
             Spacer()
         }
         
@@ -145,7 +149,7 @@ struct WiseSayingView: View {
                     router.push(to: .retrospectiveView)
                 }
                 .frame(width: 80, height: 40)
-                .disabled(selectedIndex == nil)
+                .disabled(selectedIndex == nil) 
             }
         }
     }
