@@ -71,7 +71,7 @@ struct InputDiaryView: View {
                                     .foregroundStyle(Color.red)
                             }
                         }
-                        .padding(.horizontal)
+                        //.padding(.horizontal)
                         .padding(.top, 16)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     }
