@@ -37,9 +37,24 @@ struct HomeView: View {
                 VStack(spacing: 0) {
                     // info 버튼
                     HStack {
+                        Image(.book)
+                        Spacer().frame(width: 4)
+                        Text("\(diaries.count)")
+                            .font(Font.title1Emphasized)
+                            .foregroundStyle(diaries.count == 0 ? Color.gray : Color.blue1)
+                        
+                        Spacer().frame(width: 16)
+                        
+                        
+                        Image(.fire)
+                        Text("3")
+                            .font(Font.title1Emphasized)
+                            .foregroundStyle(Color.red02)
+                        
                         Spacer()
                         InfoButton(isInfoShown: $isInfoShown)
                     }
+                    .padding(.horizontal, 16)
                     
                     // 캘린더 뷰
                     CalendarView(
