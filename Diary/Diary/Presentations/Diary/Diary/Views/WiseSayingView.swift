@@ -109,7 +109,7 @@ struct WiseSayingView: View {
                     selectedIndex = index
                 }
                 .frame(maxWidth: .infinity)
-                .frame(height: 110)
+                .frame(minHeight: 110) // 고정 크기에서 변경
                 .padding(.bottom, 24)
             }
             

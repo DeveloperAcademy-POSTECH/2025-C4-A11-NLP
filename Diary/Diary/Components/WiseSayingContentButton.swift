@@ -40,6 +40,7 @@ struct WiseSayingContentButton: View {
                                 .lineLimit(nil)
                             Spacer()
                         }
+                        .padding(.top, 24)
                         
                         HStack(spacing: 4) {
                             Text(respondent)
@@ -49,8 +50,9 @@ struct WiseSayingContentButton: View {
                                 .font(Font.caption1Emphasized)
                                 .foregroundStyle(Color.gray01)
                         }
+                        .padding(.bottom, 24)
                     }
-                    .padding(24)
+                    .padding(.horizontal, 24)
                 }
         }
     }
@@ -64,6 +66,7 @@ struct WiseSayingContentButton: View {
             source: "(이동진)",
             isSelected: true
         ) {}
+            .frame(height: 110)
         WiseSayingContentButton(
             content: "꾸준함이 힘이다.",
             respondent: "Kim",
@@ -71,4 +74,5 @@ struct WiseSayingContentButton: View {
             isSelected: false
         ) {}
     }
+    .padding(.horizontal, 16)
 }
