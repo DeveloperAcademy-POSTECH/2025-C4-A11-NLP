@@ -11,6 +11,7 @@ import SwiftData
 struct RetrospectiveWriteView: View {
     @State private var text: String = ""
     @State private var isLoading: Bool = false
+    @State private var showAlert = false
     @FocusState private var isTextFieldFocused: Bool
     
     @Environment(\.diaryVM) private var diaryVM
@@ -29,43 +30,56 @@ struct RetrospectiveWriteView: View {
     var body: some View {
         if isLoading {
             ZStack(alignment: .center) {
-                VStack() {
+                Color.lightBlue.ignoresSafeArea()
+                VStack {
                     LottieView(name: "loading")
                         .frame(width: 76, height: 60)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
             }
         } else {
-            HStack {
-                Button {
-                    diaryVM.resetDiary()
-                    router.popToRootView()
-                } label: {
-                    Image(systemName: "chevron.left")
-                        .foregroundStyle(.blue)
-                        .font(.system(size: 23, weight: .semibold))
+            ZStack {
+                Color.lightBlue.ignoresSafeArea()
+                VStack {
+                    topNavigationTitleView
+                    middleTextFieldView
+                    Spacer()
+                    bottomButtonView
                 }
-                Spacer()
-                Text("회고")
-                    .font(.title1Emphasized)
-                Spacer()
-                if isTextFieldFocused {
-                    Button {
-                        isTextFieldFocused = false
-                    } label: {
-                        Image(systemName: "keyboard.chevron.compact.down")
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button {
+                            self.showAlert = true
+                        } label: {
+                            Image(systemName: "chevron.left")
+                                .foregroundStyle(.blue)
+                                .font(.system(size: 23, weight: .semibold))
+                        }
+                    }
+                    ToolbarItem(placement: .topBarTrailing) {
+                        if isTextFieldFocused {
+                            Button {
+                                isTextFieldFocused = false
+                            } label: {
+                                Image(systemName: "keyboard.chevron.compact.down")
+                            }
+                            
+                        }
                     }
                 }
+                .navigationTitle("회고")
+                .navigationBarTitleDisplayMode(.inline)
+                .padding(.horizontal, 16)
             }
-            .padding(.horizontal, 16)
-            // ScrollView {
-            VStack {
-                topNavigationTitleView
-                middleTextFieldView
-                Spacer()
-                bottomButtonView
+            .alert("작성 취소", isPresented: $showAlert) {
+                Button("뒤로가기", role: .destructive) {
+                    diaryVM.resetDiary()
+                    router.popToRootView()
+                }
+                Button("취소", role: .cancel) {}
+            } message: {
+                Text("현재까지 입력한 내용이 저장되지 않습니다.\n정말로 취소하시겠습니까?")
             }
-            .padding(.horizontal, 16)
         }
     }
     
