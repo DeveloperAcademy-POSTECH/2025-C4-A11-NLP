@@ -75,13 +75,13 @@ struct RetrospectiveWriteView: View {
             Spacer().frame(height: 14.5)
             
             Text("이전에 남긴 다짐을 회고하며,\n내일의 나를 위한 다짐을 다시 써 내려가요.")
-                .font(Font.title22)
+                .font(Font.titleTwo)
                 .foregroundStyle(Color.black)
             
             Spacer().frame(height: 8)
             
             Text(diaryVM.diary.createDate?.formattedWithWeekday ?? Date().formattedWithWeekday)
-                .font(Font.caption1Emphasized)
+                .font(Font.caption2Emphasized)
                 .foregroundStyle(Color.gray01)
             
             Spacer().frame(height: 4)
@@ -90,7 +90,7 @@ struct RetrospectiveWriteView: View {
                 Text("일기 AI요약: ")
                 Text(myDiary?.diaryContentSummary ?? "")
             }
-            .font(Font.caption1Emphasized)
+            .font(Font.caption2Emphasized)
             .foregroundStyle(Color.gray01)
             
             Spacer().frame(height: 4)
@@ -99,7 +99,7 @@ struct RetrospectiveWriteView: View {
                 Text("명언: ")
                 Text(myDiary?.wiseSayingSummary ?? "")
             }
-            .font(Font.caption1Emphasized)
+            .font(Font.caption2Emphasized)
             .foregroundStyle(Color.gray01)
             
             Spacer().frame(height: 4)
@@ -108,7 +108,7 @@ struct RetrospectiveWriteView: View {
                 Text("다짐 AI요약: ")
                 Text(myDiary?.resolutionSummary ?? "")
             }
-            .font(Font.caption1Emphasized)
+            .font(Font.caption2Emphasized)
             .foregroundStyle(Color.gray01)
             
             Divider()
@@ -116,7 +116,7 @@ struct RetrospectiveWriteView: View {
             Spacer().frame(height: 16)
             
             Text(Date().formattedWithWeekday)
-                .font(Font.caption1Emphasized)
+                .font(Font.caption2Emphasized)
                 .foregroundStyle(Color.gray01)
             
         }

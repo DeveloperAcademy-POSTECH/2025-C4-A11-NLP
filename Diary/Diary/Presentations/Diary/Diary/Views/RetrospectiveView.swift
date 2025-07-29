@@ -80,13 +80,13 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
     private var middleSummationView: some View {
         VStack(alignment: .leading) {
             Text("마음을 눌러 담은 문장들, 저장 전에 다시 읽어보세요.")
-                .font(Font.title22)
+                .font(Font.titleTwo)
                 .foregroundStyle(Color.black)
             
             Spacer().frame(height: 8)
             
             Text(diaryVM.diary.createDate?.formattedWithWeekday ?? Date().formattedWithWeekday)
-                .font(Font.caption1Emphasized)
+                .font(Font.caption2Emphasized)
                 .foregroundStyle(Color.gray01)
         }
     }
@@ -96,7 +96,7 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
         VStack(alignment: .leading) {
             HStack {
                 Text("일기")
-                    .font(Font.body2Emphasized)
+                    .font(Font.body1Semibold)
                     .foregroundStyle(Color.black)
                 Spacer()
                 Button {
@@ -108,7 +108,7 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
             }
             Spacer().frame(height: 8)
             Text(diaryVM.diary.diaryContent)
-                .font(Font.body2Regular)
+                .font(Font.body1Regular)
                 .foregroundStyle(Color.black)
                 .fixedSize(horizontal: false, vertical: true)
             Spacer()
@@ -125,13 +125,13 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
         VStack(alignment: .leading) {
             HStack {
                 Text("명언")
-                    .font(Font.body2Emphasized)
+                    .font(Font.body1Semibold)
                     .foregroundStyle(Color.black)
                 Spacer()
             }
             Spacer().frame(height: 8)
             Text(diaryVM.diary.wiseSaying)
-                .font(Font.body2Regular)
+                .font(Font.body1Regular)
                 .foregroundStyle(Color.black)
                 .fixedSize(horizontal: false, vertical: true)
             Spacer()
@@ -148,7 +148,7 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
         VStack(alignment: .leading) {
             HStack {
                 Text("다짐")
-                    .font(Font.body2Emphasized)
+                    .font(Font.body1Semibold)
                     .foregroundStyle(Color.black)
                 Spacer()
                 Button {
@@ -160,7 +160,7 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
             }
             Spacer().frame(height: 8)
             Text(diaryVM.diary.resolution)
-                .font(Font.body2Regular)
+                .font(Font.body1Regular)
                 .foregroundStyle(Color.black)
                 .fixedSize(horizontal: false, vertical: true)
             Spacer()

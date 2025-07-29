@@ -37,7 +37,7 @@ struct InputDiaryView: View {
                     LottieView(name: "loading")
                         .frame(width: 76, height: 60)
                         Text("오늘 당신이 쓴 일기를 읽고 있어요.\n도움이 될 만한 명언들을 추천해드릴게요.")
-                            .font(Font.body2Regular)
+                            .font(Font.body1Regular)
                             .foregroundStyle(Color.black)
                             .multilineTextAlignment(.center)
                             .lineSpacing(8)
@@ -67,7 +67,7 @@ struct InputDiaryView: View {
                                 .focused($isTextFieldFocused)
                             if showRedFeedback {
                                 Text("*200자 이상 글을 작성해주세요.")
-                                    .font(.caption1Emphasized)
+                                    .font(.caption2Emphasized)
                                     .foregroundStyle(Color.red)
                             }
                         }

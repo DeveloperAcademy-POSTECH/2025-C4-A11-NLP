@@ -9,26 +9,32 @@ import Foundation
 import SwiftUI
 
 extension Font {
-    static var title1: Font {
+    static var titleOne: Font {
         .system(size: 20, weight: .medium)
     }
     static var title1Emphasized: Font {
         .system(size: 20, weight: .bold)
     }
-    static var title22: Font {
-        .system(size: 17, weight: .medium)
+    static var titleTwo: Font {
+        .system(size: 18, weight: .medium)
     }
-    static var body1: Font {
-        .system(size: 22, weight: .regular)
-    }
-    static var body2Regular: Font {
+    static var body1Regular: Font {
         .system(size: 17, weight: .regular)
     }
-    static var body2Emphasized: Font {
+    static var body1Semibold: Font {
         .system(size: 17, weight: .semibold)
     }
-    static var caption1Emphasized: Font {
-        .system(size:13, weight: .semibold)
+    static var caption1: Font {
+        .system(size:16, weight: .semibold)
+    }
+    static var caption2Regular: Font {
+        .system(size:14, weight: .regular)
+    }
+    static var caption2Emphasized: Font {
+        .system(size:14, weight: .semibold)
+    }
+    static var caption3: Font {
+        .system(size:13, weight: .regular)
     }
 }
 

@@ -27,7 +27,7 @@ struct ResolutionView: View {
                     LottieView(name: "loading")
                         .frame(width: 76, height: 60)
                     Text("오늘 당신이 쓴 일기를 읽고 있어요.\n도움이 될 만한 명언들을 추천해드릴게요.")
-                        .font(Font.body2Regular)
+                        .font(Font.body1Regular)
                         .foregroundStyle(Color.black)
                         .multilineTextAlignment(.center)
                         .lineSpacing(8)
@@ -118,13 +118,13 @@ struct ResolutionView: View {
     private var middleSummationView: some View {
         VStack(alignment: .leading) {
             Text("쓴 일기와 선택한 러너의 명언을 바탕으로,\n내일을 위한 다짐을 적어보세요.")
-                .font(Font.title22)
+                .font(Font.titleTwo)
                 .foregroundStyle(Color.black)
             
             Spacer().frame(height: 8)
             
             Text(diaryVM.diary.createDate?.formattedWithWeekday ?? Date().formattedWithWeekday)
-                .font(Font.caption1Emphasized)
+                .font(Font.caption2Emphasized)
                 .foregroundStyle(Color.gray01)
             
             Spacer().frame(height: 4)
@@ -133,7 +133,7 @@ struct ResolutionView: View {
                 Text("일기 AI요약: ")
                 Text(diaryVM.diary.diaryContentSummary)
             }
-            .font(Font.caption1Emphasized)
+            .font(Font.caption2Emphasized)
             .foregroundStyle(Color.gray01)
             
             Spacer().frame(height: 4)
@@ -142,7 +142,7 @@ struct ResolutionView: View {
                 Text("명언: ")
                 Text(diaryVM.diary.wiseSaying)
             }
-            .font(Font.caption1Emphasized)
+            .font(Font.caption2Emphasized)
             .foregroundStyle(Color.gray01)
         }
     }

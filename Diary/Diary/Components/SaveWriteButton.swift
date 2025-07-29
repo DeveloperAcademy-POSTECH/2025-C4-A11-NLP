@@ -20,7 +20,7 @@ struct SaveWriteButton: View {
                 .fill(Color.blue1)
                 .overlay {
                     Text(title)
-                        .font(Font.caption1Emphasized)
+                        .font(Font.caption2Emphasized)
                         .foregroundStyle(Color.white)
                 }
         }

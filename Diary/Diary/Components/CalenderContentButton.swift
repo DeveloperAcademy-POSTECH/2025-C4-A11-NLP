@@ -30,7 +30,7 @@ struct CalenderContentButton: View {
                                 Text(title)
                             }
                             .foregroundStyle(isEnabled ? Color.black : Color.gray02)
-                            .font(Font.caption1Emphasized)
+                            .font(Font.caption2Emphasized)
                         }
                     case .next:
                         HStack(spacing: 8) {
@@ -39,7 +39,7 @@ struct CalenderContentButton: View {
                                 Image(systemName: imageType.image)
                             }
                             .foregroundStyle(isEnabled ? Color.black : Color.gray02)
-                            .font(Font.caption1Emphasized)
+                            .font(Font.caption2Emphasized)
                         }
                     case .none:
                         HStack(spacing: 8) {
@@ -47,7 +47,7 @@ struct CalenderContentButton: View {
                                 Text(title)
                             }
                             .foregroundStyle(isEnabled ? Color.black : Color.gray02)
-                            .font(Font.caption1Emphasized)
+                            .font(Font.caption2Emphasized)
                         }
                     }
                 }

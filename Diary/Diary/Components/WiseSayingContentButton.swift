@@ -33,7 +33,7 @@ struct WiseSayingContentButton: View {
                     VStack(alignment: .leading, spacing: 16) {
                         HStack {
                             Text(content)
-                                .font(isSelected ? Font.body2Emphasized : Font.body2Regular)
+                                .font(isSelected ? Font.body1Semibold : Font.body1Regular)
                                 .foregroundStyle(Color.black)
                                 .multilineTextAlignment(.leading) 
                                 .fixedSize(horizontal: false, vertical: true)
@@ -47,7 +47,7 @@ struct WiseSayingContentButton: View {
                                 .font(.system(size: 13)).bold()
                                 .foregroundStyle(Color.black)
                             Text(source)
-                                .font(Font.caption1Emphasized)
+                                .font(Font.caption2Emphasized)
                                 .foregroundStyle(Color.gray01)
                         }
                         .padding(.bottom, 24)

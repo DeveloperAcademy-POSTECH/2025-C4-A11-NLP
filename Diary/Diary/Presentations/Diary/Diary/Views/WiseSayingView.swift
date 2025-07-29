@@ -91,13 +91,13 @@ struct WiseSayingView: View {
         
         VStack(alignment: .leading) {
             Text("비슷한 길을 걷는 러너들에게 힘이 된 한 줄이에요.\n오늘의 다짐엔 어떤 명언이 어울릴까요?")
-                .font(Font.title22)
+                .font(Font.titleTwo)
                 .foregroundStyle(Color.black)
             
             Spacer().frame(height: 8)
             
             Text(diaryVM.diary.createDate?.formattedWithWeekday ?? Date().formattedWithWeekday)
-                .font(Font.caption1Emphasized)
+                .font(Font.caption2Emphasized)
                 .foregroundStyle(.gray01)
             
             Spacer().frame(height: 32)
