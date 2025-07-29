@@ -142,14 +142,15 @@ struct RetrospectiveWriteView: View {
                     if text.count > 25 {
                         diaryVM.diary.retrospectiveSummary = try await diaryVM.summarize(text)
                     } else {
-                        diaryVM.diary.resolutionSummary = text
+                        diaryVM.diary.retrospectiveSummary = text
+                        diaryVM.diary.retrospective = text
                     }
                     // 요약 끝, 로딩 끝, 다음 화면으로!
                     await MainActor.run {
                         
                         // 2. SwiftData에 저장 (업데이트)
                         if let target = myDiary {
-                            target.retrospective = text
+                            target.retrospective = diaryVM.diary.retrospective
                             target.retrospectiveSummary = diaryVM.diary.retrospectiveSummary
                             do {
                                 try modelContext.save()
@@ -160,6 +161,8 @@ struct RetrospectiveWriteView: View {
                             }
                         }
                         isLoading = false
+                        diaryVM.diary.retrospective = ""
+                        diaryVM.diary.retrospectiveSummary = ""
                         router.pop()
                     }
                 }
