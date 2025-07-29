@@ -12,6 +12,7 @@ struct WiseSayingView: View {
     @State private var selectedIndex: Int? = nil
     @State private var selectedContent: String? = nil
     @State private var quotes: [Quote] = []
+    @State private var showAlert = false
     
     @EnvironmentObject private var router: NavigationRouter
     @Environment(\.diaryVM) private var diaryVM
@@ -37,8 +38,7 @@ struct WiseSayingView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button {
-                        diaryVM.resetDiary()
-                        router.popToRootView()
+                        self.showAlert = true
                     } label: {
                         Image(systemName: "chevron.left")
                             .foregroundStyle(.blue)
@@ -48,6 +48,15 @@ struct WiseSayingView: View {
             }
             .navigationTitle("명언")
             .navigationBarTitleDisplayMode(.inline)
+        }
+        .alert("작성 취소", isPresented: $showAlert) {
+            Button("뒤로가기", role: .destructive) {
+                diaryVM.resetDiary()
+                router.popToRootView()
+            }
+            Button("취소", role: .cancel) {}
+        } message: {
+            Text("현재까지 입력한 내용이 저장되지 않습니다.\n정말로 취소하시겠습니까?")
         }
         
     }

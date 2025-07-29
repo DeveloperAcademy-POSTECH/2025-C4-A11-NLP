@@ -21,6 +21,7 @@ struct InputDiaryView: View {
     
     @State private var testLabel: String = ""
     @State private var isLoading: Bool = false   // 추가
+    @State private var showAlert = false
 
     var viewType: ViewType
     let date: Date
@@ -146,8 +147,7 @@ struct InputDiaryView: View {
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         Button {
-                            diaryVM.resetDiary()
-                            router.popToRootView()
+                            self.showAlert = true
                         } label: {
                             Image(systemName: "chevron.left")
                                 .foregroundStyle(.blue)
@@ -164,6 +164,15 @@ struct InputDiaryView: View {
                         }
                     }
                 }
+            }
+            .alert("작성 취소", isPresented: $showAlert) {
+                Button("뒤로가기", role: .destructive) {
+                    diaryVM.resetDiary()
+                    router.popToRootView()
+                }
+                Button("취소", role: .cancel) {}
+            } message: {
+                Text("현재까지 입력한 내용이 저장되지 않습니다.\n정말로 취소하시겠습니까?")
             }
         }
     }

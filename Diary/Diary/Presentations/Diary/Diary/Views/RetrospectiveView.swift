@@ -14,6 +14,7 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
     @EnvironmentObject private var lottieManager: LottieManager
     @Environment(\.modelContext) private var modelContext
     @Environment(\.diaryVM) private var  diaryVM
+    @State private var showAlert = false
     
     let calendar = Calendar.current
     
@@ -42,8 +43,7 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button {
-                        diaryVM.resetDiary()
-                        router.popToRootView()
+                        self.showAlert = true
                     } label: {
                         Image(systemName: "chevron.left")
                             .foregroundStyle(.blue)
@@ -51,6 +51,15 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
                     }
                 }
             }
+        }
+        .alert("작성 취소", isPresented: $showAlert) {
+            Button("뒤로가기", role: .destructive) {
+                diaryVM.resetDiary()
+                router.popToRootView()
+            }
+            Button("취소", role: .cancel) {}
+        } message: {
+            Text("현재까지 입력한 내용이 저장되지 않습니다.\n정말로 취소하시겠습니까?")
         }
     }
     
