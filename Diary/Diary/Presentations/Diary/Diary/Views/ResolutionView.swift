@@ -155,7 +155,7 @@ struct ResolutionView: View {
                 CalenderContentButton(title: "이전", imageType: .previous) {
                     router.pop()
                 }
-                .frame(width: 80, height: 40)
+                .frame(width: 98, height: 48)
                 
                 Spacer()
                 
@@ -176,7 +176,7 @@ struct ResolutionView: View {
                         }
                     }
                 }
-                .frame(width: 80, height: 40)
+                .frame(width: 98, height: 48)
             }
         case .update:
             HStack {
@@ -197,7 +197,7 @@ struct ResolutionView: View {
                         }
                     }
                 }
-                .frame(width: 80, height: 40)
+                .frame(width: 98, height: 48)
                 Spacer()
             }
         }

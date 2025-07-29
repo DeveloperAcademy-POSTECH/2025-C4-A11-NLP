@@ -129,7 +129,7 @@ struct WiseSayingView: View {
             CalenderContentButton(title: "이전", imageType: .previous) {
                 router.pop()
             }
-            .frame(width: 80, height: 40)
+            .frame(width: 98, height: 48)
             
             Spacer()
             
@@ -140,7 +140,7 @@ struct WiseSayingView: View {
                     diaryVM.diary.wiseSayingSummary = selectedContent ?? ""
                     router.push(to: .resolutionView)
                 }
-                .frame(width: 80, height: 40)
+                .frame(width: 98, height: 48)
                 .disabled(selectedIndex == nil)
             case .update:
                 CalenderContentButton(title: "완료", imageType: .none) {
@@ -148,8 +148,8 @@ struct WiseSayingView: View {
                     diaryVM.diary.wiseSayingSummary = selectedContent ?? ""
                     router.push(to: .retrospectiveView)
                 }
-                .frame(width: 80, height: 40)
-                .disabled(selectedIndex == nil) 
+                .frame(width: 98, height: 48)
+                .disabled(selectedIndex == nil)
             }
         }
     }

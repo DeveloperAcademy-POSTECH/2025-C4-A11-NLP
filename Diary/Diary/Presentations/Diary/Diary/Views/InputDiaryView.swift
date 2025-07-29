@@ -49,7 +49,6 @@ struct InputDiaryView: View {
         else {
             ZStack {
                 Color.lightBlue
-                
                 VStack(spacing: .zero) {
                     topProgressBarAndNavigationTitleView
                         .padding(.horizontal, 16)
@@ -124,9 +123,10 @@ struct InputDiaryView: View {
                             HStack(spacing: 4) {
                                 Text("오늘의 명언 받기")
                             }
-                            .font(.caption)
+                            .font(.body1Semibold)
                             .foregroundStyle(.white)
-                            .frame(height: 44)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 48)
                             .padding(.horizontal, 16)
                             .background(
                                 Color.blue
@@ -136,6 +136,7 @@ struct InputDiaryView: View {
                         }
                         Spacer()
                     }
+                    .padding(.horizontal, 16)
                     .padding(.bottom, 32)
                     .navigationTitle("일기")
                     .navigationBarTitleDisplayMode(.inline)

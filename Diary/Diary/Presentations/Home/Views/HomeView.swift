@@ -139,6 +139,8 @@ struct HomeView: View {
                                     WriteReflectionButton() {
                                         router.push(to: .retrospectiveWriteView)
                                     }
+                                    .frame(maxWidth: .infinity)
+                                    .frame(height: 48)
                                 }
                             }
                             .padding()

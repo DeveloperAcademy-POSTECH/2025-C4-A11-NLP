@@ -16,6 +16,7 @@ struct DiaryApp: App {
         WindowGroup {
             RootView()
                 .environmentObject(router)
+                .modelContainer(for: DiaryModelData.self)
         }
     }
 }

@@ -179,7 +179,7 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
         let calendar = Calendar.current
         let selectedZero = calendar.startOfDay(for: diaryVM.diary.createDate ?? Date())
         
-        SaveWriteButton(title: "저장하기") {
+        SaveWriteButton(title: "완료") {
             let newDiary = DiaryModelData(
                 createDate: selectedZero/*diaryVM.diary.createDate?.addingTimeInterval(60 * 60 * 9) ?? Date().addingTimeInterval(60 * 60 * 9)*/,
                 diaryContent: diaryVM.diary.diaryContent,
@@ -205,7 +205,8 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
             diaryVM.resetDiary()
             router.popToRootView()
         }
-        .frame(width: 100, height: 44) // FIXME: 크기 동적 수정
+        .frame(maxWidth: .infinity)
+        .frame(height: 48) // FIXME: 크기 동적 수정
     }
     
 }

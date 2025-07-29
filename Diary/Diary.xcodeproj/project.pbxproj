@@ -7,25 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3E1301652E324DC800E39912 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E1301642E324DC800E39912 /* LocalAuthentication.framework */; };
-		3E4FAC1D2E37A0790081E912 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 3E4FAC1C2E37A0790081E912 /* Lottie */; };
+		DE653B422E349F88009EFA63 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = DE653B412E349F88009EFA63 /* Lottie */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		3E8C98002E3796F2003A641B /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
-		3E1301642E324DC800E39912 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		DE5BD6022E24137500ED1385 /* Diary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -42,32 +27,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3E1301652E324DC800E39912 /* LocalAuthentication.framework in Frameworks */,
-<<<<<<< HEAD
-				3EF5075F2E37939900DB66AA /* Lottie in Frameworks */,
-				3EF507612E37939900DB66AA /* Lottie-Dynamic in Frameworks */,
-=======
-				3E4FAC1D2E37A0790081E912 /* Lottie in Frameworks */,
->>>>>>> 6880a81 (🐛[Fix] #16 - Lottie 라이브러리 교체)
+				DE653B422E349F88009EFA63 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3E1301632E324DC800E39912 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				3E1301642E324DC800E39912 /* LocalAuthentication.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		DE5BD5F92E24137500ED1385 = {
 			isa = PBXGroup;
 			children = (
 				DE5BD6042E24137500ED1385 /* Diary */,
-				3E1301632E324DC800E39912 /* Frameworks */,
 				DE5BD6032E24137500ED1385 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -90,7 +60,6 @@
 				DE5BD5FE2E24137500ED1385 /* Sources */,
 				DE5BD5FF2E24137500ED1385 /* Frameworks */,
 				DE5BD6002E24137500ED1385 /* Resources */,
-				3E8C98002E3796F2003A641B /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -101,12 +70,7 @@
 			);
 			name = Diary;
 			packageProductDependencies = (
-<<<<<<< HEAD
-				3EF5075E2E37939900DB66AA /* Lottie */,
-				3EF507602E37939900DB66AA /* Lottie-Dynamic */,
-=======
-				3E4FAC1C2E37A0790081E912 /* Lottie */,
->>>>>>> 6880a81 (🐛[Fix] #16 - Lottie 라이브러리 교체)
+				DE653B412E349F88009EFA63 /* Lottie */,
 			);
 			productName = Diary;
 			productReference = DE5BD6022E24137500ED1385 /* Diary.app */;
@@ -137,7 +101,7 @@
 			mainGroup = DE5BD5F92E24137500ED1385;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				3E4FAC1B2E37A0790081E912 /* XCRemoteSwiftPackageReference "lottie-spm" */,
+				DE653B402E349F88009EFA63 /* XCRemoteSwiftPackageReference "lottie-spm" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = DE5BD6032E24137500ED1385 /* Products */;
@@ -301,7 +265,6 @@
 				DEVELOPMENT_TEAM = W4ZPYHTRPJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSFaceIDUsageDescription = "FaceID 생체 인증 사용";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -334,7 +297,6 @@
 				DEVELOPMENT_TEAM = W4ZPYHTRPJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSFaceIDUsageDescription = "FaceID 생체 인증 사용";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -381,9 +343,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		3E4FAC1B2E37A0790081E912 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
+		DE653B402E349F88009EFA63 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/airbnb/lottie-spm";
+			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 4.5.2;
@@ -392,9 +354,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		3E4FAC1C2E37A0790081E912 /* Lottie */ = {
+		DE653B412E349F88009EFA63 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 3E4FAC1B2E37A0790081E912 /* XCRemoteSwiftPackageReference "lottie-spm" */;
+			package = DE653B402E349F88009EFA63 /* XCRemoteSwiftPackageReference "lottie-spm" */;
 			productName = Lottie;
 		};
 /* End XCSwiftPackageProductDependency section */
