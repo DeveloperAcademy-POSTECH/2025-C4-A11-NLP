@@ -26,8 +26,10 @@ struct WiseSayingView: View {
             bottomButtonView
         }
         .padding(.horizontal, 16)
-        .onAppear {
-            loadQuotes()
+        .task(id: quotes.isEmpty) {
+            if quotes.isEmpty {
+                loadQuotes()
+            }
         }
     }
     
