@@ -16,36 +16,54 @@ struct ResolutionView: View {
     @EnvironmentObject private var router: NavigationRouter
     @Environment(\.diaryVM) private var diaryVM
     
+    @State private var isLoading: Bool = false   // 추가
     var body: some View {
-        VStack(alignment: .leading) {
-            topProgressBarAndNavigationTitleView
-            middleSummationView
-            
-            Spacer().frame(height: 16)
-            
-            TextEditor(text: $text)
-                .frame(maxHeight: .infinity)
-                .overlay(
-                    Group {
-                        if text.isEmpty {
-                            VStack {
-                                Text("다짐을 작성해보세요.")
-                                    .foregroundStyle(Color.gray)
-                                    .padding([.top,.horizontal], 8)
-                                    .allowsHitTesting(false)
-                                    .frame(maxWidth: .infinity, alignment: .topLeading)
-                                Spacer()
+        if isLoading {
+            ZStack(alignment: .center) {
+                VStack() {
+                    LottieView(name: "loading")
+                        .frame(width: 76, height: 60)
+                    Text("오늘 당신이 쓴 일기를 읽고 있어요.\n도움이 될 만한 명언들을 추천해드릴게요.")
+                        .font(Font.body2Regular)
+                        .foregroundStyle(Color.black)
+                        .multilineTextAlignment(.center)
+                        .lineSpacing(8)
+                        .padding(.top, 16)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+            }
+        } else {
+            VStack(alignment: .leading) {
+                topProgressBarAndNavigationTitleView
+                middleSummationView
+                
+                Spacer().frame(height: 16)
+                
+                TextEditor(text: $text)
+                    .frame(maxHeight: .infinity)
+                    .overlay(
+                        Group {
+                            if text.isEmpty {
+                                VStack {
+                                    Text("다짐을 작성해보세요.")
+                                        .foregroundStyle(Color.gray)
+                                        .padding([.top,.horizontal], 8)
+                                        .allowsHitTesting(false)
+                                        .frame(maxWidth: .infinity, alignment: .topLeading)
+                                    Spacer()
+                                }
                             }
                         }
-                    }
-                )
+                    )
+                
+                Spacer()
+                bottomButtonView
+            }
             
-            Spacer()
-            bottomButtonView
-        }
-        .padding(.horizontal, 16)
-        .task {
-            self.text = diaryVM.diary.resolution
+            .padding(.horizontal, 16)
+            .task {
+                self.text = diaryVM.diary.resolution
+            }
         }
     }
     
@@ -96,7 +114,7 @@ struct ResolutionView: View {
             
             HStack(spacing: .zero) {
                 Text("일기 AI요약: ")
-                Text(diaryVM.diary.summary)
+                Text(diaryVM.diary.diaryContentSummary)
             }
             .font(Font.caption1Emphasized)
             .foregroundStyle(Color.gray01)
@@ -125,8 +143,21 @@ struct ResolutionView: View {
                 Spacer()
                 
                 CalenderContentButton(title: "다음", imageType: .next) {
+                    
+                    isLoading = true
                     diaryVM.diary.resolution = text // 다짐 viewModel 저장
-                    router.push(to: .retrospectiveView)
+                    Task {
+                        if text.count > 25 {
+                            diaryVM.diary.resolutionSummary = try await diaryVM.summarize(text)
+                        } else {
+                            diaryVM.diary.resolutionSummary = text
+                        }
+                        // 요약 끝, 로딩 끝, 다음 화면으로!
+                        await MainActor.run {
+                            isLoading = false
+                            router.push(to: .retrospectiveView)
+                        }
+                    }
                 }
                 .frame(width: 80, height: 40)
             }
@@ -135,40 +166,25 @@ struct ResolutionView: View {
                 Spacer()
                 CalenderContentButton(title: "완료", imageType: .none) {
                     diaryVM.diary.resolution = text // 다짐 viewModel 저장
-                    router.pop()
+                    isLoading = true
+                    Task {
+                        if text.count > 25 {
+                            diaryVM.diary.resolutionSummary = try await diaryVM.summarize(text)
+                        } else {
+                            diaryVM.diary.resolutionSummary = text
+                        }
+                        // 요약 끝, 로딩 끝, 다음 화면으로!
+                        await MainActor.run {
+                            isLoading = false
+                            router.pop()
+                        }
+                    }
                 }
                 .frame(width: 80, height: 40)
                 Spacer()
             }
         }
     }
-    
-    //MARK: 하단 버튼 뷰
-//    private var bottomButtonView: some View {
-//        
-//        //        switch viewType {
-//        //        case .new:
-//        //            
-//        //        case .update:
-//        //            
-//        //        }
-//        
-//        HStack {
-//            CalenderContentButton(title: "이전", imageType: .previous) {
-//                router.pop()
-//            }
-//            .frame(width: 80, height: 40)
-//            
-//            Spacer()
-//            
-//            CalenderContentButton(title: "다음", imageType: .next) {
-//                diaryVM.diary.resolution = text // 다짐 viewModel 저장
-//                router.push(to: .retrospectiveView)
-//            }
-//            .frame(width: 80, height: 40)
-//            //            .disabled(selectedIndex == nil)
-//        }
-//    }
 }
 
 #Preview {

@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct WriteReflectionButton: View{
+    let action: () -> ()
     var body: some View {
         Button(action: {
             // 회고 작성 화면으로 이동
+            action()
         }) {
             Text("회고 쓰기")
                 .bold()
@@ -28,5 +30,7 @@ struct WriteReflectionButton: View{
 }
 
 #Preview {
-    WriteReflectionButton()
+    WriteReflectionButton() {
+        print("회고 작성 화면으로 이동")
+    }
 }

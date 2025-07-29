@@ -19,12 +19,13 @@ struct HomeView: View {
     @State private var month: Date = Date()
     
     @EnvironmentObject var router: NavigationRouter
+    @Environment(\.diaryVM) private var diaryVM
     @StateObject private var lottieManager :LottieManager = .init()
     private var lottieType: LottieType = .confettie
     
     static var shardSelectedDate: Date? //FIXME: 네비게이션 date주입을 위한 임시 변수
     
-    @Query(sort: \DiaryModelData.createDate, order: .reverse) private var diaries: [DiaryModelData]
+    @Query private var diaries: [DiaryModelData]
     
     var body: some View {
         NavigationStack(path: $router.destination) {
@@ -49,6 +50,7 @@ struct HomeView: View {
                     )
                     .onChange(of: selectedDate) { _, newValue in
                         if let date = newValue {
+                            diaryVM.diary.createDate = date //FIXME: 로직 수정해야 될 것 같음
                             print("Selected date: \(date)")
                         }
                     }
@@ -132,8 +134,11 @@ struct HomeView: View {
                                 }
                                 Divider()
                                 //회고 없을 시 "회고 쓰기" 버튼 띄우기
-                                if entry.reflection == "-" {
-                                    WriteReflectionButton()
+                                //FIXME: 이게 맞는 걸까
+                                if entry.reflection == "" {
+                                    WriteReflectionButton() {
+                                        router.push(to: .retrospectiveWriteView)
+                                    }
                                 }
                             }
                             .padding()
@@ -213,9 +218,21 @@ struct HomeView: View {
             })
             .task { // 날짜가 선택되지 않을때는 오늘 날짜로 넣어두기
                 if selectedDate == nil {
-                    selectedDate = Date()
+                    selectedDate = Date().addingTimeInterval(60 * 60 * 9)
+//                    let todayStartOfDay = Calendar.current.startOfDay(for: Date())
+//                       selectedDate = todayStartOfDay
+//                       diaryVM.diary.createDate = todayStartOfDay
                 }
+                print("diaries : \(diaries.first?.createDate)")
             }
+            //TODO: 로직 살펴보기
+            .onAppear {
+                diaryStore.update(with: diaries) // SwiftData → entries 반영
+            }
+            .onChange(of: diaries) { _, newDiaries in
+                diaryStore.update(with: newDiaries) // 데이터 변동 반영
+            }
+            
         }
         .environmentObject(lottieManager)
         
