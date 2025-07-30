@@ -22,7 +22,7 @@ struct WiseSayingView: View {
     
     var body: some View {
         ZStack {
-            Color.lightBlue.ignoresSafeArea()
+            Color.lightgreen.ignoresSafeArea()
             
             VStack(alignment: .leading) {
                 topProgressBarAndNavigationTitleView
@@ -101,7 +101,7 @@ struct WiseSayingView: View {
         VStack(alignment: .leading) {
             Text("비슷한 길을 걷는 러너들에게 힘이 된 한 줄이에요.\n오늘의 다짐엔 어떤 명언이 어울릴까요?")
                 .font(Font.titleTwo)
-                .foregroundStyle(Color.black)
+                .foregroundStyle(Color.black01)
             
             Spacer().frame(height: 8)
             

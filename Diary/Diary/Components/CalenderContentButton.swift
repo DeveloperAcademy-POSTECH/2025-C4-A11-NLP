@@ -20,7 +20,7 @@ struct CalenderContentButton: View {
             action()
         } label: {
             RoundedRectangle(cornerRadius: 15)
-                .fill(Color.blue3)
+                .fill(Color.green5)
                 .overlay {
                     switch imageType {
                     case .previous:
@@ -29,7 +29,7 @@ struct CalenderContentButton: View {
                                 Image(systemName: imageType.image)
                                 Text(title)
                             }
-                            .foregroundStyle(isEnabled ? Color.black : Color.gray02)
+                            .foregroundStyle(isEnabled ? Color.black01 : Color.gray02)
                             .font(Font.caption2Emphasized)
                         }
                     case .next:
@@ -38,7 +38,7 @@ struct CalenderContentButton: View {
                                 Text(title)
                                 Image(systemName: imageType.image)
                             }
-                            .foregroundStyle(isEnabled ? Color.black : Color.gray02)
+                            .foregroundStyle(isEnabled ? Color.black01 : Color.gray02)
                             .font(Font.caption2Emphasized)
                         }
                     case .none:
@@ -46,7 +46,7 @@ struct CalenderContentButton: View {
                             Group {
                                 Text(title)
                             }
-                            .foregroundStyle(isEnabled ? Color.black : Color.gray02)
+                            .foregroundStyle(isEnabled ? Color.black01 : Color.gray02)
                             .font(Font.caption2Emphasized)
                         }
                     }

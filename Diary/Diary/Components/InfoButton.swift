@@ -17,7 +17,7 @@ struct InfoButton: View{
         }) {
           Image(systemName: "info.circle.fill")
             .font(.system(size: 24))
-            .foregroundStyle(Color(red: 222/255, green: 223/255, blue: 224/255))
+            .foregroundStyle(Color.gray03)
             .padding()
         }
     }
@@ -28,18 +28,18 @@ struct InfoOverlay: View{
         VStack(alignment: .leading, spacing: 12) {
           HStack(spacing: 8) {
             Circle()
-              .fill(Color(red: 178/255, green: 203/255, blue: 255/255))
-              .frame(width: 30, height: 30)
+                  .fill(Color.green4)
+                  .frame(width: 30, height: 30)
             Text("회고 없음")
               .font(.system(size: 24))
           }
 
           HStack(spacing: 8) {
             Circle()
-              .fill(Color(red: 77/255, green: 133/255, blue: 255/255))
-              .frame(width: 30, height: 30)
+                  .fill(Color.green2)
+                  .frame(width: 30, height: 30)
             Text("회고 완료")
-              .font(.system(size: 24))
+                  .font(.system(size: 24))
           }
         }
         .frame(width: 189, height: 70)

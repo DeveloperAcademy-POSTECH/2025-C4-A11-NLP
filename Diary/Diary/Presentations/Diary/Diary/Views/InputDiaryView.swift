@@ -32,7 +32,7 @@ struct InputDiaryView: View {
         
         if isLoading {
             ZStack(alignment: .center) {
-                Color.lightBlue.ignoresSafeArea()
+                Color.lightgreen.ignoresSafeArea()
                 
                 VStack() {
                     LottieView(name: "loading")
@@ -49,27 +49,28 @@ struct InputDiaryView: View {
         }
         else {
             ZStack {
-                Color.lightBlue
+                Color.lightgreen.ignoresSafeArea()
                 VStack(spacing: .zero) {
                     topProgressBarAndNavigationTitleView
                         .padding(.horizontal, 16)
                     ScrollView {
                         VStack(alignment: .leading, spacing: 0) {
                             Text("오늘 하루는 어땠나요?")
-                                .font(.system(size: 17, weight: .semibold))
+                                .font(Font.titleTwo)
+                                .foregroundStyle(Color.black01)
                                 .padding(.bottom, 8)
                             Text("\(date.formattedWithWeekday)")
-                                .font(.caption)
-                                .foregroundStyle(Color.gray)
+                                .font(Font.caption2Emphasized)
+                                .foregroundStyle(Color.gray01)
                                 .padding(.bottom, 27)
-                            TextField("글을 작성해주세요.", text: $diaryText, axis: .vertical)
+                            TextField("오늘 느낀 솔직한 감정들을 써보세요.", text: $diaryText, axis: .vertical)
                                 .font(.body)
                                 .focused($isTextFieldFocused)
-                            if showRedFeedback {
-                                Text("*200자 이상 글을 작성해주세요.")
-                                    .font(.caption2Emphasized)
-                                    .foregroundStyle(Color.red)
-                            }
+//                            if showRedFeedback {
+//                                Text("*200자 이상 글을 작성해주세요.")
+//                                    .font(.caption2Emphasized)
+//                                    .foregroundStyle(Color.red)
+//                            }
                         }
                         //.padding(.horizontal)
                         .padding(.top, 16)
@@ -124,13 +125,13 @@ struct InputDiaryView: View {
                             HStack(spacing: 4) {
                                 Text("오늘의 명언 받기")
                             }
-                            .font(.body1Semibold)
+                            .font(Font.caption1)
                             .foregroundStyle(.white)
                             .frame(maxWidth: .infinity)
                             .frame(height: 48)
                             .padding(.horizontal, 16)
                             .background(
-                                Color.blue
+                                Color.green6
                             )
                             .cornerRadius(15)
                             .offset(x: shakeOffset)
@@ -150,7 +151,7 @@ struct InputDiaryView: View {
                             self.showAlert = true
                         } label: {
                             Image(systemName: "chevron.left")
-                                .foregroundStyle(.blue)
+                                .foregroundStyle(Color.brown01)
                                 .font(.system(size: 23, weight: .semibold))
                         }
                     }
@@ -160,6 +161,7 @@ struct InputDiaryView: View {
                                 isTextFieldFocused = false
                             } label: {
                                 Image(systemName: "keyboard.chevron.compact.down")
+                                    .foregroundStyle(Color.brown01)
                             }
                         }
                     }

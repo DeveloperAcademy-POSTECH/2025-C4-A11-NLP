@@ -12,7 +12,7 @@ struct ProgressView: View {
     
     var body: some View {
         RoundedRectangle(cornerRadius: 4)
-            .fill(choice ? Color.blue01 : Color.gray1)
+            .fill(choice ? Color.brown01 : Color.lightyellow)
     }
 }
 

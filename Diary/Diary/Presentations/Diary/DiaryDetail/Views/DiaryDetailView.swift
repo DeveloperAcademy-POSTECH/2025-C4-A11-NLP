@@ -11,7 +11,7 @@ struct DiaryDetailView: View {
     
     var body: some View {
         ZStack {
-            Color.lightBlu76e.ignoresSafeArea()
+            Color.lightgreen.ignoresSafeArea()
             VStack {
                 Text("자세히 보기 디테일")
             }

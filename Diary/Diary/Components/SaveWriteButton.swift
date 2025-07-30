@@ -17,10 +17,10 @@ struct SaveWriteButton: View {
             action()
         } label: {
             RoundedRectangle(cornerRadius: 15)
-                .fill(Color.blue1)
+                .fill(Color.green6)
                 .overlay {
                     Text(title)
-                        .font(Font.caption2Emphasized)
+                        .font(Font.caption1)
                         .foregroundStyle(Color.white)
                 }
         }

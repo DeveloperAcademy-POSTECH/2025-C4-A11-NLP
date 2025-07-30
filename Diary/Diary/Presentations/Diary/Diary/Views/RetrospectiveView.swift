@@ -21,7 +21,7 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
     
     var body: some View {
         ZStack {
-            Color.lightBlue.ignoresSafeArea()
+            Color.lightgreen.ignoresSafeArea()
             VStack {
                 topNavigationTitleView
                 Spacer().frame(height: 16)
@@ -46,8 +46,8 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
                         self.showAlert = true
                     } label: {
                         Image(systemName: "chevron.left")
-                            .foregroundStyle(.blue)
-                            .font(.system(size: 23, weight: .semibold))
+                            .foregroundStyle(.brown01)
+                            .font(.system(size: 17, weight: .semibold))
                     }
                 }
             }
@@ -75,7 +75,7 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
         VStack(alignment: .leading) {
             Text("마음을 눌러 담은 문장들, 저장 전에 다시 읽어보세요.")
                 .font(Font.titleTwo)
-                .foregroundStyle(Color.black)
+                .foregroundStyle(Color.black01)
             
             Spacer().frame(height: 8)
             
@@ -91,19 +91,20 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
             HStack {
                 Text("일기")
                     .font(Font.body1Semibold)
-                    .foregroundStyle(Color.black)
+                    .foregroundStyle(Color.black01)
                 Spacer()
                 Button {
                     router.push(to: .inputDiaryUpdateView(date: HomeView.shardSelectedDate ?? Date(), viewType: .update))
                 } label: {
                     Image(systemName: "square.and.pencil")
-                        .foregroundStyle(Color.blue)
+                        .font(.system(size: 24))
+                        .foregroundStyle(Color.brown01)
                 }
             }
             Spacer().frame(height: 8)
             Text(diaryVM.diary.diaryContent)
                 .font(Font.body1Regular)
-                .foregroundStyle(Color.black)
+                .foregroundStyle(Color.black01)
                 .fixedSize(horizontal: false, vertical: true)
             Spacer()
         }
@@ -120,13 +121,13 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
             HStack {
                 Text("명언")
                     .font(Font.body1Semibold)
-                    .foregroundStyle(Color.black)
+                    .foregroundStyle(Color.black01)
                 Spacer()
             }
             Spacer().frame(height: 8)
             Text(diaryVM.diary.wiseSaying)
                 .font(Font.body1Regular)
-                .foregroundStyle(Color.black)
+                .foregroundStyle(Color.black01)
                 .fixedSize(horizontal: false, vertical: true)
             Spacer()
         }
@@ -142,20 +143,21 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
         VStack(alignment: .leading) {
             HStack {
                 Text("다짐")
-                    .font(Font.body1Semibold)
-                    .foregroundStyle(Color.black)
+                    .font(Font.body1Regular)
+                    .foregroundStyle(Color.black01)
                 Spacer()
                 Button {
                     router.push(to: .resolutionUpdateView)
                 } label: {
                     Image(systemName: "square.and.pencil")
-                        .foregroundStyle(Color.blue)
+                        .font(.system(size: 17))
+                        .foregroundStyle(Color.brown01)
                 }
             }
             Spacer().frame(height: 8)
             Text(diaryVM.diary.resolution)
                 .font(Font.body1Regular)
-                .foregroundStyle(Color.black)
+                .foregroundStyle(Color.black01)
                 .fixedSize(horizontal: false, vertical: true)
             Spacer()
         }

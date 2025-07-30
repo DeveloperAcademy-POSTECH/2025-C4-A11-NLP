@@ -30,7 +30,7 @@ struct RetrospectiveWriteView: View {
     var body: some View {
         if isLoading {
             ZStack(alignment: .center) {
-                Color.lightBlue.ignoresSafeArea()
+                Color.lightgreen.ignoresSafeArea()
                 VStack {
                     LottieView(name: "loading")
                         .frame(width: 76, height: 60)
@@ -39,7 +39,7 @@ struct RetrospectiveWriteView: View {
             }
         } else {
             ZStack {
-                Color.lightBlue.ignoresSafeArea()
+                Color.lightgreen.ignoresSafeArea()
                 VStack {
                     topNavigationTitleView
                     middleTextFieldView
@@ -90,7 +90,7 @@ struct RetrospectiveWriteView: View {
             
             Text("이전에 남긴 다짐을 회고하며,\n내일의 나를 위한 다짐을 다시 써 내려가요.")
                 .font(Font.titleTwo)
-                .foregroundStyle(Color.black)
+                .foregroundStyle(Color.black01)
             
             Spacer().frame(height: 8)
             
@@ -102,28 +102,36 @@ struct RetrospectiveWriteView: View {
             
             HStack(spacing: .zero) {
                 Text("일기 AI요약: ")
+                    .font(Font.caption2Emphasized)
+                    .foregroundStyle(Color.gray01)
                 Text(myDiary?.diaryContentSummary ?? "")
+                    .font(Font.caption2Regular)
+                    .foregroundStyle(Color.gray01)
             }
-            .font(Font.caption2Emphasized)
-            .foregroundStyle(Color.gray01)
-            
+           
             Spacer().frame(height: 4)
             
             HStack(spacing: .zero) {
                 Text("명언: ")
+                    .font(Font.caption2Emphasized)
+                    .foregroundStyle(Color.gray01)
                 Text(myDiary?.wiseSayingSummary ?? "")
+                    .font(Font.caption2Regular)
+                    .foregroundStyle(Color.gray01)
             }
-            .font(Font.caption2Emphasized)
-            .foregroundStyle(Color.gray01)
+            
             
             Spacer().frame(height: 4)
             
             HStack(spacing: .zero) {
                 Text("다짐 AI요약: ")
+                    .font(Font.caption2Emphasized)
+                    .foregroundStyle(Color.gray01)
                 Text(myDiary?.resolutionSummary ?? "")
+                    .font(Font.caption2Regular)
+                    .foregroundStyle(Color.gray01)
             }
-            .font(Font.caption2Emphasized)
-            .foregroundStyle(Color.gray01)
+           
             
             Divider()
             
@@ -137,9 +145,10 @@ struct RetrospectiveWriteView: View {
     }
     
     private var middleTextFieldView: some View {
-        TextField("글을 작성해주세요.", text: $text, axis: .vertical)
+        TextField("회고를 작성해주세요.", text: $text, axis: .vertical)
             .focused($isTextFieldFocused)
-            .font(.body)
+            .font(Font.body1Regular)
+            .foregroundStyle(Color.black01)
     }
     
     private var bottomButtonView: some View {

@@ -23,13 +23,13 @@ struct ResolutionView: View {
     var body: some View {
         if isLoading {
             ZStack(alignment: .center) {
-                Color.lightBlue.ignoresSafeArea()
+                Color.lightgreen.ignoresSafeArea()
                 VStack() {
                     LottieView(name: "loading")
                         .frame(width: 76, height: 60)
                     Text("오늘 당신이 쓴 일기를 읽고 있어요.\n도움이 될 만한 명언들을 추천해드릴게요.")
                         .font(Font.body1Regular)
-                        .foregroundStyle(Color.black)
+                        .foregroundStyle(Color.black01)
                         .multilineTextAlignment(.center)
                         .lineSpacing(8)
                         .padding(.top, 16)
@@ -38,7 +38,7 @@ struct ResolutionView: View {
             }
         } else {
             ZStack {
-                Color.lightBlue.ignoresSafeArea()
+                Color.lightgreen.ignoresSafeArea()
                 
                 VStack(alignment: .leading) {
                     topProgressBarAndNavigationTitleView
@@ -46,7 +46,7 @@ struct ResolutionView: View {
                     
                     Spacer().frame(height: 16)
                     
-                    TextField("글을 작성해주세요.", text: $text, axis: .vertical)
+                    TextField("다짐을 작성해보세요.", text: $text, axis: .vertical)
                         .font(.body)
                         .focused($isTextFieldFocused)
                     Spacer()
@@ -65,8 +65,8 @@ struct ResolutionView: View {
                         self.showAlert = true
                     } label: {
                         Image(systemName: "chevron.left")
-                            .foregroundStyle(.blue)
-                            .font(.system(size: 23, weight: .semibold))
+                            .foregroundStyle(.brown01)
+                            .font(.system(size: 17, weight: .semibold))
                     }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
@@ -75,6 +75,7 @@ struct ResolutionView: View {
                             isTextFieldFocused = false
                         } label: {
                             Image(systemName: "keyboard.chevron.compact.down")
+                                .foregroundStyle(Color.brown01)
                         }
                     }
                 }
@@ -128,7 +129,7 @@ struct ResolutionView: View {
         VStack(alignment: .leading) {
             Text("쓴 일기와 선택한 러너의 명언을 바탕으로,\n내일을 위한 다짐을 적어보세요.")
                 .font(Font.titleTwo)
-                .foregroundStyle(Color.black)
+                .foregroundStyle(Color.black01)
             
             Spacer().frame(height: 8)
             
@@ -140,18 +141,20 @@ struct ResolutionView: View {
             
             HStack(spacing: .zero) {
                 Text("일기 AI요약: ")
+                    .font(Font.caption2Emphasized)
                 Text(diaryVM.diary.diaryContentSummary)
+                    .font(Font.caption2Regular)
             }
-            .font(Font.caption2Emphasized)
             .foregroundStyle(Color.gray01)
             
             Spacer().frame(height: 4)
             
             HStack(spacing: .zero) {
                 Text("명언: ")
+                    .font(Font.caption2Emphasized)
                 Text(diaryVM.diary.wiseSaying)
+                    .font(Font.caption2Regular)
             }
-            .font(Font.caption2Emphasized)
             .foregroundStyle(Color.gray01)
         }
     }

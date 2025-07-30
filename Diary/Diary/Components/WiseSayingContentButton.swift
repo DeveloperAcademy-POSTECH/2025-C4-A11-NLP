@@ -22,11 +22,11 @@ struct WiseSayingContentButton: View {
             action()
         } label: {
             RoundedRectangle(cornerRadius: 30)
-                .fill(Color.blue3)
+                .fill(Color.green5)
                 .overlay {
                     if isSelected {
                         RoundedRectangle(cornerRadius: 30)
-                            .stroke(Color.blue2, lineWidth: 5)
+                            .stroke(Color.green6, lineWidth: 5)
                     }
                 }
                 .overlay {
@@ -34,8 +34,8 @@ struct WiseSayingContentButton: View {
                         HStack {
                             Text(content)
                                 .font(isSelected ? Font.body1Semibold : Font.body1Regular)
-                                .foregroundStyle(Color.black)
-                                .multilineTextAlignment(.leading) 
+                                .foregroundStyle(Color.black01)
+                                .multilineTextAlignment(.leading)
                                 .fixedSize(horizontal: false, vertical: true)
                                 .lineLimit(nil)
                             Spacer()
@@ -45,7 +45,7 @@ struct WiseSayingContentButton: View {
                         HStack(spacing: 4) {
                             Text(respondent)
                                 .font(.system(size: 13)).bold()
-                                .foregroundStyle(Color.black)
+                                .foregroundStyle(Color.black01)
                             Text(source)
                                 .font(Font.caption2Emphasized)
                                 .foregroundStyle(Color.gray01)

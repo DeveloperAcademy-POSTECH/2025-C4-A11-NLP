@@ -15,7 +15,7 @@ struct WriteReflectionButton: View {
             action()
         }) {
             RoundedRectangle(cornerRadius: 15)
-                .fill(Color.blue1)
+                .fill(Color.green6)
                 .overlay {
                     Text("회고 쓰기")
                         .font(Font.caption1)
