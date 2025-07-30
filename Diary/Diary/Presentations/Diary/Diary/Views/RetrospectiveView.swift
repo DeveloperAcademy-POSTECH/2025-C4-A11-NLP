@@ -97,7 +97,7 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
                     router.push(to: .inputDiaryUpdateView(date: HomeView.shardSelectedDate ?? Date(), viewType: .update))
                 } label: {
                     Image(systemName: "square.and.pencil")
-                        .font(.system(size: 24))
+                        .font(.system(size: 17))
                         .foregroundStyle(Color.brown01)
                 }
             }
