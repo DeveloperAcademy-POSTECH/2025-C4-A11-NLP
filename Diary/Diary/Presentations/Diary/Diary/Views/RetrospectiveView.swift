@@ -190,7 +190,7 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
             let sharedDefaults = UserDefaults(suiteName: "group.com.SPC4.Diary")
             sharedDefaults?.set(newDiary.createDate, forKey: "latestDiaryDate")
             sharedDefaults?.set(newDiary.wiseSaying, forKey: "latestWiseSaying")
-            sharedDefaults?.set(newDiary.resolution, forKey: "latestResolution")
+            sharedDefaults?.set(newDiary.resolutionSummary, forKey: "latestResolution")
             WidgetCenter.shared.reloadAllTimelines()
 
             lottieManager.shouldPlayLottie = true  // Lottie 실행
