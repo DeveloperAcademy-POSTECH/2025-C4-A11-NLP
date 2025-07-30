@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct StreakView: View {
     let lottieType: LottieType
@@ -13,12 +14,14 @@ struct StreakView: View {
     @EnvironmentObject private var router: NavigationRouter
     @EnvironmentObject private var lottieManager: LottieManager
     
-    @State var test: Int = 0
+    @State private var streakCount: Int = 0
     @State private var colorChange: Bool = false
     @State private var showResult = false
     @State private var showResult2 = false
     @State private var remove = false
     @State private var showConfettie = false
+    
+    @Query private var diaries: [DiaryModelData]
     
     let customGradient = LinearGradient(
         gradient: Gradient(stops: [
@@ -61,7 +64,7 @@ struct StreakView: View {
                 
                 Spacer().frame(height: 80) //FIXME: 임시
                 
-                Text("\(test)")
+                Text("\(streakCount - 1)")
                     .font(.system(size: 40))
                     .foregroundStyle(colorChange ? Color.red01 : Color.gray03)
                     .opacity(remove ? 0 : 1)
@@ -69,7 +72,7 @@ struct StreakView: View {
                 //FIXME: 텍스트 위치 임의 조정
                 VStack(alignment: .center) {
                     HStack {
-                        Text("\(test)")
+                        Text("\(streakCount)")
                             .font(.system(size: 40))
                             .foregroundStyle(Color.red01)
                             .opacity(showResult ? 1 : 0)
@@ -96,7 +99,7 @@ struct StreakView: View {
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 withAnimation(.easeInOut(duration: 0.8)) {
-                    test += 1
+                    //streakCount += 1
                     colorChange = true
                 }
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
@@ -118,6 +121,34 @@ struct StreakView: View {
                 }
             }
         }
+        .onAppear {
+            streakCount = calculateStreak(from: diaries)
+        }
+    }
+    
+    private func calculateStreak(from diaries: [DiaryModelData]) -> Int {
+        guard !diaries.isEmpty else { return 0 }
+
+        let diaryDatesSet = Set(diaries.map { Calendar.current.startOfDay(for: $0.createDate) })
+        
+        var streak = 0
+        var currentDate = Calendar.current.startOfDay(for: Date())
+        
+        // 오늘 작성했는지 여부 체크
+        if !diaryDatesSet.contains(currentDate) {
+            // 오늘 작성된 기록이 없다면 하루 전으로 옮겨서 체크
+            guard let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: currentDate) else { return 0 }
+            currentDate = yesterday
+        }
+        
+        // 연속 기록 여부 체크
+        while diaryDatesSet.contains(currentDate) {
+            streak += 1
+            guard let previousDate = Calendar.current.date(byAdding: .day, value: -1, to: currentDate) else { break }
+            currentDate = previousDate
+        }
+        
+        return streak
     }
 }
 

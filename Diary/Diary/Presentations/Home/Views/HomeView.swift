@@ -265,7 +265,7 @@ struct HomeView: View {
 //                       selectedDate = todayStartOfDay
 //                       diaryVM.diary.createDate = todayStartOfDay
                 }
-                print("diaries : \(diaries.first?.createDate)")
+                // print("diaries : \(diaries.first?.createDate)")
             }
             //TODO: 로직 살펴보기
             .onAppear {
