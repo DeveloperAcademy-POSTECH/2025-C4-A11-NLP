@@ -85,7 +85,7 @@ struct HomeView: View {
                             // 일기가 있는 경우에만 화살표 표시
                             if diaryStore.diary(for: selected) != nil {
                                 Button(action: {
-                                    // 일기 상세 보기 뷰 네비게이션
+                                    router.push(to: .diaryDetailView)
                                 }) {
                                     Image(systemName: "arrow.right")
                                         .font(.system(size: 20))

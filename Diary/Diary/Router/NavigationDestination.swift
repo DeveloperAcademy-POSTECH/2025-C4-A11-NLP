@@ -19,5 +19,6 @@ enum NavigationDestination: Equatable, Hashable {
     case wiseSayingUpdateView(emotions: [String])
     case streakView
     case retrospectiveWriteView
+    case diaryDetailView
 }
 

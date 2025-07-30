@@ -37,6 +37,8 @@ struct NavigationRoutingView: View {
                 StreakView(lottieType: .fire)
             case .retrospectiveWriteView:
                 RetrospectiveWriteView()
+            case .diaryDetailView:
+                DiaryDetailView()
             }
         }
         .hideBackButton()
