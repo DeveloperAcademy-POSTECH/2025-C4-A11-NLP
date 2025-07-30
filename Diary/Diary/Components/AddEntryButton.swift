@@ -19,7 +19,7 @@ struct AddEntryButton: View{
             .font(.system(size: 32))
             .foregroundStyle(.white)
             .frame(width: 59, height: 59)
-            .background(Color(red: 36/255, green: 36/255, blue: 205/255))
+            .background(Color.green6)
             .clipShape(Circle())
             .shadow(radius: 4)
             .padding(.bottom, 30)

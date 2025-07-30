@@ -14,13 +14,14 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
     @EnvironmentObject private var lottieManager: LottieManager
     @Environment(\.modelContext) private var modelContext
     @Environment(\.diaryVM) private var  diaryVM
+    @State private var showAlert = false
     
     let calendar = Calendar.current
     
     
     var body: some View {
         ZStack {
-            Color.lightBlue.ignoresSafeArea()
+            Color.lightgreen.ignoresSafeArea()
             VStack {
                 topNavigationTitleView
                 Spacer().frame(height: 16)
@@ -35,43 +36,51 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
                     Spacer().frame(height: 24)
                     bottomSaveButtonView
                 }
+                .navigationTitle("미리보기")
+                .navigationBarTitleDisplayMode(.inline)
             }
             .padding(.horizontal, 16)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        self.showAlert = true
+                    } label: {
+                        Image(systemName: "chevron.left")
+                            .foregroundStyle(.brown01)
+                            .font(.system(size: 17, weight: .semibold))
+                    }
+                }
+            }
+        }
+        .alert("작성 취소", isPresented: $showAlert) {
+            Button("뒤로가기", role: .destructive) {
+                diaryVM.resetDiary()
+                router.popToRootView()
+            }
+            Button("취소", role: .cancel) {}
+        } message: {
+            Text("현재까지 입력한 내용이 저장되지 않습니다.\n정말로 취소하시겠습니까?")
         }
     }
     
     //MARK: 네비게이션 타이틀
     private var topNavigationTitleView: some View {
         VStack {
-            HStack {
-                Button {
-                    diaryVM.resetDiary()
-                    router.popToRootView()
-                } label: {
-                    Image(systemName: "chevron.left")
-                        .foregroundStyle(.blue)
-                        .font(.system(size: 23, weight: .semibold))
-                }
-                Spacer()
-                Text("미리보기")
-                    .font(.title1Emphasized)
-                Spacer()
-            }
-            .padding(.vertical, 16)
         }
+        .padding(.bottom, 16)
     }
     
     //MARK: 미들 요약 뷰
     private var middleSummationView: some View {
         VStack(alignment: .leading) {
             Text("마음을 눌러 담은 문장들, 저장 전에 다시 읽어보세요.")
-                .font(Font.title22)
-                .foregroundStyle(Color.black)
+                .font(Font.titleTwo)
+                .foregroundStyle(Color.black01)
             
             Spacer().frame(height: 8)
             
             Text(diaryVM.diary.createDate?.formattedWithWeekday ?? Date().formattedWithWeekday)
-                .font(Font.caption1Emphasized)
+                .font(Font.caption2Emphasized)
                 .foregroundStyle(Color.gray01)
         }
     }
@@ -81,20 +90,21 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
         VStack(alignment: .leading) {
             HStack {
                 Text("일기")
-                    .font(Font.body2Emphasized)
-                    .foregroundStyle(Color.black)
+                    .font(Font.body1Semibold)
+                    .foregroundStyle(Color.black01)
                 Spacer()
                 Button {
                     router.push(to: .inputDiaryUpdateView(date: HomeView.shardSelectedDate ?? Date(), viewType: .update))
                 } label: {
                     Image(systemName: "square.and.pencil")
-                        .foregroundStyle(Color.blue)
+                        .font(.system(size: 24))
+                        .foregroundStyle(Color.brown01)
                 }
             }
             Spacer().frame(height: 8)
             Text(diaryVM.diary.diaryContent)
-                .font(Font.body2Regular)
-                .foregroundStyle(Color.black)
+                .font(Font.body1Regular)
+                .foregroundStyle(Color.black01)
                 .fixedSize(horizontal: false, vertical: true)
             Spacer()
         }
@@ -110,14 +120,14 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
         VStack(alignment: .leading) {
             HStack {
                 Text("명언")
-                    .font(Font.body2Emphasized)
-                    .foregroundStyle(Color.black)
+                    .font(Font.body1Semibold)
+                    .foregroundStyle(Color.black01)
                 Spacer()
             }
             Spacer().frame(height: 8)
             Text(diaryVM.diary.wiseSaying)
-                .font(Font.body2Regular)
-                .foregroundStyle(Color.black)
+                .font(Font.body1Regular)
+                .foregroundStyle(Color.black01)
                 .fixedSize(horizontal: false, vertical: true)
             Spacer()
         }
@@ -133,20 +143,21 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
         VStack(alignment: .leading) {
             HStack {
                 Text("다짐")
-                    .font(Font.body2Emphasized)
-                    .foregroundStyle(Color.black)
+                    .font(Font.body1Regular)
+                    .foregroundStyle(Color.black01)
                 Spacer()
                 Button {
                     router.push(to: .resolutionUpdateView)
                 } label: {
                     Image(systemName: "square.and.pencil")
-                        .foregroundStyle(Color.blue)
+                        .font(.system(size: 17))
+                        .foregroundStyle(Color.brown01)
                 }
             }
             Spacer().frame(height: 8)
             Text(diaryVM.diary.resolution)
-                .font(Font.body2Regular)
-                .foregroundStyle(Color.black)
+                .font(Font.body1Regular)
+                .foregroundStyle(Color.black01)
                 .fixedSize(horizontal: false, vertical: true)
             Spacer()
         }
@@ -164,7 +175,7 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
         let calendar = Calendar.current
         let selectedZero = calendar.startOfDay(for: diaryVM.diary.createDate ?? Date())
         
-        SaveWriteButton(title: "저장하기") {
+        SaveWriteButton(title: "완료") {
             let newDiary = DiaryModelData(
                 createDate: selectedZero/*diaryVM.diary.createDate?.addingTimeInterval(60 * 60 * 9) ?? Date().addingTimeInterval(60 * 60 * 9)*/,
                 diaryContent: diaryVM.diary.diaryContent,
@@ -190,13 +201,16 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
             diaryVM.resetDiary()
             router.popToRootView()
         }
-        .frame(width: 100, height: 44) // FIXME: 크기 동적 수정
+        .frame(maxWidth: .infinity)
+        .frame(height: 48) // FIXME: 크기 동적 수정
     }
     
 }
 
 #Preview {
-    RetrospectiveView()
-        .environmentObject(NavigationRouter())
+    NavigationStack {
+        RetrospectiveView()
+            .environmentObject(NavigationRouter())
+    }
 }
 

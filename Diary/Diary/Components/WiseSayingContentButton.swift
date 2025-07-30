@@ -22,35 +22,37 @@ struct WiseSayingContentButton: View {
             action()
         } label: {
             RoundedRectangle(cornerRadius: 30)
-                .fill(Color.blue3)
+                .fill(Color.green5)
                 .overlay {
                     if isSelected {
                         RoundedRectangle(cornerRadius: 30)
-                            .stroke(Color.blue2, lineWidth: 5)
+                            .stroke(Color.green6, lineWidth: 5)
                     }
                 }
                 .overlay {
                     VStack(alignment: .leading, spacing: 16) {
                         HStack {
                             Text(content)
-                                .font(isSelected ? Font.body2Emphasized : Font.body2Regular)
-                                .foregroundStyle(Color.black)
-                                .multilineTextAlignment(.leading) 
+                                .font(isSelected ? Font.body1Semibold : Font.body1Regular)
+                                .foregroundStyle(Color.black01)
+                                .multilineTextAlignment(.leading)
                                 .fixedSize(horizontal: false, vertical: true)
                                 .lineLimit(nil)
                             Spacer()
                         }
+                        .padding(.top, 24)
                         
                         HStack(spacing: 4) {
                             Text(respondent)
                                 .font(.system(size: 13)).bold()
-                                .foregroundStyle(Color.black)
+                                .foregroundStyle(Color.black01)
                             Text(source)
-                                .font(Font.caption1Emphasized)
+                                .font(Font.caption2Emphasized)
                                 .foregroundStyle(Color.gray01)
                         }
+                        .padding(.bottom, 24)
                     }
-                    .padding(24)
+                    .padding(.horizontal, 24)
                 }
         }
     }
@@ -64,6 +66,7 @@ struct WiseSayingContentButton: View {
             source: "(이동진)",
             isSelected: true
         ) {}
+            .frame(height: 110)
         WiseSayingContentButton(
             content: "꾸준함이 힘이다.",
             respondent: "Kim",
@@ -71,4 +74,5 @@ struct WiseSayingContentButton: View {
             isSelected: false
         ) {}
     }
+    .padding(.horizontal, 16)
 }

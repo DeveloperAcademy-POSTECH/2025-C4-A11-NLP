@@ -21,6 +21,7 @@ struct InputDiaryView: View {
     
     @State private var testLabel: String = ""
     @State private var isLoading: Bool = false   // 추가
+    @State private var showAlert = false
 
     var viewType: ViewType
     let date: Date
@@ -31,11 +32,13 @@ struct InputDiaryView: View {
         
         if isLoading {
             ZStack(alignment: .center) {
+                Color.lightgreen.ignoresSafeArea()
+                
                 VStack() {
                     LottieView(name: "loading")
                         .frame(width: 76, height: 60)
                         Text("오늘 당신이 쓴 일기를 읽고 있어요.\n도움이 될 만한 명언들을 추천해드릴게요.")
-                            .font(Font.body2Regular)
+                            .font(Font.body1Regular)
                             .foregroundStyle(Color.black)
                             .multilineTextAlignment(.center)
                             .lineSpacing(8)
@@ -45,142 +48,156 @@ struct InputDiaryView: View {
             }
         }
         else {
-            VStack(spacing: 0) {
-                topProgressBarAndNavigationTitleView
-                    .padding(.horizontal, 16)
-                
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 0) {
-                        Text("오늘 하루는 어땠나요?")
-                            .font(.system(size: 17, weight: .semibold))
-                            .padding(.bottom, 8)
-                        Text("\(date.formattedWithWeekday)")
-                            .font(.caption)
-                            .foregroundStyle(Color.gray)
-                            .padding(.bottom, 27)
-                        TextField("글을 작성해주세요.", text: $diaryText, axis: .vertical)
-                            .font(.body)
-                            .focused($isTextFieldFocused)
-                        
-                        if showRedFeedback {
-                            Text("*200자 이상 글을 작성해주세요.")
-                                .font(.caption1Emphasized)
-                                .foregroundStyle(Color.red)
-                        }
-                    }
-                    .padding(.horizontal)
-                    .padding(.top, 16)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                }
-                .overlay(alignment: .bottom) {
-                    Button {
-                    switch viewType {
-                    case .new:
-                        results = analyzer.predictTopSentiments(for: diaryText, count: 3)
-                        diaryVM.diary.createDate = self.date
-                        diaryVM.diary.diaryContent = diaryText // 다이어리 컨텐츠 뷰모델 저장
-                        
-                        // 프로그래스바 시작
-                        isLoading = true
-                        
-                        Task {
-                            if diaryText.count > 25 {
-                                diaryVM.diary.diaryContentSummary = try await diaryVM.summarize(diaryText)
-                            } else {
-                                diaryVM.diary.diaryContentSummary = diaryText
-                            }
-                            // 요약 끝, 로딩 끝, 다음 화면으로!
-                            await MainActor.run {
-                                isLoading = false
-                                router.push(to: .wiseSayingView(emotions: results.map { $0.0 }))
-                            }
-                        }
-                    case .update:
-                        results = analyzer.predictTopSentiments(for: diaryText, count: 3)
-                        diaryVM.diary.createDate = self.date
-                        diaryVM.diary.diaryContent = diaryText // 다이어리 컨텐츠 뷰모델 저장
-                        
-                        // 프로그래스바 시작
-                        isLoading = true
-                        
-                        Task {
-                            if diaryText.count > 25 {
-                                diaryVM.diary.diaryContentSummary = try await diaryVM.summarize(diaryText)
-                            } else {
-                                diaryVM.diary.diaryContentSummary = diaryText
-                            }
-                            // 요약 끝, 로딩 끝, 다음 화면으로!
-                            await MainActor.run {
-                                isLoading = false
-                                router.push(to: .wiseSayingUpdateView(emotions: results.map { $0.0 }))
-                            }
-                        }
-                    }
-                        
-                    } label: {
-                        HStack(spacing: 4) {
-                            Text("오늘의 명언 받기")
-                        }
-                        .font(.caption)
-                        .foregroundStyle(.white)
-                        .frame(height: 44)
+            ZStack {
+                Color.lightgreen.ignoresSafeArea()
+                VStack(spacing: .zero) {
+                    topProgressBarAndNavigationTitleView
                         .padding(.horizontal, 16)
-                        .background(
-                            Color.blue
-                        )
-                        .cornerRadius(15)
-                        .offset(x: shakeOffset)
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: 0) {
+                            Text("오늘 하루는 어땠나요?")
+                                .font(Font.titleTwo)
+                                .foregroundStyle(Color.black01)
+                                .padding(.bottom, 8)
+                            Text("\(date.formattedWithWeekday)")
+                                .font(Font.caption2Emphasized)
+                                .foregroundStyle(Color.gray01)
+                                .padding(.bottom, 27)
+                            TextField("오늘 느낀 솔직한 감정들을 써보세요.", text: $diaryText, axis: .vertical)
+                                .font(.body)
+                                .focused($isTextFieldFocused)
+//                            if showRedFeedback {
+//                                Text("*200자 이상 글을 작성해주세요.")
+//                                    .font(.caption2Emphasized)
+//                                    .foregroundStyle(Color.red)
+//                            }
+                        }
+                        //.padding(.horizontal)
+                        .padding(.top, 16)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                     }
-                    Spacer()
+                    .overlay(alignment: .bottom) {
+                        Button {
+                            switch viewType {
+                            case .new:
+                                results = analyzer.predictTopSentiments(for: diaryText, count: 3)
+                                diaryVM.diary.createDate = self.date
+                                diaryVM.diary.diaryContent = diaryText // 다이어리 컨텐츠 뷰모델 저장
+                                
+                                // 프로그래스바 시작
+                                isLoading = true
+                                
+                                Task {
+                                    if diaryText.count > 25 {
+                                        diaryVM.diary.diaryContentSummary = try await diaryVM.summarize(diaryText)
+                                    } else {
+                                        diaryVM.diary.diaryContentSummary = diaryText
+                                    }
+                                    // 요약 끝, 로딩 끝, 다음 화면으로!
+                                    await MainActor.run {
+                                        isLoading = false
+                                        router.push(to: .wiseSayingView(emotions: results.map { $0.0 }))
+                                    }
+                                }
+                            case .update:
+                                results = analyzer.predictTopSentiments(for: diaryText, count: 3)
+                                diaryVM.diary.createDate = self.date
+                                diaryVM.diary.diaryContent = diaryText // 다이어리 컨텐츠 뷰모델 저장
+                                
+                                // 프로그래스바 시작
+                                isLoading = true
+                                
+                                Task {
+                                    if diaryText.count > 25 {
+                                        diaryVM.diary.diaryContentSummary = try await diaryVM.summarize(diaryText)
+                                    } else {
+                                        diaryVM.diary.diaryContentSummary = diaryText
+                                    }
+                                    // 요약 끝, 로딩 끝, 다음 화면으로!
+                                    await MainActor.run {
+                                        isLoading = false
+                                        router.push(to: .wiseSayingUpdateView(emotions: results.map { $0.0 }))
+                                    }
+                                }
+                            }
+                            
+                        } label: {
+                            HStack(spacing: 4) {
+                                Text("오늘의 명언 받기")
+                            }
+                            .font(Font.caption1)
+                            .foregroundStyle(.white)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 48)
+                            .padding(.horizontal, 16)
+                            .background(
+                                Color.green6
+                            )
+                            .cornerRadius(15)
+                            .offset(x: shakeOffset)
+                        }
+                        Spacer()
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 32)
+                    .navigationTitle("일기")
+                    .navigationBarTitleDisplayMode(.inline)
                 }
-                .padding(.bottom, 32)
+                .background(Color(.systemGray6))
+                .ignoresSafeArea(edges: .bottom)
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button {
+                            self.showAlert = true
+                        } label: {
+                            Image(systemName: "chevron.left")
+                                .foregroundStyle(Color.brown01)
+                                .font(.system(size: 23, weight: .semibold))
+                        }
+                    }
+                    ToolbarItem(placement: .topBarTrailing) {
+                        if isTextFieldFocused {
+                            Button {
+                                isTextFieldFocused = false
+                            } label: {
+                                Image(systemName: "keyboard.chevron.compact.down")
+                                    .foregroundStyle(Color.brown01)
+                            }
+                        }
+                    }
+                }
             }
-            .background(Color(.systemGray6))
-            .ignoresSafeArea(edges: .bottom)
+            .alert("작성 취소", isPresented: $showAlert) {
+                Button("뒤로가기", role: .destructive) {
+                    diaryVM.resetDiary()
+                    router.popToRootView()
+                }
+                Button("취소", role: .cancel) {}
+            } message: {
+                Text("현재까지 입력한 내용이 저장되지 않습니다.\n정말로 취소하시겠습니까?")
+            }
         }
     }
     
     
     //MARK: 상단 프로그래스 바, 네비게이션 타이틀
     private var topProgressBarAndNavigationTitleView: some View {
-        VStack {
-            //FIXME: 반복 코드 수정
-            HStack(spacing: 8) {
-                ProgressView(choice: true)
-                    .frame(width: 115, height: 4)
-                ProgressView(choice: false)
-                    .frame(width: 115, height: 4)
-                ProgressView(choice: false)
-                    .frame(width: 115, height: 4)
-            }
-            HStack {
-                Button {
-                    diaryVM.resetDiary()
-                    router.popToRootView()
-                } label: {
-                    Image(systemName: "chevron.left")
-                        .foregroundStyle(.blue)
-                        .font(.system(size: 23, weight: .semibold))
-                }
-                Spacer()
-                Text("일기")
-                    .font(.title1Emphasized)
-                Spacer()
-                if isTextFieldFocused {
-                    Button {
-                        isTextFieldFocused = false
-                    } label: {
-                        Image(systemName: "keyboard.chevron.compact.down")
-                    }
-                }
-            }
-            .padding(.vertical, 16)
+        //FIXME: 반복 코드 수정
+        HStack {
+            ProgressView(choice: true)
+                .frame(width: 115, height: 4)
+            ProgressView(choice: false)
+                .frame(width: 115, height: 4)
+            ProgressView(choice: false)
+                .frame(width: 115, height: 4)
         }
     }
 }
 
 
 #Preview {
-    InputDiaryView(viewType: .new, date: Date())
-        .environmentObject(NavigationRouter())
+    NavigationStack {
+        InputDiaryView(viewType: .new, date: Date())
+            .environmentObject(NavigationRouter())
+    }
 }

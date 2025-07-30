@@ -29,9 +29,22 @@
 		DE5BD6022E24137500ED1385 /* Diary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		DE0E5FA32E3A0522008063E3 /* Exceptions for "Diary" folder in "Diary" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = DE5BD6012E24137500ED1385 /* Diary */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		DE5BD6042E24137500ED1385 /* Diary */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				DE0E5FA32E3A0522008063E3 /* Exceptions for "Diary" folder in "Diary" target */,
+			);
 			path = Diary;
 			sourceTree = "<group>";
 		};
@@ -291,6 +304,7 @@
 				DEVELOPMENT_TEAM = W4ZPYHTRPJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Diary/Info.plist;
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "FaceID 생체 인증 사용";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -324,6 +338,7 @@
 				DEVELOPMENT_TEAM = W4ZPYHTRPJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Diary/Info.plist;
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "FaceID 생체 인증 사용";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

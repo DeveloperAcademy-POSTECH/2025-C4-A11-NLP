@@ -133,7 +133,7 @@ extension CalendarView {
             let entry = diaryStore.diary(for: date)
             let status: ReflectionStatus = {
                 if let entry = entry {
-                    return entry.reflection == "-" ? .pending : .completed
+                    return entry.reflection == "" ? .pending : .completed
                 } else {
                     return .none
                 }
