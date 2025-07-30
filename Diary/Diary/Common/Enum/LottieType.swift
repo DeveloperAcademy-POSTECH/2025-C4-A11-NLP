@@ -17,7 +17,6 @@ enum LottieType {
         case .confettie: return "confettie"
         case .fire: return "fire"
         case .loading: return "loading"
-            
         }
     }
 }
