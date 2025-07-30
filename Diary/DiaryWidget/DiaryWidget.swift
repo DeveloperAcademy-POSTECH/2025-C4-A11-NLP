@@ -8,38 +8,34 @@
 import WidgetKit
 import SwiftUI
 
-struct Provider: AppIntentTimelineProvider {
+struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: ConfigurationAppIntent(), latestDiaryDate: nil, wiseSaying: nil, resolution: nil)
+        SimpleEntry(date: Date(), latestDiaryDate: nil, wiseSaying: nil, resolution: nil)
     }
 
-    func snapshot(for configuration: ConfigurationAppIntent, in context: Context) async -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: configuration, latestDiaryDate: nil, wiseSaying: nil, resolution: nil)
+    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> Void) {
+        let entry = SimpleEntry(date: Date(), latestDiaryDate: nil, wiseSaying: nil, resolution: nil)
+        completion(entry)
     }
-    
-    func timeline(for configuration: ConfigurationAppIntent, in context: Context) async -> Timeline<SimpleEntry> {
+
+    func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> Void) {
         var entries: [SimpleEntry] = []
-
         let shared = UserDefaults(suiteName: "group.com.SPC4.Diary")
         let latestDiaryDate = shared?.object(forKey: "latestDiaryDate") as? Date
         let wiseSaying = shared?.string(forKey: "latestWiseSaying")
         let resolution = shared?.string(forKey: "latestResolution")
-
         let currentDate = Date()
-        let entry = SimpleEntry(date: currentDate, configuration: configuration, latestDiaryDate: latestDiaryDate, wiseSaying: wiseSaying, resolution: resolution)
+        let entry = SimpleEntry(date: currentDate, latestDiaryDate: latestDiaryDate, wiseSaying: wiseSaying, resolution: resolution)
         entries.append(entry)
 
-        return Timeline(entries: entries, policy: .atEnd)
+        let timeline = Timeline(entries: entries, policy: .atEnd)
+        completion(timeline)
     }
 
-//    func relevances() async -> WidgetRelevances<ConfigurationAppIntent> {
-//        // Generate a list containing the contexts this widget is relevant in.
-//    }
 }
 
 struct SimpleEntry: TimelineEntry {
     let date: Date
-    let configuration: ConfigurationAppIntent
     let latestDiaryDate: Date?
     let wiseSaying: String?
     let resolution: String?
@@ -47,56 +43,89 @@ struct SimpleEntry: TimelineEntry {
 
 struct DiaryWidgetEntryView : View {
     var entry: Provider.Entry
-
+    
+    static let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.dateFormat = "M월d일"
+        return formatter
+    }()
+    
+    static let dateFormatterForURL: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter
+    }()
+    
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            if let latestDate = entry.latestDiaryDate {
-                Text("🗓 최근 작성일: \(latestDate.formatted(date: .abbreviated, time: .omitted))")
-                    .font(.caption)
-            }
-            if let saying = entry.wiseSaying {
-                Text("💬 명언: \(saying)")
-                    .font(.caption2)
-                    .lineLimit(2)
-            }
-            if let resolution = entry.resolution {
-                Text("🎯 다짐: \(resolution)")
-                    .font(.caption2)
-                    .lineLimit(1)
+        ZStack {
+            ViewThatFits {
+                VStack(alignment: .leading) {
+                    HStack {
+                        Image("appicon_widget")
+                        if let latestDate = entry.latestDiaryDate {
+                            Text("\(Self.dateFormatter.string(from: latestDate)) 회고쓰기")
+                                .font(.system(size: 16, weight: .semibold))
+                        }
+                    }
+                    
+                    HStack {
+                        Text("명언")
+                            .font(.system(size: 16, weight: .semibold))
+                            .frame(width: 40, alignment: .leading)
+                        
+                        if let saying = entry.wiseSaying {
+                            Text("\(saying)")
+                                .font(.system(size: 12))
+                                .lineLimit(2)
+                        }
+                    }
+                    
+                    Divider()
+                    
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text("다짐")
+                                .font(.system(size: 16, weight: .semibold))
+                            Text("AI 요약")
+                                .font(.system(size: 13))
+                        }
+                        .frame(width: 40, alignment: .leading)
+                        
+                        if let resolution = entry.resolution {
+                            Text("\(resolution)")
+                                .font(.system(size: 12))
+                                .lineLimit(2)
+                        }
+                    }
+                    
+                }
+                
             }
         }
-        .padding()
     }
 }
 
 struct DiaryWidget: Widget {
     let kind: String = "DiaryWidget"
-
+    
     var body: some WidgetConfiguration {
-        AppIntentConfiguration(kind: kind, intent: ConfigurationAppIntent.self, provider: Provider()) { entry in
+        StaticConfiguration(kind: kind, provider: Provider()) { entry in
             DiaryWidgetEntryView(entry: entry)
-                .containerBackground(.fill.tertiary, for: .widget)
+                .containerBackground(Color.white, for: .widget)
         }
         .supportedFamilies([.systemMedium])
     }
 }
 
-//extension ConfigurationAppIntent {
-//    fileprivate static var smiley: ConfigurationAppIntent {
-//        let intent = ConfigurationAppIntent()
-//        intent.favoriteEmoji = "😀"
-//        return intent
-//    }
-//
-//    fileprivate static var starEyes: ConfigurationAppIntent {
-//        let intent = ConfigurationAppIntent()
-//        intent.favoriteEmoji = "🤩"
-//        return intent
-//    }
-//}
 
 #Preview(as: .systemMedium) {
     DiaryWidget()
 } timeline: {
-    SimpleEntry(date: .now, configuration: ConfigurationAppIntent(), latestDiaryDate: nil, wiseSaying: nil, resolution: nil)
+    SimpleEntry(
+        date: .now,
+        latestDiaryDate: Calendar.current.date(from: DateComponents(year: 2025, month: 7, day: 20)),
+        wiseSaying: "삶은 자전거 타기와 같다. 균형을 잡으려면 움직여야 한다.",
+        resolution: "매일 기록하기"
+    )
 }
