@@ -1,0 +1,113 @@
+{
+  "fill" : {
+    "automatic-gradient" : "display-p3:0.96863,0.96863,0.86667,1.00000"
+  },
+  "groups" : [
+    {
+      "layers" : [
+        {
+          "glass" : true,
+          "image-name" : "logo dot 3.svg",
+          "name" : "logo dot 3",
+          "position" : {
+            "scale" : 1,
+            "translation-in-points" : [
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "image-name" : "logo _.svg",
+          "name" : "logo _",
+          "position" : {
+            "scale" : 1,
+            "translation-in-points" : [
+              0,
+              -285.8901194372037
+            ]
+          }
+        }
+      ],
+      "name" : "top",
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.5
+      }
+    },
+    {
+      "layers" : [
+        {
+          "fill-specializations" : [
+            {
+              "appearance" : "dark",
+              "value" : {
+                "solid" : "extended-gray:1.00000,1.00000"
+              }
+            }
+          ],
+          "glass-specializations" : [
+            {
+              "appearance" : "dark",
+              "value" : false
+            }
+          ],
+          "hidden" : false,
+          "image-name" : "logo top.svg",
+          "name" : "logo top",
+          "position" : {
+            "scale" : 1,
+            "translation-in-points" : [
+              -189.661981266289,
+              -32.123457018133486
+            ]
+          }
+        },
+        {
+          "image-name" : "logo mid.svg",
+          "name" : "logo mid",
+          "position" : {
+            "scale" : 1,
+            "translation-in-points" : [
+              0,
+              -30.634080663098747
+            ]
+          }
+        },
+        {
+          "fill" : {
+            "solid" : "srgb:0.60784,0.80392,0.13333,1.00000"
+          },
+          "image-name" : "logo back.svg",
+          "name" : "logo back"
+        }
+      ],
+      "name" : "base",
+      "position" : {
+        "scale" : 1,
+        "translation-in-points" : [
+          -0.33035725466881566,
+          27.419652137511697
+        ]
+      },
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.5
+      }
+    }
+  ],
+  "supported-platforms" : {
+    "circles" : [
+      "watchOS"
+    ],
+    "squares" : "shared"
+  }
+}
