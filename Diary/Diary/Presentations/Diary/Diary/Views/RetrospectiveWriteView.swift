@@ -11,6 +11,7 @@ import SwiftData
 struct RetrospectiveWriteView: View {
     @State private var text: String = ""
     @State private var isLoading: Bool = false
+    @State private var showAlert = false
     @FocusState private var isTextFieldFocused: Bool
     
     @Environment(\.diaryVM) private var diaryVM
@@ -29,43 +30,56 @@ struct RetrospectiveWriteView: View {
     var body: some View {
         if isLoading {
             ZStack(alignment: .center) {
-                VStack() {
+                Color.lightgreen.ignoresSafeArea()
+                VStack {
                     LottieView(name: "loading")
                         .frame(width: 76, height: 60)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
             }
         } else {
-            HStack {
-                Button {
-                    diaryVM.resetDiary()
-                    router.popToRootView()
-                } label: {
-                    Image(systemName: "chevron.left")
-                        .foregroundStyle(.blue)
-                        .font(.system(size: 23, weight: .semibold))
+            ZStack {
+                Color.lightgreen.ignoresSafeArea()
+                VStack {
+                    topNavigationTitleView
+                    middleTextFieldView
+                    Spacer()
+                    bottomButtonView
                 }
-                Spacer()
-                Text("회고")
-                    .font(.title1Emphasized)
-                Spacer()
-                if isTextFieldFocused {
-                    Button {
-                        isTextFieldFocused = false
-                    } label: {
-                        Image(systemName: "keyboard.chevron.compact.down")
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button {
+                            self.showAlert = true
+                        } label: {
+                            Image(systemName: "chevron.left")
+                                .foregroundStyle(.blue)
+                                .font(.system(size: 23, weight: .semibold))
+                        }
+                    }
+                    ToolbarItem(placement: .topBarTrailing) {
+                        if isTextFieldFocused {
+                            Button {
+                                isTextFieldFocused = false
+                            } label: {
+                                Image(systemName: "keyboard.chevron.compact.down")
+                            }
+                            
+                        }
                     }
                 }
+                .navigationTitle("회고")
+                .navigationBarTitleDisplayMode(.inline)
+                .padding(.horizontal, 16)
             }
-            .padding(.horizontal, 16)
-            // ScrollView {
-            VStack {
-                topNavigationTitleView
-                middleTextFieldView
-                Spacer()
-                bottomButtonView
+            .alert("작성 취소", isPresented: $showAlert) {
+                Button("뒤로가기", role: .destructive) {
+                    diaryVM.resetDiary()
+                    router.popToRootView()
+                }
+                Button("취소", role: .cancel) {}
+            } message: {
+                Text("현재까지 입력한 내용이 저장되지 않습니다.\n정말로 취소하시겠습니까?")
             }
-            .padding(.horizontal, 16)
         }
     }
     
@@ -75,57 +89,66 @@ struct RetrospectiveWriteView: View {
             Spacer().frame(height: 14.5)
             
             Text("이전에 남긴 다짐을 회고하며,\n내일의 나를 위한 다짐을 다시 써 내려가요.")
-                .font(Font.title22)
-                .foregroundStyle(Color.black)
+                .font(Font.titleTwo)
+                .foregroundStyle(Color.black01)
             
             Spacer().frame(height: 8)
             
             Text(diaryVM.diary.createDate?.formattedWithWeekday ?? Date().formattedWithWeekday)
-                .font(Font.caption1Emphasized)
+                .font(Font.caption2Emphasized)
                 .foregroundStyle(Color.gray01)
             
             Spacer().frame(height: 4)
             
             HStack(spacing: .zero) {
                 Text("일기 AI요약: ")
+                    .font(Font.caption2Emphasized)
+                    .foregroundStyle(Color.gray01)
                 Text(myDiary?.diaryContentSummary ?? "")
+                    .font(Font.caption2Regular)
+                    .foregroundStyle(Color.gray01)
             }
-            .font(Font.caption1Emphasized)
-            .foregroundStyle(Color.gray01)
-            
+           
             Spacer().frame(height: 4)
             
             HStack(spacing: .zero) {
                 Text("명언: ")
+                    .font(Font.caption2Emphasized)
+                    .foregroundStyle(Color.gray01)
                 Text(myDiary?.wiseSayingSummary ?? "")
+                    .font(Font.caption2Regular)
+                    .foregroundStyle(Color.gray01)
             }
-            .font(Font.caption1Emphasized)
-            .foregroundStyle(Color.gray01)
+            
             
             Spacer().frame(height: 4)
             
             HStack(spacing: .zero) {
                 Text("다짐 AI요약: ")
+                    .font(Font.caption2Emphasized)
+                    .foregroundStyle(Color.gray01)
                 Text(myDiary?.resolutionSummary ?? "")
+                    .font(Font.caption2Regular)
+                    .foregroundStyle(Color.gray01)
             }
-            .font(Font.caption1Emphasized)
-            .foregroundStyle(Color.gray01)
+           
             
             Divider()
             
             Spacer().frame(height: 16)
             
             Text(Date().formattedWithWeekday)
-                .font(Font.caption1Emphasized)
+                .font(Font.caption2Emphasized)
                 .foregroundStyle(Color.gray01)
             
         }
     }
     
     private var middleTextFieldView: some View {
-        TextField("글을 작성해주세요.", text: $text, axis: .vertical)
+        TextField("회고를 작성해주세요.", text: $text, axis: .vertical)
             .focused($isTextFieldFocused)
-            .font(.body)
+            .font(Font.body1Regular)
+            .foregroundStyle(Color.black01)
     }
     
     private var bottomButtonView: some View {
@@ -142,14 +165,15 @@ struct RetrospectiveWriteView: View {
                     if text.count > 25 {
                         diaryVM.diary.retrospectiveSummary = try await diaryVM.summarize(text)
                     } else {
-                        diaryVM.diary.resolutionSummary = text
+                        diaryVM.diary.retrospectiveSummary = text
+                        diaryVM.diary.retrospective = text
                     }
                     // 요약 끝, 로딩 끝, 다음 화면으로!
                     await MainActor.run {
                         
                         // 2. SwiftData에 저장 (업데이트)
                         if let target = myDiary {
-                            target.retrospective = text
+                            target.retrospective = diaryVM.diary.retrospective
                             target.retrospectiveSummary = diaryVM.diary.retrospectiveSummary
                             do {
                                 try modelContext.save()
@@ -160,6 +184,8 @@ struct RetrospectiveWriteView: View {
                             }
                         }
                         isLoading = false
+                        diaryVM.diary.retrospective = ""
+                        diaryVM.diary.retrospectiveSummary = ""
                         router.pop()
                     }
                 }

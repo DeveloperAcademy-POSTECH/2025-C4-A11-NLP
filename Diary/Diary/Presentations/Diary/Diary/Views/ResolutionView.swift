@@ -10,6 +10,7 @@ import SwiftUI
 struct ResolutionView: View {
     
     @State var text: String = ""
+    @State private var showAlert = false
     
     var viewType: ViewType
     
@@ -17,15 +18,18 @@ struct ResolutionView: View {
     @Environment(\.diaryVM) private var diaryVM
     
     @State private var isLoading: Bool = false   // 추가
+    @FocusState private var isTextFieldFocused: Bool
+    
     var body: some View {
         if isLoading {
             ZStack(alignment: .center) {
+                Color.lightgreen.ignoresSafeArea()
                 VStack() {
                     LottieView(name: "loading")
                         .frame(width: 76, height: 60)
                     Text("오늘 당신이 쓴 일기를 읽고 있어요.\n도움이 될 만한 명언들을 추천해드릴게요.")
-                        .font(Font.body2Regular)
-                        .foregroundStyle(Color.black)
+                        .font(Font.body1Regular)
+                        .foregroundStyle(Color.black01)
                         .multilineTextAlignment(.center)
                         .lineSpacing(8)
                         .padding(.top, 16)
@@ -33,36 +37,57 @@ struct ResolutionView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
             }
         } else {
-            VStack(alignment: .leading) {
-                topProgressBarAndNavigationTitleView
-                middleSummationView
+            ZStack {
+                Color.lightgreen.ignoresSafeArea()
                 
-                Spacer().frame(height: 16)
-                
-                TextEditor(text: $text)
-                    .frame(maxHeight: .infinity)
-                    .overlay(
-                        Group {
-                            if text.isEmpty {
-                                VStack {
-                                    Text("다짐을 작성해보세요.")
-                                        .foregroundStyle(Color.gray)
-                                        .padding([.top,.horizontal], 8)
-                                        .allowsHitTesting(false)
-                                        .frame(maxWidth: .infinity, alignment: .topLeading)
-                                    Spacer()
-                                }
-                            }
-                        }
-                    )
-                
-                Spacer()
-                bottomButtonView
+                VStack(alignment: .leading) {
+                    topProgressBarAndNavigationTitleView
+                    middleSummationView
+                    
+                    Spacer().frame(height: 16)
+                    
+                    TextField("다짐을 작성해보세요.", text: $text, axis: .vertical)
+                        .font(.body)
+                        .focused($isTextFieldFocused)
+                    Spacer()
+                    bottomButtonView
+                }
+                .padding(.horizontal, 16)
+                .task {
+                    self.text = diaryVM.diary.resolution
+                }
+                .navigationTitle("다짐")
+                .navigationBarTitleDisplayMode(.inline)
             }
-            
-            .padding(.horizontal, 16)
-            .task {
-                self.text = diaryVM.diary.resolution
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        self.showAlert = true
+                    } label: {
+                        Image(systemName: "chevron.left")
+                            .foregroundStyle(.brown01)
+                            .font(.system(size: 17, weight: .semibold))
+                    }
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    if isTextFieldFocused {
+                        Button {
+                            isTextFieldFocused = false
+                        } label: {
+                            Image(systemName: "keyboard.chevron.compact.down")
+                                .foregroundStyle(Color.brown01)
+                        }
+                    }
+                }
+            }
+            .alert("작성 취소", isPresented: $showAlert) {
+                Button("뒤로가기", role: .destructive) {
+                    diaryVM.resetDiary()
+                    router.popToRootView()
+                }
+                Button("취소", role: .cancel) {}
+            } message: {
+                Text("현재까지 입력한 내용이 저장되지 않습니다.\n정말로 취소하시겠습니까?")
             }
         }
     }
@@ -79,21 +104,23 @@ struct ResolutionView: View {
                 ProgressView(choice: true)
                     .frame(width: 115, height: 4)
             }
-            HStack {
-                Button {
-                    diaryVM.resetDiary()
-                    router.popToRootView()
-                } label: {
-                    Image(systemName: "chevron.left")
-                        .foregroundStyle(.blue)
-                        .font(.system(size: 23, weight: .semibold))
-                }
-                Spacer()
-                Text("다짐")
-                    .font(.title1Emphasized)
-                Spacer()
-            }
-            .padding(.vertical, 16)
+            .padding(.bottom, 16)
+            
+            //            HStack {
+            //                Button {
+            //                    diaryVM.resetDiary()
+            //                    router.popToRootView()
+            //                } label: {
+            //                    Image(systemName: "chevron.left")
+            //                        .foregroundStyle(.blue)
+            //                        .font(.system(size: 23, weight: .semibold))
+            //                }
+            //                Spacer()
+            //                Text("다짐")
+            //                    .font(.title1Emphasized)
+            //                Spacer()
+            //            }
+            //            .padding(.vertical, 16)
         }
     }
     
@@ -101,31 +128,33 @@ struct ResolutionView: View {
     private var middleSummationView: some View {
         VStack(alignment: .leading) {
             Text("쓴 일기와 선택한 러너의 명언을 바탕으로,\n내일을 위한 다짐을 적어보세요.")
-                .font(Font.title22)
-                .foregroundStyle(Color.black)
+                .font(Font.titleTwo)
+                .foregroundStyle(Color.black01)
             
             Spacer().frame(height: 8)
             
             Text(diaryVM.diary.createDate?.formattedWithWeekday ?? Date().formattedWithWeekday)
-                .font(Font.caption1Emphasized)
+                .font(Font.caption2Emphasized)
                 .foregroundStyle(Color.gray01)
             
             Spacer().frame(height: 4)
             
             HStack(spacing: .zero) {
                 Text("일기 AI요약: ")
+                    .font(Font.caption2Emphasized)
                 Text(diaryVM.diary.diaryContentSummary)
+                    .font(Font.caption2Regular)
             }
-            .font(Font.caption1Emphasized)
             .foregroundStyle(Color.gray01)
             
             Spacer().frame(height: 4)
             
             HStack(spacing: .zero) {
                 Text("명언: ")
+                    .font(Font.caption2Emphasized)
                 Text(diaryVM.diary.wiseSaying)
+                    .font(Font.caption2Regular)
             }
-            .font(Font.caption1Emphasized)
             .foregroundStyle(Color.gray01)
         }
     }
@@ -138,7 +167,7 @@ struct ResolutionView: View {
                 CalenderContentButton(title: "이전", imageType: .previous) {
                     router.pop()
                 }
-                .frame(width: 80, height: 40)
+                .frame(width: 98, height: 48)
                 
                 Spacer()
                 
@@ -159,7 +188,7 @@ struct ResolutionView: View {
                         }
                     }
                 }
-                .frame(width: 80, height: 40)
+                .frame(width: 98, height: 48)
             }
         case .update:
             HStack {
@@ -180,7 +209,7 @@ struct ResolutionView: View {
                         }
                     }
                 }
-                .frame(width: 80, height: 40)
+                .frame(width: 98, height: 48)
                 Spacer()
             }
         }
@@ -188,7 +217,9 @@ struct ResolutionView: View {
 }
 
 #Preview {
-    ResolutionView(text: "", viewType: .update)
-        .environmentObject(NavigationRouter())
+    NavigationStack {
+        ResolutionView(text: "", viewType: .new)
+            .environmentObject(NavigationRouter())
+    }
 }
 

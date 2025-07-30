@@ -31,15 +31,38 @@ struct HomeView: View {
         NavigationStack(path: $router.destination) {
             ZStack(alignment: .topTrailing) {
                 
-                Color(red: 247/255, green: 248/255, blue: 250/255)
-                    .ignoresSafeArea()
+                Color.lightgreen.ignoresSafeArea()
                 
                 VStack(spacing: 0) {
                     // info 버튼
                     HStack {
+                        Text("Quotiary")
+                            .font(Font.ppAcma26)
+                            .foregroundStyle(Color.black)
+                        
                         Spacer()
+                        
+                        Image(.greenbook)
+                        Spacer().frame(width: 4)
+                        Text("\(diaries.count)")
+                            .font(Font.title1Emphasized)
+                            .foregroundStyle(diaries.count == 0 ? Color.gray03 : Color.green1) //FIXME: 색 한번 더 확인
+                        
+                        Spacer().frame(width: 16)
+                        
+                        
+                        Image(.fire)
+                        Text("3") //TODO: Streak으로 변경
+                            .font(Font.title1Emphasized)
+                            .foregroundStyle(Color.red01)
+                        
+                        
                         InfoButton(isInfoShown: $isInfoShown)
                     }
+                    .padding(.horizontal, 16)
+                    
+                    
+                    Spacer().frame(height: 25)
                     
                     // 캘린더 뷰
                     CalendarView(
@@ -58,51 +81,59 @@ struct HomeView: View {
                     
                     // 캘린더 뷰 아래쪽
                     if let selected = selectedDate {
-                        HStack {
-                            // 날짜 텍스트
-                            Text(selected.formattedWithWeekday)
-                                .font(.system(size: 20))
-                                .foregroundStyle(Color(red: 23/255, green: 76/255, blue: 192/255))
-                                .bold()
-                            
-                            Spacer()
-                            
-                            // 일기가 있는 경우에만 화살표 표시
-                            if diaryStore.diary(for: selected) != nil {
-                                Button(action: {
-                                    // 일기 상세 보기 뷰 네비게이션
-                                }) {
-                                    Image(systemName: "arrow.right")
-                                        .font(.system(size: 20))
-                                        .bold()
-                                        .foregroundStyle(Color(red: 23/255, green: 76/255, blue: 192/255))
+                        VStack {
+                            HStack {
+                                // 날짜 텍스트
+                                Text(selected.formattedWithWeekday)
+                                    .font(Font.title1Emphasized)
+                                    .foregroundStyle(Color.brown01)
+                                
+                                Spacer()
+                                
+                                // 일기가 있는 경우에만 화살표 표시
+                                if diaryStore.diary(for: selected) != nil {
+                                    Button(action: {
+                                        router.push(to: .diaryDetailView)
+                                    }) {
+                                        Image(systemName: "arrow.right")
+                                            .font(Font.titleOne)
+                                            .foregroundStyle(Color.brown01)
+                                    }
                                 }
                             }
+                            .padding(.horizontal, 16)
+                            .padding(.top, 16)
+                            
+                            Spacer().frame(height: 8)
                         }
-                        .padding(.horizontal, 16)
-                        .padding(.top, 16)
                         
                         // 글 미리보기
                         if let entry = diaryStore.diary(for: selected) {
-                            VStack(alignment: .leading, spacing: 8){
+                            
+                            VStack(alignment: .leading, spacing: 8) {
                                 HStack(alignment: .top){
-                                    VStack(alignment: .leading, spacing: 2){
+                                    VStack(alignment: .leading, spacing: 2) {
                                         Text("일기")
-                                            .font(.system(size: 17))
+                                            .font(Font.body1Semibold)
+                                            .foregroundStyle(Color.black01)
                                         Text("AI 요약")
-                                            .font(.system(size: 13))
+                                            .font(Font.caption3)
+                                            .foregroundStyle(Color.black01)
                                     }
                                     Text(entry.content)
-                                        .font(.system(size: 17))
+                                        .font(Font.body1Regular)
+                                        .foregroundStyle(Color.black01)
                                         .multilineTextAlignment(.leading)
                                         .lineLimit(nil)
                                 }
                                 Divider()
-                                HStack(alignment: .top){
+                                HStack(alignment: .top) {
                                     Text("명언")
-                                        .font(.system(size: 17))
+                                        .font(Font.body1Semibold)
+                                        .foregroundStyle(Color.black01)
                                     Text(entry.quote)
-                                        .font(.system(size: 17))
+                                        .font(Font.body1Regular)
+                                        .foregroundStyle(Color.black01)
                                         .multilineTextAlignment(.leading)
                                         .lineLimit(nil)
                                 }
@@ -110,12 +141,15 @@ struct HomeView: View {
                                 HStack(alignment: .top){
                                     VStack(alignment: .leading, spacing: 2){
                                         Text("다짐")
-                                            .font(.system(size: 17))
+                                            .font(Font.body1Semibold)
+                                            .foregroundStyle(Color.black01)
                                         Text("AI 요약")
-                                            .font(.system(size: 13))
+                                            .font(Font.caption3)
+                                            .foregroundStyle(Color.black01)
                                     }
                                     Text(entry.vow)
-                                        .font(.system(size: 17))
+                                        .font(Font.body1Regular)
+                                        .foregroundStyle(Color.black01)
                                         .multilineTextAlignment(.leading)
                                         .lineLimit(nil)
                                 }
@@ -123,12 +157,15 @@ struct HomeView: View {
                                 HStack(alignment: .top) {
                                     VStack(alignment: .leading, spacing: 2) {
                                         Text("회고")
-                                            .font(.system(size: 17))
+                                            .font(Font.body1Semibold)
+                                            .foregroundStyle(Color.black01)
                                         Text("AI 요약")
-                                            .font(.system(size: 13))
+                                            .font(Font.caption3)
+                                            .foregroundStyle(Color.black01)
                                     }
                                     Text(entry.reflection)
-                                        .font(.system(size: 17))
+                                        .font(Font.body1Regular)
+                                        .foregroundStyle(Color.black01)
                                         .multilineTextAlignment(.leading)
                                         .lineLimit(nil)
                                 }
@@ -139,6 +176,8 @@ struct HomeView: View {
                                     WriteReflectionButton() {
                                         router.push(to: .retrospectiveWriteView)
                                     }
+                                    .frame(maxWidth: .infinity)
+                                    .frame(height: 48)
                                 }
                             }
                             .padding()
@@ -148,12 +187,13 @@ struct HomeView: View {
                             .clipShape(RoundedRectangle(cornerRadius: 20))
                             .padding(.horizontal, 16)
                             .padding(.vertical, 16)
+                            
                         } else {
                             // 일기 없는 경우
                             VStack {
                                 Text("오늘의 일기를 써보세요.")
-                                    .font(.system(size: 17))
-                                    .foregroundStyle(Color(red: 207/255, green: 208/255, blue: 209/255))
+                                    .font(Font.body1Regular)
+                                    .foregroundStyle(Color.gray01)
                                 Spacer().frame(height: 40)
                             }
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -242,7 +282,9 @@ struct HomeView: View {
 
 
 #Preview {
-    HomeView()
-        .environmentObject(NavigationRouter())
+    NavigationStack {
+        HomeView()
+            .environmentObject(NavigationRouter())
+    }
 }
 

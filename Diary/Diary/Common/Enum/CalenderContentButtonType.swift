@@ -15,9 +15,9 @@ enum CalenderContentButtonType {
     var image: String {
         switch self {
         case .previous:
-            return "chevron.left"
+            return "arrow.left"
         case .next:
-            return "chevron.right"
+            return "arrow.right"
         case .none:
             return ""
         }
