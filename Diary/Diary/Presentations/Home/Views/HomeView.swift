@@ -275,6 +275,13 @@ struct HomeView: View {
             .onAppear {
                 diaryStore.update(with: diaries) // SwiftData → entries 반영
                 streakCount = calculateStreak(from: diaries)
+                
+                //FIXME: 버그 우회 임시
+                if router.destination.isEmpty {
+                    let today = Calendar.current.startOfDay(for: Date())
+                    selectedDate = today
+                    diaryVM.diary.createDate = today
+                }
             }
             .onChange(of: diaries) { _, newDiaries in
                 diaryStore.update(with: newDiaries) // 데이터 변동 반영
