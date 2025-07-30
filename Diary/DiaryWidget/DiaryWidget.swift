@@ -51,12 +51,6 @@ struct DiaryWidgetEntryView : View {
         return formatter
     }()
     
-    static let dateFormatterForURL: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        return formatter
-    }()
-    
     var body: some View {
         ZStack {
             ViewThatFits {
