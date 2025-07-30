@@ -61,13 +61,13 @@ struct DiaryDetailView: View {
                     .font(Font.body1Semibold)
                     .foregroundStyle(Color.black01)
                 Spacer()
-                Button {
-                    router.push(to: .inputDiaryUpdateView(date: HomeView.shardSelectedDate ?? Date(), viewType: .update))
-                } label: {
-                    Image(systemName: "square.and.pencil")
-                        .font(.system(size: 17))
-                        .foregroundStyle(Color.brown01)
-                }
+//                Button {
+//                    router.push(to: .inputDiaryUpdateView(date: HomeView.shardSelectedDate ?? Date(), viewType: .update))
+//                } label: {
+//                    Image(systemName: "square.and.pencil")
+//                        .font(.system(size: 17))
+//                        .foregroundStyle(Color.brown01)
+//                }
             }
             Spacer().frame(height: 8)
             Text(myDiary?.diaryContent ?? "")
@@ -115,13 +115,13 @@ struct DiaryDetailView: View {
                     .font(Font.body1Regular)
                     .foregroundStyle(Color.black01)
                 Spacer()
-                Button {
-                    router.push(to: .resolutionUpdateView)
-                } label: {
-                    Image(systemName: "square.and.pencil")
-                        .font(.system(size: 17))
-                        .foregroundStyle(Color.brown01)
-                }
+//                Button {
+//                    router.push(to: .resolutionUpdateView)
+//                } label: {
+//                    Image(systemName: "square.and.pencil")
+//                        .font(.system(size: 17))
+//                        .foregroundStyle(Color.brown01)
+//                }
             }
             Spacer().frame(height: 8)
             Text(myDiary?.resolution ?? "")
@@ -145,13 +145,13 @@ struct DiaryDetailView: View {
                     .font(Font.body1Regular)
                     .foregroundStyle(Color.black01)
                 Spacer()
-                Button {
-                    router.push(to: .resolutionUpdateView)
-                } label: {
-                    Image(systemName: "square.and.pencil")
-                        .font(.system(size: 17))
-                        .foregroundStyle(Color.brown01)
-                }
+//                Button {
+//                    router.push(to: .resolutionUpdateView)
+//                } label: {
+//                    Image(systemName: "square.and.pencil")
+//                        .font(.system(size: 17))
+//                        .foregroundStyle(Color.brown01)
+//                }
             }
             Spacer().frame(height: 8)
             Text(myDiary?.retrospective ?? "")
