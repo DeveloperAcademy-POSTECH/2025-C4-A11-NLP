@@ -26,6 +26,8 @@ struct HomeView: View {
     static var shardSelectedDate: Date? //FIXME: 네비게이션 date주입을 위한 임시 변수
     
     @Query private var diaries: [DiaryModelData]
+   
+    @State private var streakCount: Int = 0
     
     var body: some View {
         NavigationStack(path: $router.destination) {
@@ -52,9 +54,9 @@ struct HomeView: View {
                         
                         
                         Image(.fire)
-                        Text("3") //TODO: Streak으로 변경
+                        Text("\(streakCount)") 
                             .font(Font.title1Emphasized)
-                            .foregroundStyle(Color.red01)
+                            .foregroundStyle(streakCount == 0 ? Color.gray03 : Color.red01)
                         
                         
                         InfoButton(isInfoShown: $isInfoShown)
@@ -250,6 +252,10 @@ struct HomeView: View {
                             }
                         }
                         .transition(.opacity)
+                    
+                    
+                    
+                    
                 }
             }
             .navigationDestination(for: NavigationDestination.self, destination: { destination in
@@ -263,19 +269,54 @@ struct HomeView: View {
 //                       selectedDate = todayStartOfDay
 //                       diaryVM.diary.createDate = todayStartOfDay
                 }
-                print("diaries : \(diaries.first?.createDate)")
+                // print("diaries : \(diaries.first?.createDate)")
             }
             //TODO: 로직 살펴보기
             .onAppear {
                 diaryStore.update(with: diaries) // SwiftData → entries 반영
+                streakCount = calculateStreak(from: diaries)
+                
+                //FIXME: 버그 우회 임시
+                if router.destination.isEmpty {
+                    let today = Calendar.current.startOfDay(for: Date())
+                    selectedDate = today
+                    diaryVM.diary.createDate = today
+                }
             }
             .onChange(of: diaries) { _, newDiaries in
                 diaryStore.update(with: newDiaries) // 데이터 변동 반영
+                streakCount = calculateStreak(from: newDiaries)
             }
             
         }
         .environmentObject(lottieManager)
         
+    }
+    
+    // Streak 계산 함수
+    private func calculateStreak(from diaries: [DiaryModelData]) -> Int {
+        guard !diaries.isEmpty else { return 0 }
+
+        let diaryDatesSet = Set(diaries.map { Calendar.current.startOfDay(for: $0.createDate) })
+        
+        var streak = 0
+        var currentDate = Calendar.current.startOfDay(for: Date())
+        
+        // 오늘 작성했는지 여부 체크
+        if !diaryDatesSet.contains(currentDate) {
+            // 오늘 작성된 기록이 없다면 하루 전으로 옮겨서 체크
+            guard let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: currentDate) else { return 0 }
+            currentDate = yesterday
+        }
+        
+        // 연속 기록 여부 체크
+        while diaryDatesSet.contains(currentDate) {
+            streak += 1
+            guard let previousDate = Calendar.current.date(byAdding: .day, value: -1, to: currentDate) else { break }
+            currentDate = previousDate
+        }
+        
+        return streak
     }
 }
 

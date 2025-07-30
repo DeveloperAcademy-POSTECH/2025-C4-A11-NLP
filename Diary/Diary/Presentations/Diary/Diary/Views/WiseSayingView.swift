@@ -41,8 +41,8 @@ struct WiseSayingView: View {
                         self.showAlert = true
                     } label: {
                         Image(systemName: "chevron.left")
-                            .foregroundStyle(.blue)
-                            .font(.system(size: 23, weight: .semibold))
+                            .foregroundStyle(.brown01)
+                            .font(.system(size: 17, weight: .semibold))
                     }
                 }
             }
