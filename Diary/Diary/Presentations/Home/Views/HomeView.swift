@@ -42,7 +42,7 @@ struct HomeView: View {
                         
                         Spacer()
                         
-                        Image(.book)
+                        Image(.greenbook)
                         Spacer().frame(width: 4)
                         Text("\(diaries.count)")
                             .font(Font.title1Emphasized)
