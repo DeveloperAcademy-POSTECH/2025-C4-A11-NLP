@@ -27,7 +27,7 @@ struct SplashView: View {
                             .scaledToFit()
                             .frame(height: 60)
                         Text("Quotiary")
-                            .font(Font.ppAcma50)
+                            .font(Font.ppAcma70)
                             .foregroundStyle(Color.white)
                     }
 
