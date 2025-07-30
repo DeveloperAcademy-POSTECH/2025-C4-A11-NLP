@@ -63,6 +63,9 @@ struct DiaryWidgetEntryView : View {
                 VStack(alignment: .leading) {
                     HStack {
                         Image("appicon_widget")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 20)
                         Text("명언 한 줄, 나의 다짐")
                             .font(.system(size: 16, weight: .medium))
                         Spacer()
