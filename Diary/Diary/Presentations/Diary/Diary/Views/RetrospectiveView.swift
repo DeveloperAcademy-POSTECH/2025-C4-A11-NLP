@@ -7,6 +7,8 @@
 
 import SwiftUI
 import SwiftData
+import WidgetKit
+
 
 struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
     
@@ -197,6 +199,13 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
             } catch {
                 print("SwiftData 저장 에러: \(error.localizedDescription)")
             }
+            let sharedDefaults = UserDefaults(suiteName: "group.com.SPC4.Diary")
+            sharedDefaults?.set(newDiary.createDate, forKey: "latestDiaryDate")
+            sharedDefaults?.set(newDiary.wiseSaying, forKey: "latestWiseSaying")
+            sharedDefaults?.set(newDiary.resolutionSummary, forKey: "latestResolution")
+            WidgetCenter.shared.reloadAllTimelines()
+
+
             lottieManager.shouldPlayLottie = true
             diaryVM.resetDiary()
             router.popToRootView()
