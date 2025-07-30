@@ -197,10 +197,8 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
             } catch {
                 print("SwiftData 저장 에러: \(error.localizedDescription)")
             }
-            lottieManager.shouldPlayLottie = true
             diaryVM.resetDiary()
-            //TODO: 여기 부분 Lottie 추가하기
-            router.popToRootView()
+            router.push(to: .streakView)
         }
         .frame(maxWidth: .infinity)
         .frame(height: 48) // FIXME: 크기 동적 수정
