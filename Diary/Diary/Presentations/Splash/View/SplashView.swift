@@ -17,37 +17,56 @@ struct SplashView: View {
         ZStack {
             Color("brown01")
                 .ignoresSafeArea()
+
             VStack {
-                Image("greenbook")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 60)
-                Image(systemName: "faceid")
-                Text("앱 아이콘")
-                
-                // FaceID가 필요한 경우 안내문구와 버튼 표시
-                if isAuthAvailable {
-                    Text("일기를 쓰려면 Face ID를 사용하십시오.")
-                        .foregroundStyle(.gray)
-                    
-                    if authFailed {
-                        Button("Face ID/비밀번호 다시 시도") {
+                Spacer()
+                VStack(spacing: 40) {
+                    VStack(spacing: 0) {
+                        Image("applogo")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 60)
+                        Text("Quotiary")
+                            .font(Font.ppAcma50)
+                            .foregroundStyle(Color.white)
+                    }
+
+                    if isAuthAvailable && authFailed {
+                        Button(action: {
                             onRetry()
+                        }) {
+                            HStack(spacing: 6) {
+                                Image(systemName: "faceid")
+                                Text("Face ID 또는")
+                                Image(systemName: "lock.fill")
+                                Text("비밀번호로 다시 시도")
+                            }
+                            .font(.caption3)
+                            .foregroundStyle(Color.white)
+                            .padding(.horizontal, 24)
+                            .padding(.vertical, 15)
+                            .background(Color(.black))
+                            .clipShape(RoundedRectangle(cornerRadius: 15))
                         }
-                        .padding()
+                    } else {
+                        Color.clear
+                            .frame(height: 44)
                     }
                 }
+                Spacer()
             }
+            .frame(maxHeight: .infinity)
+            .frame(maxWidth: .infinity)
         }
     }
 }
 
 #Preview {
     SplashView(
-            isAuthAvailable: true,
-            authFailed: false,
-            onRetry: {
-                print("다시 시도")
-            }
-        )
+        isAuthAvailable: true,
+        authFailed: true,
+        onRetry: {
+            print("다시 시도")
+        }
+    )
 }
