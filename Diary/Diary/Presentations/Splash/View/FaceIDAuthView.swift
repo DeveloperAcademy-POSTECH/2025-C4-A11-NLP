@@ -15,26 +15,35 @@ struct FaceIDAuthView: View {
     var body: some View {
         ZStack {
             if viewModel.isAuthAvailable {
+                
+                SplashView(
+                                isAuthAvailable: viewModel.isAuthAvailable,
+                                authFailed: viewModel.authFailed,
+                                onRetry: {
+                                    viewModel.authenticate()
+                                }
+                            )
+                
                 // 암호 있을 때
-                VStack(spacing: 20) {
-                    Image(systemName: "faceid")
-                    Text("앱 아이콘")
-                    Text("일기를 쓰려면 Face ID를 사용하십시오.")
-                        .foregroundStyle(.gray)
-                        
-                    if viewModel.authFailed {
-                        Button("Face ID/비밀번호 다시 시도") {
-                            viewModel.authenticate()
-                        }
-                        .padding()
-                    }
-                }
-            } else {
-                // 암호 없을 때
-                VStack(spacing: 20) {
-                    Image(systemName: "faceid")
-                    Text("앱 아이콘")
-                }
+//                VStack(spacing: 20) {
+//                    Image(systemName: "faceid")
+//                    Text("앱 아이콘")
+//                    Text("일기를 쓰려면 Face ID를 사용하십시오.")
+//                        .foregroundStyle(.gray)
+//                        
+//                    if viewModel.authFailed {
+//                        Button("Face ID/비밀번호 다시 시도") {
+//                            viewModel.authenticate()
+//                        }
+//                        .padding()
+//                    }
+//                }
+//            } else {
+//                // 암호 없을 때
+//                VStack(spacing: 20) {
+//                    Image(systemName: "faceid")
+//                    Text("앱 아이콘")
+//                }
             }
         }
         .onAppear {
