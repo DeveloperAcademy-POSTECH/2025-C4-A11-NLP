@@ -63,44 +63,38 @@ struct DiaryWidgetEntryView : View {
                 VStack(alignment: .leading) {
                     HStack {
                         Image("appicon_widget")
+                        Text("명언 한 줄, 나의 다짐")
+                            .font(.system(size: 16, weight: .medium))
+                        Spacer()
                         if let latestDate = entry.latestDiaryDate {
-                            Text("\(Self.dateFormatter.string(from: latestDate)) 회고쓰기")
-                                .font(.system(size: 16, weight: .semibold))
+                            Text("\(Self.dateFormatter.string(from: latestDate))")
+                                .font(.system(size: 13, weight: .regular))
+                                .foregroundStyle(.gray01)
                         }
                     }
                     
-                    HStack {
-                        Text("명언")
-                            .font(.system(size: 16, weight: .semibold))
-                            .frame(width: 40, alignment: .leading)
-                        
+                    VStack(alignment: .leading, spacing: 2) {
                         if let saying = entry.wiseSaying {
                             Text("\(saying)")
-                                .font(.system(size: 12))
-                                .lineLimit(2)
+                                .font(.system(size: 16))
                         }
+                        Text("명언")
+                            .font(.system(size: 12, weight: .medium))
+                            .foregroundStyle(.black.opacity(0.5))
                     }
                     
                     Divider()
                     
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text("다짐")
-                                .font(.system(size: 16, weight: .semibold))
-                            Text("AI 요약")
-                                .font(.system(size: 13))
-                        }
-                        .frame(width: 40, alignment: .leading)
-                        
+                    VStack(alignment: .leading, spacing: 2) {
                         if let resolution = entry.resolution {
                             Text("\(resolution)")
-                                .font(.system(size: 12))
-                                .lineLimit(2)
+                                .font(.system(size: 16))
                         }
+                        Text("다짐 AI요약")
+                            .font(.system(size: 12, weight: .medium))
+                            .foregroundStyle(.black.opacity(0.5))
                     }
-                    
                 }
-                
             }
         }
     }
