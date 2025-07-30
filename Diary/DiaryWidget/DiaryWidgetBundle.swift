@@ -12,6 +12,5 @@ import SwiftUI
 struct DiaryWidgetBundle: WidgetBundle {
     var body: some Widget {
         DiaryWidget()
-//        DiaryWidgetControl()
     }
 }
