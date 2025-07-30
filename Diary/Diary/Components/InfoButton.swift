@@ -18,7 +18,7 @@ struct InfoButton: View{
           Image(systemName: "info.circle.fill")
             .font(.system(size: 24))
             .foregroundStyle(Color.gray03)
-            .padding()
+            //.padding()
         }
     }
 }

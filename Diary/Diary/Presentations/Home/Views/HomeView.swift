@@ -36,6 +36,12 @@ struct HomeView: View {
                 VStack(spacing: 0) {
                     // info 버튼
                     HStack {
+                        Text("Quotiary")
+                            .font(Font.ppAcma26)
+                            .foregroundStyle(Color.black)
+                        
+                        Spacer()
+                        
                         Image(.book)
                         Spacer().frame(width: 4)
                         Text("\(diaries.count)")
@@ -50,10 +56,13 @@ struct HomeView: View {
                             .font(Font.title1Emphasized)
                             .foregroundStyle(Color.red01)
                         
-                        Spacer()
+                        
                         InfoButton(isInfoShown: $isInfoShown)
                     }
                     .padding(.horizontal, 16)
+                    
+                    
+                    Spacer().frame(height: 25)
                     
                     // 캘린더 뷰
                     CalendarView(
@@ -273,7 +282,9 @@ struct HomeView: View {
 
 
 #Preview {
-    HomeView()
-        .environmentObject(NavigationRouter())
+    NavigationStack {
+        HomeView()
+            .environmentObject(NavigationRouter())
+    }
 }
 

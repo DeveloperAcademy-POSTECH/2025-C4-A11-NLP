@@ -9,6 +9,8 @@ import Foundation
 import SwiftUI
 
 extension Font {
+    static let ppAcma26: Font = .custom("PPAcma-Semibold", size: 26)
+    
     static var titleOne: Font {
         .system(size: 20, weight: .medium)
     }
