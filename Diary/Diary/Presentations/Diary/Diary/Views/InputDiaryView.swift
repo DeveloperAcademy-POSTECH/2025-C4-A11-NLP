@@ -152,7 +152,7 @@ struct InputDiaryView: View {
                         } label: {
                             Image(systemName: "chevron.left")
                                 .foregroundStyle(Color.brown01)
-                                .font(.system(size: 23, weight: .semibold))
+                                .font(.system(size: 17, weight: .semibold))
                         }
                     }
                     ToolbarItem(placement: .topBarTrailing) {

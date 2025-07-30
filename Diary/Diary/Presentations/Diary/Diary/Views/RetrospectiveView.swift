@@ -99,7 +99,7 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
                     router.push(to: .inputDiaryUpdateView(date: HomeView.shardSelectedDate ?? Date(), viewType: .update))
                 } label: {
                     Image(systemName: "square.and.pencil")
-                        .font(.system(size: 24))
+                        .font(.system(size: 17))
                         .foregroundStyle(Color.brown01)
                 }
             }
@@ -199,6 +199,7 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
             } catch {
                 print("SwiftData 저장 에러: \(error.localizedDescription)")
             }
+
             let sharedDefaults = UserDefaults(suiteName: "group.com.SPC4.Diary")
             sharedDefaults?.set(newDiary.createDate, forKey: "latestDiaryDate")
             sharedDefaults?.set(newDiary.wiseSaying, forKey: "latestWiseSaying")
@@ -207,8 +208,9 @@ struct RetrospectiveView: View { //TODO: 이것만 따로 빼서 커밋하기
 
 
             lottieManager.shouldPlayLottie = true
+
             diaryVM.resetDiary()
-            router.popToRootView()
+            router.push(to: .streakView)
         }
         .frame(maxWidth: .infinity)
         .frame(height: 48) // FIXME: 크기 동적 수정

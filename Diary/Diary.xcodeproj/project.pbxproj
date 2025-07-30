@@ -12,6 +12,7 @@
 		3EDF3A542E3A46FD003031AB /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EDF3A532E3A46FD003031AB /* WidgetKit.framework */; };
 		3EDF3A562E3A46FD003031AB /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EDF3A552E3A46FD003031AB /* SwiftUI.framework */; };
 		3EDF3A612E3A46FD003031AB /* DiaryWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 3EDF3A522E3A46FD003031AB /* DiaryWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,7 +109,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E1301652E324DC800E39912 /* LocalAuthentication.framework in Frameworks */,
-				3E4FAC1D2E37A0790081E912 /* Lottie in Frameworks */,
+				DE7CA2F52E3A6D1C00DB5850 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -190,7 +191,7 @@
 			);
 			name = Diary;
 			packageProductDependencies = (
-				3E4FAC1C2E37A0790081E912 /* Lottie */,
+				DE7CA2F42E3A6D1C00DB5850 /* Lottie */,
 			);
 			productName = Diary;
 			productReference = DE5BD6022E24137500ED1385 /* Diary.app */;
@@ -224,7 +225,7 @@
 			mainGroup = DE5BD5F92E24137500ED1385;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				3E4FAC1B2E37A0790081E912 /* XCRemoteSwiftPackageReference "lottie-spm" */,
+				DE7CA2F32E3A6D1C00DB5850 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = DE5BD6032E24137500ED1385 /* Products */;
@@ -566,9 +567,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		3E4FAC1B2E37A0790081E912 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
+		DE7CA2F32E3A6D1C00DB5850 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/airbnb/lottie-spm";
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 4.5.2;
@@ -577,9 +578,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		3E4FAC1C2E37A0790081E912 /* Lottie */ = {
+		DE7CA2F42E3A6D1C00DB5850 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 3E4FAC1B2E37A0790081E912 /* XCRemoteSwiftPackageReference "lottie-spm" */;
+			package = DE7CA2F32E3A6D1C00DB5850 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
 		};
 /* End XCSwiftPackageProductDependency section */

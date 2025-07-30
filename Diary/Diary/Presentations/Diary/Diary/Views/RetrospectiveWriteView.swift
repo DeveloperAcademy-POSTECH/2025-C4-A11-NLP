@@ -52,8 +52,8 @@ struct RetrospectiveWriteView: View {
                             self.showAlert = true
                         } label: {
                             Image(systemName: "chevron.left")
-                                .foregroundStyle(.blue)
-                                .font(.system(size: 23, weight: .semibold))
+                                .foregroundStyle(Color.brown01)
+                                .font(.system(size: 17, weight: .semibold))
                         }
                     }
                     ToolbarItem(placement: .topBarTrailing) {

@@ -18,6 +18,13 @@ extension Date {
         return formatter.string(from: self)
     }
     
+    var formattedWithWeekdayNavi: String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.dateFormat = "MM월 dd일 E요일"
+        return formatter.string(from: self)
+    }
+    
     var onlyDate: Date {
         let comps = Calendar.current.dateComponents([.year, .month, .day], from: self)
         return Calendar.current.date(from: comps)!
