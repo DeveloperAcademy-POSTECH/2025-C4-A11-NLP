@@ -25,17 +25,8 @@ struct DiaryDetailView: View {
                     router.pop()
                 } label: {
                     Image(systemName: "chevron.left")
-                        .foregroundStyle(.blue)
-                        .font(.system(size: 23, weight: .semibold))
-                }
-            }
-            ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    
-                } label: {
-                    Image(systemName: "trash")
-                        .foregroundStyle(.blue)
-                        .font(.system(size: 23, weight: .semibold))
+                        .foregroundStyle(Color.brown01)
+                        .font(.system(size: 17, weight: .semibold))
                 }
             }
         }

@@ -42,7 +42,7 @@ struct WiseSayingView: View {
                     } label: {
                         Image(systemName: "chevron.left")
                             .foregroundStyle(.brown01)
-                            .font(.system(size: 23, weight: .semibold))
+                            .font(.system(size: 17, weight: .semibold))
                     }
                 }
             }

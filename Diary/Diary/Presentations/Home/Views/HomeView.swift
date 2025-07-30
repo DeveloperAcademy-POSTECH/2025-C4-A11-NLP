@@ -56,7 +56,7 @@ struct HomeView: View {
                         Image(.fire)
                         Text("\(streakCount)") 
                             .font(Font.title1Emphasized)
-                            .foregroundStyle(Color.red01)
+                            .foregroundStyle(streakCount == 0 ? Color.gray03 : Color.red01)
                         
                         
                         InfoButton(isInfoShown: $isInfoShown)
@@ -252,6 +252,10 @@ struct HomeView: View {
                             }
                         }
                         .transition(.opacity)
+                    
+                    
+                    
+                    
                 }
             }
             .navigationDestination(for: NavigationDestination.self, destination: { destination in
