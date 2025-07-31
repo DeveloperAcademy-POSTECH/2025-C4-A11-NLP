@@ -139,7 +139,7 @@ struct ResolutionView: View {
             
             Spacer().frame(height: 4)
             
-            HStack(spacing: .zero) {
+            HStack(alignment: .top, spacing: .zero) {
                 Text("일기 AI요약: ")
                     .font(Font.caption2Emphasized)
                 Text(diaryVM.diary.diaryContentSummary)
@@ -149,7 +149,7 @@ struct ResolutionView: View {
             
             Spacer().frame(height: 4)
             
-            HStack(spacing: .zero) {
+            HStack(alignment: .top, spacing: .zero) {
                 Text("명언: ")
                     .font(Font.caption2Emphasized)
                 Text(diaryVM.diary.wiseSaying)
