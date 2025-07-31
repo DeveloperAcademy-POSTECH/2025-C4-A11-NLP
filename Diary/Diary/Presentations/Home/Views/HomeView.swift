@@ -26,7 +26,7 @@ struct HomeView: View {
     static var shardSelectedDate: Date? //FIXME: 네비게이션 date주입을 위한 임시 변수
     
     @Query private var diaries: [DiaryModelData]
-   
+    
     @State private var streakCount: Int = 0
     
     var body: some View {
@@ -54,7 +54,7 @@ struct HomeView: View {
                         
                         
                         Image(.fire)
-                        Text("\(streakCount)") 
+                        Text("\(streakCount)")
                             .font(Font.title1Emphasized)
                             .foregroundStyle(streakCount == 0 ? Color.gray03 : Color.red01)
                         
@@ -122,6 +122,7 @@ struct HomeView: View {
                                             .font(Font.caption3)
                                             .foregroundStyle(Color.black01)
                                     }
+                                    .frame(width: 40, alignment: .leading)
                                     Text(entry.content)
                                         .font(Font.body1Regular)
                                         .foregroundStyle(Color.black01)
@@ -133,6 +134,7 @@ struct HomeView: View {
                                     Text("명언")
                                         .font(Font.body1Semibold)
                                         .foregroundStyle(Color.black01)
+                                        .frame(width: 40, alignment: .leading)
                                     Text(entry.quote)
                                         .font(Font.body1Regular)
                                         .foregroundStyle(Color.black01)
@@ -149,6 +151,7 @@ struct HomeView: View {
                                             .font(Font.caption3)
                                             .foregroundStyle(Color.black01)
                                     }
+                                    .frame(width: 40, alignment: .leading)
                                     Text(entry.vow)
                                         .font(Font.body1Regular)
                                         .foregroundStyle(Color.black01)
@@ -165,6 +168,7 @@ struct HomeView: View {
                                             .font(Font.caption3)
                                             .foregroundStyle(Color.black01)
                                     }
+                                    .frame(width: 40, alignment: .leading)
                                     Text(entry.reflection)
                                         .font(Font.body1Regular)
                                         .foregroundStyle(Color.black01)
@@ -265,9 +269,9 @@ struct HomeView: View {
             .task { // 날짜가 선택되지 않을때는 오늘 날짜로 넣어두기
                 if selectedDate == nil {
                     selectedDate = Date().addingTimeInterval(60 * 60 * 9)
-//                    let todayStartOfDay = Calendar.current.startOfDay(for: Date())
-//                       selectedDate = todayStartOfDay
-//                       diaryVM.diary.createDate = todayStartOfDay
+                    //                    let todayStartOfDay = Calendar.current.startOfDay(for: Date())
+                    //                       selectedDate = todayStartOfDay
+                    //                       diaryVM.diary.createDate = todayStartOfDay
                 }
                 // print("diaries : \(diaries.first?.createDate)")
             }
@@ -296,7 +300,7 @@ struct HomeView: View {
     // Streak 계산 함수
     private func calculateStreak(from diaries: [DiaryModelData]) -> Int {
         guard !diaries.isEmpty else { return 0 }
-
+        
         let diaryDatesSet = Set(diaries.map { Calendar.current.startOfDay(for: $0.createDate) })
         
         var streak = 0
